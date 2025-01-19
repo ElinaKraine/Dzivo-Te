@@ -2,5 +2,7 @@
     $page = "parmums";
     require "assets/header.php";
 ?>
-</body>
-</html>
+
+<?php
+    require "assets/footer.php";
+?>

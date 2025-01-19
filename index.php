@@ -57,8 +57,42 @@
         </div>
     </section>
 
+    <section id="pedejiSludinajumi">
+        <h1>Jaunpieejamās mājokļi pārdošanai</h1>
+        <div class="lielaKaste">
+            <?php
+                require "admin/database/con_db.php";
+
+                $pedejiSludinajumiSQL = "SELECT majuvieta_pirkt.*, majuvieta_atteli.pirma_attela AS attela, majuvieta_adrese.* FROM majuvieta_pirkt INNER JOIN majuvieta_atteli ON majuvieta_pirkt.id_atteli = majuvieta_atteli.attelu_kopums_id INNER JOIN majuvieta_adrese ON majuvieta_pirkt.id_adrese = majuvieta_adrese.adrese_id LIMIT 4";
+                $atlasaPedejiSludinajumi = mysqli_query($savienojums, $pedejiSludinajumiSQL);
+
+                if(mysqli_num_rows($atlasaPedejiSludinajumi) > 0){
+                    while($sludinajums = mysqli_fetch_assoc($atlasaPedejiSludinajumi)){
+                        echo "
+                            <div class='sludinajums'>
+                                <div class='attela-sirds'>
+                                    <img src='data:image/jpeg;base64," . base64_encode($sludinajums['attela']) . "' />
+                                    <a class='sirds'><i class='fa-regular fa-heart'></i></a>
+                                </div>
+                                <p id='cena'>{$sludinajums['cena']} €</p>
+                                <div id='papildInfo'>
+                                    <p><i class='fa-solid fa-door-open'></i> {$sludinajums['istabas']}</p>
+                                    <p><i class='fa-solid fa-ruler-combined'></i> {$sludinajums['platiba']} m<sup>2</sup></p>
+                                    <p><i class='fa-solid fa-stairs'></i> {$sludinajums['stavs_vai_stavi']}</p>
+                                </div>
+                                <p id='adrese'>{$sludinajums['pilseta']}, {$sludinajums['iela']} {$sludinajums['majas_numurs']}</p>
+                            </div>
+                        ";
+                    }
+                }else{
+                    echo "Tagad nav pieejami sludinājumi";
+                }
+            ?>
+        </div>
+    </section>
+
     <section class="piedavajumi">
-        <h1>Skatiet, kā <span>Māju Vieta</span> var palīdzēt</h1>
+        <h1>Skatiet, kā Māju Vieta var palīdzēt</h1>
         <div class="lielaKaste">
             <div class="mazaKaste">
                 <img src="images/pirkt.png">
@@ -81,28 +115,6 @@
         </div>
     </section>
 
-    <footer>
-        <div class="lielaKaste">
-            <div class="mazaKaste">
-                <h1>Māju Vieta</h1>
-                <p>Dzīvo, kur vēlies. <br> Sāciet ar mums!</p>
-            </div>
-            <div class="mazaKaste">
-                <h2>KONTAKTI</h2>
-                <ul>
-                    <li><i></i> Liela iela 10, LV-3414, Liepāja, Latvija</li>
-                    <li><i></i> +371 21228753</li>
-                    <li><i></i> info@majuvieta.lv</li>
-                </ul>
-            </div>
-            <div class="mazaKaste">
-                <i class="fa-brands fa-facebook"></i>
-                <i class="fa-brands fa-square-instagram"></i>
-                <i class="fa-brands fa-linkedin"></i>
-            </div>
-        </div>
-        <p>&copy; Autortiesības 2025 Māju Vieta - Elīna Kraine</p>
-    </footer>
-
-</body>
-</html>
+<?php
+    require "assets/footer.php";
+?>

@@ -247,13 +247,9 @@ header{
     border-radius: 4rem;
 }
 
-.piedavajumi{
-    padding-top: 0;
-}
-
-.piedavajumi h1{
+.piedavajumi h1, #pedejiSludinajumi h1{
     text-align: center;
-    font-size: 2.5rem;
+    font-size: 2.1rem;
     margin-bottom: 4rem;
 }
 
@@ -299,4 +295,140 @@ header{
 
 #tresaisTeksts{
     width: 80%;
+}
+
+#pedejiSludinajumi{
+    padding: 0 5% 5rem;
+}
+
+#pedejiSludinajumi .lielaKaste{
+    align-items: flex-start;
+}
+
+.sludinajums{
+    position: relative;
+}
+
+.sludinajums:hover{
+    transform: translate(0, -2rem);
+    cursor: pointer;
+}
+
+#pedejiSludinajumi img{
+    width: 100%;
+    height: 100%;
+    border-radius: .5rem;
+}
+
+#cena{
+    font-weight: 500;
+    font-size: 1.5rem;
+}
+
+#adrese, #papildInfo{
+    font-size: 1.1rem;
+}
+
+#papildInfo{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: .5rem 0;
+}
+
+#papildInfo i{
+    color: var(--dark-violet-2);
+}
+
+.sirds{
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    cursor: pointer;
+}
+
+.sirds i{
+    font-size: 2rem;
+    color: white;
+}
+
+.sirds i:hover{
+    color: red;
+}
+
+.attela-sirds {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* Footer: */
+footer{
+    padding: 2rem 7%;
+    background: black;
+    color: white;
+}
+
+#lielaKasteFooter{
+    display: flex;
+    justify-content: space-evenly;
+    gap: 2rem;
+}
+
+#visparigaInfo{
+    text-align: left;
+}
+
+#visparigaInfo h1{
+    color: var(--light-violet);
+    font-size: 2.4rem;
+    margin-bottom: 1rem;
+}
+
+#visparigaInfo p{
+    font-size: 1.3rem;
+    font-size: 300;
+}
+
+#kontakti{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+}
+
+#kontakti ul{
+    line-height: 2;
+    list-style: none;
+}
+
+#kontakti li:hover{
+    cursor: pointer;
+    color: var(--bright-violet);
+}
+
+#saraksts{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    font-size: 2.5rem;
+    color: var(--light-violet);
+}
+
+#saraksts i:hover{
+    cursor: pointer;
+    color: white;
+}
+
+#tiesibas{
+    margin-top: 2rem;
+    padding: 1rem;
+    border-top: 1px solid var(--light-violet);
+    font-weight: 200;
+}
+
+/* Majas.php: */
+.filtri{
+    margin-top: 3rem;
 }
