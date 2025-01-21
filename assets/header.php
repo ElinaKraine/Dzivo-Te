@@ -18,5 +18,5 @@
             <a href="majas.php" class="<?php echo ($page == 'majas' ? 'current' : '') ?>">Mājās</a>
             <a href="dzivokli.php" class="<?php echo ($page == 'dzivokli' ? 'current' : '') ?>">Dzīvokļi</a>
         </nav>
-        <a class="btn">Ielogoties</a>
+        <a class="btn" href="login.php">Ielogoties</a>
     </header>
