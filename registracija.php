@@ -10,11 +10,11 @@
     <div class="registracijasKaste">
         <div class="majuVieta">
             <img src="images/logo.png">
-            <h2>Māju Vieta</h2>
+            <p>Māju Vieta</p>
         </div>
         <h2>Reģistrēšana</h2>
         <form>
-            <div class="vardsUzvards">
+            <div id="vardsUzvards">
                 <input type="text" name="vards" placeholder="Vārds *" required>
                 <input type="text" name="uzvards" placeholder="Uzvārds *" required>
             </div>

@@ -44,7 +44,7 @@ html::-webkit-scrollbar-thumb{
 }
 
 section{
-    padding: 3rem 5%;
+    padding: 4rem 5%;
 }
 
 /* Header: */
@@ -473,29 +473,33 @@ footer{
     font-size: 2rem;
 }
 
-.loginDala form{
+.loginDala form, .registracijasKaste form{
     display: flex;
     flex-direction: column;
     gap: 1rem;
     width: 55%;
 }
 
-.loginDala form input{
+.loginDala form input, .registracijasKaste form input{
     width: 100%;
     font-size: 1rem;
     padding: 1rem;
     background: var(--light-gray);
-    border-radius: 5rem;
+    border-radius: 1rem;
 }
 
-.loginDala form .btn{
+.loginDala form input:focus, .registracijasKaste form input:focus{
+    background: var(--light-violet);
+}
+
+.loginDala form .btn, .registracijasKaste form .btn{
     font-size: 1rem;
     padding: 1rem;
-    border-radius: 5rem;
+    border-radius: 1rem;
     background: var(--dark-violet-2);
 }
 
-.loginDala form .btn:hover{
+.loginDala form .btn:hover, .registracijasKaste form .btn:hover{
     background: var(--dark-violet);
 }
 
@@ -516,6 +520,239 @@ footer{
     background-position: center;
     min-height: 100vh;
     margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.registracijasKaste{
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: auto;
+    width: 40%;
+    border-radius: 5rem;
+    border: 1px solid var(--dark-violet-2);
+    padding: 2rem;
+}
+
+.majuVieta{
+    display: flex;
+    align-items: center;
+    color: var(--dark-violet);
+    font-weight: 300;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.majuVieta img{
+    width: 5rem;
+}
+
+#vardsUzvards{
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.registracijasKaste form{
+    width: 65%;
+}
+
+/* ParMums.php: */
+#parMums{
+    margin-top: 4rem
+}
+
+#parMums h1{
+    color: var(--dark-violet);
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+#parMums p{
+    text-align: center;
+    width: 50%;
+    margin: auto;
+    line-height: 2;
+    font-size: 1.2rem;
+    color: var(--dark-violet-2);
+    margin-bottom: 2rem;
+}
+
+#parMums img{
+    height: 100%;
+}
+
+#parMums1{
+    flex: 25%;
+}
+
+#parMums2{
+    flex: 45%;
+}
+
+#parMums3{
+    flex: 30%;
+}
+
+.komentariji{
+    background: var(--light-violet);
+    display: flex;
+    padding: 0 14%;
+}
+
+.komentarijs{
+    flex: 1;
+    display: flex;
+    margin: 4rem 1rem;
+}
+
+.komentarijs img{
+    width: 10rem;
+    transform: translateX(2rem);
+}
+
+.saturs{
+    background: white;
+    border: 1px solid var(--dark-violet-2);
+    border-radius: 2rem;
+    padding: 1rem 2rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.saturs i{
+    font-size: 2.5rem;
+    color: var(--dark-violet);
+}
+
+.teksts{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.teksts p{
+    line-height: 1.5;
+}
+
+.komentarijaIpasnieks{
+    font-weight: bold;
+    color: var(--dark-violet);
+}
+
+.komentarijaIpasnieks span{
+    font-weight: 300;
+}
+
+#lietotajaDarbibas h1{
+    text-align: center;
+    font-size: 2.5rem;
+}
+
+#lietotajaDarbibas h1 span{
+    color: var(--dark-violet-2);
+}
+
+.darbibas{
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin: 4rem 0 2rem;
+}
+
+.darbiba h2{
+    color: var(--dark-violet);
+    margin: 1rem 0;
+}
+
+.darbiba ul {
+    font-size: 1.2rem;
+    line-height: 2;
+    list-style: none;
+    padding-left: 0;
+}
+
+.darbiba ul li {
+    position: relative;
+    padding-left: 2rem;
+}
+
+.darbiba ul li::before {
+    content: '\f058';
+    font-family: "Font Awesome 6 Free";
+    position: absolute;
+    left: 0;
+    color: var(--light-violet);
+}
+
+#sazinaties{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.karte{
+    width: 65%;
+}
+
+.zina{
+    background: var(--dark-violet-2);
+    border-radius: 1rem;
+    padding: 1rem 2rem;
+    color: white;
+    width: 35%;
+}
+
+.zina h2{
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.zina p{
+    font-weight: 300;
+    text-align: justify;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+#sazinaties form{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#sazinaties form input, #sazinaties form textarea{
+    padding: 1rem;
+    border-radius: 1rem;
+    background: none;
+    border: 1px solid white;
+    color: white;
+}
+
+#sazinaties form textarea{
+    resize: none;
+}
+
+#sazinaties form .btn{
+    color: var(--dark-violet);
+    background: white;
+    font-size: 1.1rem;
+}
+
+#sazinaties form .btn:hover{
+    background: var(--light-violet);
+    font-weight: bold;
+}
+
+#sazinaties form span{
+    color: red;
 }
 
 /* Majas.php: */
