@@ -105,7 +105,7 @@
         </form>
     </div>
     <div class="karte">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2201.533222695734!2d21.0121609290902!3d56.510247252771585!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46faa6176ecda02b%3A0xc9b579799a66ccb5!2zTGllbMSBIGllbGEgMTAsIExpZXDEgWphLCBMVi0zNDAx!5e0!3m2!1sru!2slv!4v1737532031928!5m2!1sru!2slv" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2201.533222695734!2d21.0121609290902!3d56.510247252771585!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46faa6176ecda02b%3A0xc9b579799a66ccb5!2zTGllbMSBIGllbGEgMTAsIExpZXDEgWphLCBMVi0zNDAx!5e0!3m2!1sru!2slv!4v1737532031928!5m2!1sru!2slv" width="100%" height="100%" style="border:0; border-radius:1rem;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
 </section>
 

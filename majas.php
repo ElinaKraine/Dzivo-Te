@@ -4,6 +4,10 @@
 ?>
 
 <form class="filtri">
+    <div class="darijumuVeids">
+        <button>Pirkt</button>
+        <button></button>
+    </div>
 
 </form>
 <div class="lielaKreisaPuse">

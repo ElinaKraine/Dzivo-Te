@@ -512,6 +512,25 @@ footer{
     color: var(--bright-violet);
 }
 
+.pazinojums{
+    text-align: center;
+    padding: .5rem;
+    color: darkred;
+    font-weight: bold;
+}
+
+.paroleKaste{
+    display: flex;
+    background: var(--light-gray);
+    border-radius: 1rem;
+}
+
+.paroleKaste i{
+    color: var(--dark-violet);
+    cursor: pointer;
+    margin: 1.1rem;
+}
+
 /* Reģistrācija.php: */
 #registracijaBody {
     background-image: url("../images/backgroundForRegistr.png");
@@ -692,6 +711,7 @@ footer{
 }
 
 #sazinaties{
+    margin-top: 2rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -700,6 +720,7 @@ footer{
 
 .karte{
     width: 65%;
+    height: 46.5rem;
 }
 
 .zina{
