@@ -18,6 +18,57 @@ Māju Vieta ir ērta platforma mājokļu meklēšanai Latvijā. Mēs piedāvāja
 - Apskatīt informāciju par mājokļa īpašībām un atrašanās vietu kartē
 - Izmantot meklēšanu un filtrus, lai atrastu mājokļus
 
+## To do list:
+- [ ] Izstrādāt mājaslapas dizainu (Figma)
+- [ ] Izveidot datu bāzi
+- [ ] Realizēt mājaslapas dizainu (Front-end)
+- [ ] Izveidot mājaslapas funkcionālu daļu (Back-end)
+- [ ] Atrast un izmantot citu serveri
+- [ ] Mājaslapas testēšana
+- [ ] Uzrakstīt dokumentāciju
+
+### Front-end:
+- [x] Sākumlapa
+- [x] Par mums
+- [ ] Mājās
+- [ ] Dzīvokļi
+- [ ] Saglabātie
+- [ ] Lietotāja konts
+- [x] Ielogošanas lapa
+- [x] Reģistrēšanas lapa
+- [ ] Responsivitātie mājaslapā
+- [ ] Admin daļa: Sākumlapa
+- [ ] Admin daļa: Sludinājumi
+- [ ] Admin daļa: Lietotāji
+- [ ] Admin daļa: Pieteikumi
+
+### Back-end:
+- [ ] Mājokļu aplūkošana
+- [ ] Viena mājokļa aplūkošana
+- [ ] Filtrēšana
+- [ ] Filtra tīrīšana
+- [ ] Mājokļu kartošāna
+- [ ] Mājokļu aplūkošana kartē
+- [ ] Vēstules nosūtīšana
+- [x] Lietotāja reģistrēšanās
+- [x] Ielogošanās
+- [x] Izlogošanās
+- [ ] Mājokļa pievienošana saglabātajam
+- [ ] Mājokļa dzēšana saglabātajam
+- [ ] Izīrēt mājokli
+- [ ] Pieteikties iegādei
+- [ ] Pievienot sludinājumu
+- [ ] Lietotāju konta aplūkošana
+- [ ] Administratoru un moderatoru kontu aplūkošana
+- [ ] Lietotāja un moderatora pievienošana
+- [ ] Lietotāja un moderatora rediģēšana
+- [ ] Lietotāja un moderatora dzēšana
+- [ ] Mājokļa pievienošana
+- [ ] Mājokļa rediģēšana
+- [ ] Mājokļa dzēšana
+- [ ] Pieteikuma statusa izmaiņas
+- [ ] Sludinājuma statusa izmaiņas
+
 ### Dizaina iedvesma:
 - https://archioto.framer.website
 - https://www.trulia.com
