@@ -153,6 +153,16 @@ header{
     max-width: 90%;
     line-height: 1.5;
     word-wrap: break-word;
+    opacity: 0;
+    transform: translateY(3rem);
+    animation: slideIn 2s forwards;
+}
+
+@keyframes slideIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .galvenaStatistika{
@@ -246,6 +256,29 @@ header{
 .attelas img{
     width: 100%;
     border-radius: 4rem;
+}
+
+/* Animacijas */
+.parInfo, .pirmaAttela, .otraAttela, .tresaAttela, .piedavajumi h1, .piedavajumi .mazaKaste, .lietotajaDarbibas h1, .lietotajaDarbibas .darbiba{
+    opacity: 0;
+    transform: translateY(7rem);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.pirmaAttela.redzams, .otraAttela.redzams, .tresaAttela.redzams, .parInfo.redzams, .piedavajumi h1.redzams, .piedavajumi .mazaKaste.redzams, .lietotajaDarbibas h1.redzams, .lietotajaDarbibas .darbiba.redzams{
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.komentarijs{
+    opacity: 0;
+    transform: scale(0);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.komentarijs.redzams{
+    opacity: 1;
+    transform: scale(1);
 }
 
 .piedavajumi h1, #pedejiSludinajumi h1{
@@ -581,18 +614,21 @@ footer{
 }
 
 /* ParMums.php: */
-#parMums{
-    margin-top: 4rem
+.parMums{
+    margin-top: 4rem;
+    opacity: 0;
+    transform: translateY(3rem);
+    animation: slideIn 1s forwards;
 }
 
-#parMums h1{
+.parMums h1{
     color: var(--dark-violet);
     font-size: 3rem;
     text-align: center;
     margin-bottom: 1.5rem;
 }
 
-#parMums p{
+.parMums p{
     text-align: center;
     width: 50%;
     margin: auto;
@@ -602,19 +638,19 @@ footer{
     margin-bottom: 2rem;
 }
 
-#parMums img{
+.parMums img{
     height: 100%;
 }
 
-#parMums1{
+.parMums1{
     flex: 25%;
 }
 
-#parMums2{
+.parMums2{
     flex: 45%;
 }
 
-#parMums3{
+.parMums3{
     flex: 30%;
 }
 
@@ -669,12 +705,12 @@ footer{
     font-weight: 300;
 }
 
-#lietotajaDarbibas h1{
+.lietotajaDarbibas h1{
     text-align: center;
     font-size: 2.5rem;
 }
 
-#lietotajaDarbibas h1 span{
+.lietotajaDarbibas h1 span{
     color: var(--dark-violet-2);
 }
 

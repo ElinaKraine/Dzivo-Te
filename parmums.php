@@ -3,23 +3,25 @@
     require "assets/header.php";
 ?>
 
-<section id="parMums">
-    <h1>Par mums</h1>
-    <p>Māju Vieta ir ērta platforma mājokļu meklēšanai Latvijā. Mēs piedāvājam plašu māju un dzīvokļu klāstu īrei vai iegādei. Vienkārša navigācija, aktuālie piedāvājumi un noderīgi filtri palīdzēs ātri atrast ideālo mājokli ērtai dzīvošanai vai investīcijām.</p>
+<section class="parMums">
+    <div class="parMumsTeksts">
+        <h1>Par mums</h1>
+        <p>Māju Vieta ir ērta platforma mājokļu meklēšanai Latvijā. Mēs piedāvājam plašu māju un dzīvokļu klāstu īrei vai iegādei. Vienkārša navigācija, aktuālie piedāvājumi un noderīgi filtri palīdzēs ātri atrast ideālo mājokli ērtai dzīvošanai vai investīcijām.</p>
+    </div>
     <div class="attelas">
-        <div id="parMums1">
+        <div class="parMums1">
             <img src="images/parMums1.png">
         </div>
-        <div id="parMums2">
+        <div class="parMums2">
             <img src="images/parMums2.png">
         </div>
-        <div id="parMums3">
+        <div class="parMums3">
             <img src="images/parMums3.png">
         </div>
     </div>
 </section>
 
-<div class="komentariji">
+<section class="komentariji">
     <div class="komentarijs">
         <img src="images/komentars1.png">
         <div class="saturs">
@@ -40,9 +42,9 @@
             </div>
         </div>
     </div>
-</div>
+</section>
 
-<section id="lietotajaDarbibas">
+<section class="lietotajaDarbibas">
     <h1>Ko lietotājs var darīt mājaslapā <span>Māju Vieta</span>?</h1>
     <div class="darbibas">
         <div class="darbiba">

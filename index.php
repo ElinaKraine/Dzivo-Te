@@ -24,7 +24,7 @@
         </div>
         <img src="images/zieds.png">
         <div class="kasteInfo">
-            <h1>3000</h1>
+            <h1>1500</h1>
             <p>Laimīgi klienti</p>
         </div>
         <img src="images/zieds.png">
