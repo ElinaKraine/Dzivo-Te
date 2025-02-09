@@ -6,6 +6,7 @@
     --bright-violet: #7B2CED;
     --dark-violet-2: #5E486F;
     --light-gray: #F5F6F7;
+    --dark-gray: #e8e9ea;
     --border: .1rem solid rgba(0, 0, 0, 10%);
     --box-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, 10%);
 }
@@ -813,6 +814,242 @@ footer{
 }
 
 /* Majas.php: */
+.galvenieFiltri{
+    margin-top: 8rem;
+    padding: 2rem 5%;
+    gap: 1rem;
+    align-items: center;
+}
+
+.filtriKaste{
+    display: flex;
+    gap: 1rem;
+    position: absolute;
+    transform: translateY(-3.45rem) translateX(13.4rem);
+}
+
 .filtri{
-    margin-top: 3rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.darijumuVeids{
+    width: 12.3rem;
+    border-radius: 1.3rem;
+    background: var(--light-gray);
+    display: flex;
+}
+
+.atlasits{
+    border-radius: 1.3rem;
+    border: 1px solid var(--dark-violet);
+    background: white;
+}
+
+.neAtlasits{
+    background: none;
+}
+
+.neAtlasits:hover{
+    background: var(--dark-gray);
+}
+
+.darijumuVeids button{
+    border-radius: 1.3rem;
+    font-weight: bold;
+    font-size: 1.1rem;
+    padding: 1rem 2rem;
+    cursor: pointer;
+}
+
+.meklesana{
+    display: flex;
+}
+
+.meklesana input{
+    font-size: 1.1rem;
+    padding: 1rem;
+    background: var(--light-gray);
+    border-radius: 1.3rem 0 0 1.3rem;
+}
+
+.meklesana a{
+    background: var(--dark-violet-2);
+    border-radius: 0 1.3rem 1.3rem 0;
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 1rem;
+}
+
+.meklesana a:hover{
+    cursor: pointer;
+    background: var(--dark-violet);
+}
+
+.meklesana a i{
+    color: white;
+}
+
+.galvenieFiltri .kaste button{
+    font-size: 1.1rem;
+    background: var(--light-gray);
+    border-radius: 1.3rem;
+    padding: 1rem 1.3rem;
+}
+
+.galvenieFiltri .kaste button i{
+    margin-left: 1rem;
+}
+
+.galvenieFiltri .kaste button:hover{
+    cursor: pointer;
+    background: var(--dark-gray);
+}
+
+.izdzestFiltrusPoga{
+    font-size: 1.1rem;
+    padding: 1rem;
+    color: var(--dark-violet);
+    background: none;
+    border: 1px solid var(--dark-violet);
+    border-radius: 1.3rem;
+}
+
+.izdzestFiltrusPoga:hover{
+    color: var(--bright-violet);
+    border-color: var(--bright-violet);
+    cursor: pointer;
+}
+
+.staviDiapozons, .cenuDiapozons, .istabasDiapozons, .platibasDiapozons{
+    display: none;
+    position: absolute;
+    box-shadow: var(--box-shadow);
+    border-radius: .5rem;
+    margin-top: .5rem;
+    padding: .5rem;
+    background: white;
+}
+
+.staviDiapozons p, .cenuDiapozons p, .istabasDiapozons p, .platibasDiapozons p{
+    font-size: .9rem;
+}
+
+.pdiapozons, .cdiapozons, .idiapozons, .pdiapozons{
+    margin-top: .5rem;
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+}
+
+.pdiapozons p, .cdiapozons p, .idiapozons p, .pdiapozons p{
+    font-size: 1.3rem;
+}
+
+.pdiapozons input, .cdiapozons input, .idiapozons input, .pdiapozons input{
+    font-size: 1rem;
+    padding: .5rem;
+    border-radius: .5rem;
+    border: 1px solid var(--dark-violet);
+}
+
+.majasSaturs{
+    display: flex;
+    width: 100%;
+}
+
+.lielaKreisaPuse{
+    flex: 65%;
+    margin-top: 1.5rem;
+}
+
+.karte{
+    flex: 35%;
+}
+
+.lielaKreisaPuse h2, .iresanasLapa h2{
+    font-weight: 400;
+}
+
+.kartosana{
+    margin-top: 1.2rem;
+}
+
+.kartosana select{
+    padding: .5rem 0;
+    border-radius: .5rem;
+    font-size: 1.1rem;
+    cursor: pointer;
+    border: 1px solid white;
+}
+
+.kartosana select:focus{
+    border-color: var(--bright-violet);
+}
+
+/* MajasIresanai.php: */
+.iresanasLapa{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.iresanasLapa .kreisaPuse{
+    margin-top: 1.5rem;
+}
+
+.labaPuse{
+    width: 100%;
+}
+
+.labaPuse .iresanasDatumi{
+    display: flex;
+    padding-left: 15%;
+    gap: 1rem;
+}
+
+.datumi{
+    background: var(--light-gray);
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--dark-violet);
+    border-radius: 1.3rem;
+    padding: 1rem 0 1rem 1rem;
+    gap: .5rem;
+}
+
+.datumi i{
+    font-size: 1rem;
+}
+
+.datumi input{
+    font-size: 1rem;
+    text-align: center;
+    background: none;
+}
+
+.datumi input:focus{
+    background: var(--dark-gray);
+}
+
+.datumi p{
+    font-size: 1.1rem;
+}
+
+.iresanasDatumi button{
+    background: var(--dark-violet-2);
+    font-size: 1rem;
+    border-radius: 1.3rem;
+}
+
+.iresanasDatumi button:hover{
+    background: var(--dark-violet);
+}
+
+.iresanasBack{
+    background-image: url(../images/iresanasBackground.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-top: 1rem;
 }

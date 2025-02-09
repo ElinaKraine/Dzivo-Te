@@ -3,29 +3,13 @@
     require "assets/header.php";
 ?>
 
-<form class="filtri">
+<div class="galvenieFiltri">
     <div class="darijumuVeids">
-        <button>Pirkt</button>
-        <button></button>
+        <button type="button" name="pirkt" class="atlasits">Pirkt</button>
+        <button type="button" name="iret" class="neAtlasits">Īrēt</button>
     </div>
-
-</form>
-<div class="lielaKreisaPuse">
-
-</div>
-<div class="karte">
-    <h2>Mājas pārdošanai</h2>
-    <form class="kartosana">
-
-    </form>
-    <div class="sludinajumasKartinas">
-        <select name="" id="">
-            <option value="">Kārtot: Cena(Aug - Zem)</option>
-            <option value="">Kārtot: Cena(Zem - Aug)</option>
-            <option value="">Kārtot: Jaunākie</option>
-            <option value="">Kārtot: Platība(Aug - Zem)</option>
-            <option value="">Kārtot: Platība(Zem - Aug)</option>
-        </select>
+    
+    <div id="contentContainer">
     </div>
 </div>
 
