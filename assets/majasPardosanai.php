@@ -1,9 +1,8 @@
     <div class="filtriKaste">
-        <div class="meklesana">
-            <input type="text" placeholder="Meklēt pilsētu vai adrese">
-            <a name="meklet"><i class="fas fa-search"></i></a>
-        </div>
         <form class="filtri">
+            <div class="meklesana">
+                <input type="text" placeholder="Meklēt pilsētu" id="meklet-lauks" name="meklet-lauks">
+            </div>
             <div class="kaste">
                 <button type="button" name="cenaPoga" class="filter-poga">Cena <i class="fa-solid fa-chevron-down"></i></button>
                 <div class="cenuDiapozons">
@@ -48,30 +47,31 @@
                     </div>
                 </div>
             </div>
-            <button class="izdzestFiltrusPoga">Izdzēst filtrus</button>
+            <button class="mekleteFiltrus" type="submit">Meklēt <i class="fas fa-search"></i></button>
+            <a class="btn" id="izdest-filtrus">Izdzēst filtrus <i class="fa-solid fa-trash-can"></i></a>
         </form>
-    </div>
-</div>
 
-<div class="majasSaturs">
-    <div class="lielaKreisaPuse">
-        <h2>Mājas pārdošanai</h2>
-        <form class="kartosana">
-            <select name="" id="">
-                <option value="">Kārtot: Cena(Aug - Zem)</option>
-                <option value="">Kārtot: Cena(Zem - Aug)</option>
-                <option value="" selected>Kārtot: Publicēšanas datums(Jauns - Vecs)</option>
-                <option value="">Kārtot: Publicēšanas datums(Vecs - Jauns)</option>
-                <option value="">Kārtot: Platība(Aug - Zem)</option>
-                <option value="">Kārtot: Platība(Zem - Aug)</option>
-            </select>
-        </form>
-        <div class="sludinajumasKartinas">
-            
+    </div>
+    </div>
+
+    <div class="majasSaturs">
+        <div class="lielaKreisaPuse">
+            <h2>Mājas pārdošanai</h2>
+            <form class="kartosana">
+                <select name="kartosanasOpcijas" id="kartosanasOpcijas">
+                    <option value="cena_desc">Kārtot: Cena(Aug - Zem)</option>
+                    <option value="cena_asc">Kārtot: Cena(Zem - Aug)</option>
+                    <option value="datums_desc" selected>Kārtot: Publicēšanas datums(Jauns - Vecs)</option>
+                    <option value="datums_asc">Kārtot: Publicēšanas datums(Vecs - Jauns)</option>
+                    <option value="platiba_desc">Kārtot: Platība(Aug - Zem)</option>
+                    <option value="platiba_asc">Kārtot: Platība(Zem - Aug)</option>
+                </select>
+            </form>
+            <div class="sludinajumasKartinas" id="majas">
+
+            </div>
+        </div>
+        <div class="karte">
+
         </div>
     </div>
-    <div class="karte">
-
-    </div>
-</div>
-

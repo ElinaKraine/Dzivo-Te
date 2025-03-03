@@ -43,12 +43,14 @@
                 $vaicajums = $savienojums->prepare("INSERT INTO majuvieta_lietotaji(vards, uzvards, epasts, talrunis, parole) VALUES (?, ?, ?, ?, ?)");
                 $vaicajums->bind_param("sssss", $vards, $uzvards, $epasts, $talrunis, $sifrets_parole);
                 if($vaicajums->execute()){
-                    echo "Lietotājs veiksmīgi pievienots!";
+                    $_SESSION['pazinojumsMVL'] = "Reģistrācija veiksmīgi pabeigta!";
                 }else{
-                    echo "Kļūda sistemā: ".$vaicajums->error;
+                    $_SESSION['pazinojums'] = "Kļūda sistemā!";
                 }
                 $vaicajums->close();
                 $savienojums->close();
+
+                header("location: ../../registracija.php");
             }
         }else{
             $_SESSION['pazinojumsMV'] = "Jāaizpilda visi obligātie lauki! *";

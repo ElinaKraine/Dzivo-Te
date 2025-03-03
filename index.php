@@ -63,7 +63,7 @@
             <?php
                 require "admin/database/con_db.php";
 
-                $pedejiSludinajumiSQL = "SELECT majuvieta_pirkt.*, majuvieta_atteli.pirma_attela AS attela, majuvieta_adrese.* FROM majuvieta_pirkt INNER JOIN majuvieta_atteli ON majuvieta_pirkt.id_atteli = majuvieta_atteli.attelu_kopums_id INNER JOIN majuvieta_adrese ON majuvieta_pirkt.id_adrese = majuvieta_adrese.adrese_id LIMIT 4";
+                $pedejiSludinajumiSQL = "SELECT majuvieta_pirkt.*, majuvieta_atteli.pirma_attela AS attela, majuvieta_adrese.* FROM majuvieta_pirkt INNER JOIN majuvieta_atteli ON majuvieta_pirkt.id_atteli = majuvieta_atteli.attelu_kopums_id INNER JOIN majuvieta_adrese ON majuvieta_pirkt.id_adrese = majuvieta_adrese.adrese_id ORDER BY izveidosanas_datums DESC LIMIT 4";
                 $atlasaPedejiSludinajumi = mysqli_query($savienojums, $pedejiSludinajumiSQL);
 
                 if(mysqli_num_rows($atlasaPedejiSludinajumi) > 0){

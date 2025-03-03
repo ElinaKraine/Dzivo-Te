@@ -1,7 +1,7 @@
 <?php
     session_start();
     
-    if (!isset($_SESSION['lietotajaLomaMV'])) {
+    if (!isset($_SESSION['lietotajaLomaMV']) || ($_SESSION['lietotajaLomaMV'] !== 'Administrators' && $_SESSION['lietotajaLomaMV'] !== 'Moderators')) { 
         header("Location: index.php");
         exit();
     }

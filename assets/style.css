@@ -614,6 +614,79 @@ footer{
     width: 65%;
 }
 
+.registracijasKaste a{
+    font-size: .9rem;
+    margin-top: 1rem;
+    color: var(--dark-violet);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.registracijasKaste a:hover{
+    color: var(--bright-violet);
+    transform: scale(1.05);
+    transition: width 0.3s ease-in-out;
+}
+
+/* Modālais logs: */
+.modal{
+    position: fixed;
+    background: rgba(0,0,0,70%);
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.modal-active{
+    display: flex;
+}
+
+.modal-box{
+    background: white;
+    max-width: 50rem;
+    box-shadow: var(--box-shadow);
+    padding: 2rem;
+    margin: 2rem;
+    border-radius: .5rem;
+    position: relative;
+}
+
+.modal .close-modal{
+    position: absolute;
+    top: .5rem;
+    right: .5rem;
+    background: var(--dark-violet);
+    padding: .3rem .5rem;
+    font-size: .7rem;
+    border-radius: .5rem;
+    cursor: pointer;
+    color: white;
+}
+
+.modal .close-modal:hover{
+    background: white;
+    color: var(--dark-violet);
+}
+
+.modal h2{
+    text-align: center;
+    padding: 0 3rem;
+}
+
+.modal .btn{
+    width: 100%;
+    text-align: center;
+}
+
+.modal.modal-active{
+    display: flex;
+}
+
 /* ParMums.php: */
 .parMums{
     margin-top: 4rem;
@@ -871,24 +944,36 @@ footer{
     font-size: 1.1rem;
     padding: 1rem;
     background: var(--light-gray);
-    border-radius: 1.3rem 0 0 1.3rem;
+    border-radius: 1.3rem;
 }
 
-.meklesana a{
-    background: var(--dark-violet-2);
-    border-radius: 0 1.3rem 1.3rem 0;
+.mekleteFiltrus{
     font-size: 1.1rem;
-    font-weight: bold;
-    padding: 1rem;
-}
-
-.meklesana a:hover{
-    cursor: pointer;
     background: var(--dark-violet);
+    color: white;
+    border-radius: 1.3rem;
+    padding: 1rem 1.3rem;
 }
 
-.meklesana a i{
+.mekleteFiltrus i{
+    padding-left: .5rem;
+}
+
+.mekleteFiltrus:hover{
+    cursor: pointer;
+    background: var(--dark-violet-2);
+}
+
+#izdest-filtrus{
+    font-size: 1rem;
+    background: darkred;
     color: white;
+    border-radius: 1.3rem;
+    padding: 1rem 1.2rem;
+}
+
+#izdest-filtrus:hover{
+    background: rgb(76, 0, 0);
 }
 
 .galvenieFiltri .kaste button{
@@ -986,6 +1071,40 @@ footer{
 
 .kartosana select:focus{
     border-color: var(--bright-violet);
+}
+
+.majasSaturs #majas{
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.majasSaturs #majas .sludinajums{
+    width: 30rem;
+}
+
+.majasSaturs #majas .sludinajums img{
+    width: 100%;
+    border-radius: .5rem;
+}
+
+.majasSaturs #majas .sludinajums #adrese{
+    margin-bottom: 1rem;
+}
+
+.majasSaturs #majas .sludinajums:hover{
+    transform: scale(1.02);
+}
+
+.majasSaturs #majas .sludinajums .attela-sirds{
+    height: auto;
+}
+
+.navRezultatus{
+    font-weight: bold;
+    color: darkred;
+    font-size: 1.2rem;
 }
 
 /* MajasIresanai.php: */

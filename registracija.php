@@ -43,6 +43,21 @@
             </div>
             <button type="submit" class="btn" name="registracija">Reģistrēties</button>
         </form>
+        <a href="login.php"><i class="fa-solid fa-arrow-left"></i> Atpakaļ uz ielogošanu</a>
     </div>
+
+    <?php if(isset($_SESSION['pazinojumsMVL'])): ?>
+    <div class="modal modal-active" id="modal-message">
+        <div class="modal-box">
+            <div class="close-modal" data-target="#modal-message"><i class="fas fa-times"></i></div>
+            <h2>
+                <?php 
+                    echo $_SESSION['pazinojumsMVL'];
+                    unset($_SESSION['pazinojumsMVL']);
+                ?>
+            </h2>
+        </div>
+    </div>
+    <?php endif; ?>
 </body>
 </html>
