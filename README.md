@@ -53,7 +53,7 @@ Māju Vieta ir ērta platforma mājokļu meklēšanai Latvijā. Mēs piedāvāja
 - [ ] Mājokļu aplūkošana
 - [ ] Viena mājokļa aplūkošana
 - [x] Filtrēšana
-- [ ] Filtra tīrīšana
+- [x] Filtra tīrīšana
 - [x] Mājokļu kartošāna
 - [ ] Mājokļu aplūkošana kartē
 - [ ] Vēstules nosūtīšana

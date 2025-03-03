@@ -83,4 +83,20 @@ $(document).ready(function () {
 
     fetchMajas(tekosaMeklesana, filtri, tekosaKartosana);
   });
+
+  $(document).on("click", "#izdest-filtrus", function (e) {
+    e.preventDefault();
+
+    $("#meklet-lauks").val("");
+    $("input[name='minimalaCena']").val("");
+    $("input[name='maksimalaCena']").val("");
+    $("input[name='minimumIstabas']").val("");
+    $("input[name='maksimumIstabas']").val("");
+    $("input[name='minimalaPlatiba']").val("");
+    $("input[name='maksimalaPlatiba']").val("");
+    $("input[name='minimumStavus']").val("");
+    $("input[name='maksimumStavus']").val("");
+
+    fetchMajas("", {}, tekosaKartosana);
+  });
 });
