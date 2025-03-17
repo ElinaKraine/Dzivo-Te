@@ -1,5 +1,4 @@
 <?php
-session_start();
 $lietotajaLoma = $_SESSION['lietotajaLomaMV'] ?? null;
 ?>
 <!DOCTYPE html>
@@ -9,7 +8,7 @@ $lietotajaLoma = $_SESSION['lietotajaLomaMV'] ?? null;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dzīvo Te</title>
-    <link rel="shortcut icon" href="images/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="././images/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="assets/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" defer></script>
     <script src="assets/script.js" defer></script>

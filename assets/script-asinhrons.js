@@ -14,7 +14,7 @@ $(document).ready(function () {
     }
 
     $.ajax({
-      url: `./admin/database/majas_list.php?${queryParams.toString()}`,
+      url: `./assets/database/majas_list.php?${queryParams.toString()}`,
       type: "GET",
       success: function (response) {
         const majas = JSON.parse(response);

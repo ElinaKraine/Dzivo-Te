@@ -71,6 +71,20 @@ if (isset($_GET['id'])) {
             <?php } ?>
         </section>
 
+        <?php if (isset($_SESSION['pazinojumsMV'])): ?>
+            <div class="modal modal-active" id="modal-message">
+                <div class="modal-box">
+                    <div class="close-modal" data-target="#modal-message"><i class="fas fa-times"></i></div>
+                    <h2>
+                        <?php
+                        echo $_SESSION['pazinojumsMV'];
+                        unset($_SESSION['pazinojumsMV']);
+                        ?>
+                    </h2>
+                </div>
+            </div>
+        <?php endif; ?>
+
         <div class="modal" id="modal-ticket">
             <div class="modal-box">
                 <div class="close-modal" data-target="#modal-ticket"><i class="fas fa-times"></i></div>
@@ -81,7 +95,7 @@ if (isset($_GET['id'])) {
                     <p><i class="fa-solid fa-user"></i> <?php echo $_SESSION['lietotajsMV']; ?></p>
                 </div>
                 <form action="pieteikumi.php" method="POST">
-                    <input type="hidden" id="<?php echo $sludinajums['pirkt_id']; ?>">
+                    <input type="hidden" name="id_majuvieta_pirkt" value="<?php echo $sludinajums['pirkt_id']; ?>">
                     <button data-i18n="nosutit_piet" type="submit" name="nosutit" class="btn">Nosūtīt pieteikumu</button>
                 </form>
             </div>
