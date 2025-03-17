@@ -1,7 +1,7 @@
     <footer>
         <div id="lielaKasteFooter">
             <div id="visparigaInfo">
-                <h1>Māju Vieta</h1>
+                <h1>Dzīvo Te</h1>
                 <p>Dzīvo, kur vēlies. <br> Sāciet ar mums!</p>
             </div>
             <div id="kontakti">
@@ -9,7 +9,7 @@
                 <ul>
                     <li><i class="fa-solid fa-map-location-dot"></i> Liela iela 10, LV-3414, Liepāja, Latvija</li>
                     <li><i class="fa-solid fa-phone"></i> +371 21228753</li>
-                    <li><i class="fa-solid fa-envelope"></i> info@majuvieta.lv</li>
+                    <li><i class="fa-solid fa-envelope"></i> info@dzivote.lv</li>
                 </ul>
             </div>
             <div id="saraksts">
@@ -18,8 +18,9 @@
                 <i class="fa-brands fa-linkedin"></i>
             </div>
         </div>
-        <p id="tiesibas">&copy; Autortiesības 2025 Māju Vieta - Elīna Kraine</p>
+        <p id="tiesibas">&copy; Autortiesības 2025 Dzīvo Te - Elīna Kraine</p>
     </footer>
 
-</body>
-</html>
+    </body>
+
+    </html>

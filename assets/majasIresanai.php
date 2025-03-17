@@ -1,10 +1,8 @@
-    
     <div class="filtriKaste">
-        <div class="meklesana">
-            <input type="text" placeholder="Meklēt pilsētu vai adrese">
-            <a name="meklet"><i class="fas fa-search"></i></a>
-        </div>
         <form class="filtri">
+            <div class="meklesana">
+                <input type="text" placeholder="Meklēt pilsētu" id="meklet-lauks" name="meklet-lauks">
+            </div>
             <div class="kaste">
                 <button type="button" name="cenaPoga" class="filter-poga">Cena <i class="fa-solid fa-chevron-down"></i></button>
                 <div class="cenuDiapozons">
@@ -49,44 +47,45 @@
                     </div>
                 </div>
             </div>
-            <button class="izdzestFiltrusPoga">Izdzēst filtrus</button>
+            <button class="mekleteFiltrus" type="submit">Meklēt <i class="fas fa-search"></i></button>
+            <a class="btn" id="izdest-filtrus">Izdzēst filtrus <i class="fa-solid fa-trash-can"></i></a>
         </form>
     </div>
-</div>
+    </div>
 
-<div class="iresanasLapa">
-    <div class="kreisaPuse">
-        <h2>Mājas īrešanai</h2>
-        <form class="kartosana">
-            <select name="" id="">
-                <option value="">Kārtot: Cena(Aug - Zem)</option>
-                <option value="">Kārtot: Cena(Zem - Aug)</option>
-                <option value="" selected>Kārtot: Publicēšanas datums(Jauns - Vecs)</option>
-                <option value="">Kārtot: Publicēšanas datums(Vecs - Jauns)</option>
-                <option value="">Kārtot: Platība(Aug - Zem)</option>
-                <option value="">Kārtot: Platība(Zem - Aug)</option>
-            </select>
-        </form>
-    </div>
-    <div class="labaPuse">
-        <form class="iresanasDatumi">
-            <div class="datumi">
-                <i class="fa fa-calendar"></i>
-                <input name="no" placeholder="Registresanas datums" onfocus="(this.type='date')" onblur="(this.type='text')" required>
-                <p>-</p>
-                <input name="lidz" placeholder="Izrakstisanas datums" onfocus="(this.type='date')" onblur="(this.type='text')" required>
-            </div>
-            <button type="submit" class="btn">Meklēt</button>
-        </form>
-    </div>
-</div>
-<div class="majasSaturs iresanasBack">
-    <div class="lielaKreisaPuse">
-        <div class="sludinajumasKartinas">
-                
+    <div class="iresanasLapa">
+        <div class="kreisaPuse">
+            <h2>Mājas īrešanai</h2>
+            <form class="kartosana">
+                <select name="" id="">
+                    <option value="">Kārtot: Cena(Aug - Zem)</option>
+                    <option value="">Kārtot: Cena(Zem - Aug)</option>
+                    <option value="" selected>Kārtot: Publicēšanas datums(Jauns - Vecs)</option>
+                    <option value="">Kārtot: Publicēšanas datums(Vecs - Jauns)</option>
+                    <option value="">Kārtot: Platība(Aug - Zem)</option>
+                    <option value="">Kārtot: Platība(Zem - Aug)</option>
+                </select>
+            </form>
+        </div>
+        <div class="labaPuse">
+            <form class="iresanasDatumi">
+                <div class="datumi">
+                    <i class="fa fa-calendar"></i>
+                    <input name="no" placeholder="Registresanas datums" onfocus="(this.type='date')" onblur="(this.type='text')" required>
+                    <p>-</p>
+                    <input name="lidz" placeholder="Izrakstisanas datums" onfocus="(this.type='date')" onblur="(this.type='text')" required>
+                </div>
+                <button type="submit" class="btn">Atlasiet</button>
+            </form>
         </div>
     </div>
-    <div class="karte">
+    <div class="majasSaturs iresanasBack">
+        <div class="lielaKreisaPuse">
+            <div class="sludinajumasKartinas">
 
+            </div>
+        </div>
+        <div class="karte">
+
+        </div>
     </div>
-</div>

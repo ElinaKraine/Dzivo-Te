@@ -1,5 +1,5 @@
 <?php
-require 'con_db.php';
+require './Maju-Vieta/admin/database/con_db.php';
 
 $prasibas = ["mp.majokla_tips = 'Mājas'"];
 $params = [];

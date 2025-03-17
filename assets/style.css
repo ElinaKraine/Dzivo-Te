@@ -7,6 +7,7 @@
     --dark-violet-2: #5E486F;
     --light-gray: #F5F6F7;
     --dark-gray: #e8e9ea;
+    --dark-gray-2: #938D8D;
     --border: .1rem solid rgba(0, 0, 0, 10%);
     --box-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, 10%);
 }
@@ -422,7 +423,6 @@ footer{
 
 #visparigaInfo p{
     font-size: 1.3rem;
-    font-size: 300;
 }
 
 #kontakti{
@@ -1104,6 +1104,120 @@ footer{
 .navRezultatus{
     font-weight: bold;
     color: darkred;
+    font-size: 1.2rem;
+}
+
+/* Maja.php: */
+.majaLapa{
+    padding: 4rem 15%;
+}
+
+.majaLapa .attela-sirds{
+    height: auto;
+}
+
+.majaLapa .attela-sirds .sirds i{
+    filter: drop-shadow(2px 4px 6px black);
+}
+
+.visasBildes{
+    display: flex;
+    gap: .5rem;
+}
+
+.visasBildes img{
+    width: 100%;
+    border-radius: .5rem;
+}
+
+.visasBildes .viensAttela{
+    width: 70%;
+}
+
+.visasBildes .viensAttela img{
+    height: 40.5rem;
+}
+
+.visasBildes .diviAttela img, .visasBildes .trisAttela img, .visasBildes .diviAttela{
+    height: 20rem;
+}
+
+.visasBildes .diviAtteliKopa{
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    width: 30%;
+    height: 40rem;
+}
+
+.visasBildes:hover{
+    transform: scale(0.98);
+    cursor: pointer;
+}
+
+.pamatInfo{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    padding: 0 1rem;
+}
+
+.pamatInfo h2{
+    font-size: 2.5rem;
+}
+
+.pamatInfo .btn{
+    background: var(--dark-violet-2);
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+.pamatInfo .btn:hover{
+    background: var(--dark-violet);
+}
+
+.papildInfo{
+    margin-top: 1rem;
+    font-size: 1.3rem;
+    color: var(--dark-gray-2);
+    padding: 0 1rem;
+}
+
+.ikoninasArInfo{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.majaLapa .apraksts{
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    line-height: 2;
+    text-align: justify;
+}
+
+.majaLapa .ipasnieks{
+    margin-top: 2rem;
+    font-size: 1.2rem;
+}
+
+.majaLapa .ipasnieks h3{
+    color: var(--dark-violet);
+    margin-bottom: .5rem;
+}
+
+.majaLapa .ipasnieks p:hover{
+    cursor: pointer;
+    color: var(--bright-violet);
+}
+
+.modal .pamatInfo{
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    margin-bottom: 1.3rem;
     font-size: 1.2rem;
 }
 

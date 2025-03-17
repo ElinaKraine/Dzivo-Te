@@ -99,4 +99,9 @@ $(document).ready(function () {
 
     fetchMajas("", {}, tekosaKartosana);
   });
+
+  $(document).on("click", ".sludinajums", function () {
+    let majaId = $(this).attr("maja_id");
+    window.location.href = `maja.php?id=${majaId}`;
+  });
 });

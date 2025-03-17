@@ -1,12 +1,12 @@
 <?php
-    $page = "parmums";
-    require "assets/header.php";
+$page = "parmums";
+require "assets/header.php";
 ?>
 
 <section class="parMums">
     <div class="parMumsTeksts">
         <h1>Par mums</h1>
-        <p>Māju Vieta ir ērta platforma mājokļu meklēšanai Latvijā. Mēs piedāvājam plašu māju un dzīvokļu klāstu īrei vai iegādei. Vienkārša navigācija, aktuālie piedāvājumi un noderīgi filtri palīdzēs ātri atrast ideālo mājokli ērtai dzīvošanai vai investīcijām.</p>
+        <p>Dzīvo Te ir ērta platforma mājokļu meklēšanai Latvijā. Mēs piedāvājam plašu māju un dzīvokļu klāstu īrei vai iegādei. Vienkārša navigācija, aktuālie piedāvājumi un noderīgi filtri palīdzēs ātri atrast ideālo mājokli ērtai dzīvošanai vai investīcijām.</p>
     </div>
     <div class="attelas">
         <div class="parMums1">
@@ -28,7 +28,7 @@
             <i class="fa-solid fa-quote-left"></i>
             <div class="teksts">
                 <p>Mūsu mērķis bija piedāvāt risinājumu, kas būtu piemērots dažādām dzīves situācijām, un es lepojos, ka tas mums ir izdevies.</p>
-                <p class="komentarijaIpasnieks">Roberta Henrija <span>Māju Vieta direktors</span></p>
+                <p class="komentarijaIpasnieks">Roberta Henrija <span>Dzīvo Te direktors</span></p>
             </div>
         </div>
     </div>
@@ -45,7 +45,7 @@
 </section>
 
 <section class="lietotajaDarbibas">
-    <h1>Ko lietotājs var darīt mājaslapā <span>Māju Vieta</span>?</h1>
+    <h1>Ko lietotājs var darīt mājaslapā <span>Dzīvo Te</span>?</h1>
     <div class="darbibas">
         <div class="darbiba">
             <h2><i class="fa-solid fa-lock-open"></i> Autorizēti lietotāji var</h2>
@@ -112,5 +112,5 @@
 </section>
 
 <?php
-    require "assets/footer.php";
+require "assets/footer.php";
 ?>
