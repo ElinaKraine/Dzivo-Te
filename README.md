@@ -1,6 +1,7 @@
 # Dzīvo Te
 
-![image](https://github.com/user-attachments/assets/c852e652-18a7-4c00-acb8-ea0154977139)
+![image](https://github.com/user-attachments/assets/5bc667e3-6210-4fdc-bf5a-55a75ef9b05a)
+
 
 Dzīvo Te ir ērta platforma mājokļu meklēšanai Latvijā. Mēs piedāvājam plašu māju un dzīvokļu klāstu īrei vai iegādei. Vienkārša navigācija, aktuālie piedāvājumi un noderīgi filtri palīdzēs ātri atrast ideālo mājokli ērtai dzīvošanai vai investīcijām.
 
