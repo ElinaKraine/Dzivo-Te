@@ -1108,31 +1108,31 @@ footer{
     border-color: var(--bright-violet);
 }
 
-.majasSaturs #majas{
+.majasSaturs #majas, .majasSaturs #majasIret{
     margin-top: 1rem;
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
 }
 
-.majasSaturs #majas .sludinajums{
+.majasSaturs #majas .sludinajums,  .majasSaturs #majasIret .sludinajums{
     width: 30rem;
 }
 
-.majasSaturs #majas .sludinajums img{
+.majasSaturs #majas .sludinajums img,  .majasSaturs #majasIret .sludinajums img{
     width: 100%;
     border-radius: .5rem;
 }
 
-.majasSaturs #majas .sludinajums #adrese{
+.majasSaturs #majas .sludinajums #adrese,  .majasSaturs #majasIret .sludinajums #adrese{
     margin-bottom: 1rem;
 }
 
-.majasSaturs #majas .sludinajums:hover{
+.majasSaturs #majas .sludinajums:hover,  .majasSaturs #majasIret .sludinajums:hover{
     transform: scale(1.02);
 }
 
-.majasSaturs #majas .sludinajums .attela-sirds{
+.majasSaturs #majas .sludinajums .attela-sirds,  .majasSaturs #majasIret .sludinajums .attela-sirds{
     height: auto;
 }
 
@@ -1142,7 +1142,7 @@ footer{
     font-size: 1.2rem;
 }
 
-/* Maja.php: */
+/* maja_pirkt.php: */
 .majaLapa{
     padding: 4rem 15%;
 }
@@ -1254,6 +1254,12 @@ footer{
     gap: .5rem;
     margin-bottom: 1.3rem;
     font-size: 1.2rem;
+}
+
+/* maja_iret.php */
+.cenas{
+    margin-top: 1rem;
+    line-height: 1.5;
 }
 
 /* MajasIresanai.php: */

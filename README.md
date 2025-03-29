@@ -36,7 +36,7 @@ Dzīvo Te ir ērta platforma mājokļu meklēšanai Latvijā. Mēs piedāvājam 
 
 - [x] Sākumlapa
 - [x] Par mums
-- [ ] Mājās
+- [x] Mājās
 - [ ] Dzīvokļi
 - [ ] Saglabātie
 - [ ] Lietotāja konts
@@ -62,7 +62,7 @@ Dzīvo Te ir ērta platforma mājokļu meklēšanai Latvijā. Mēs piedāvājam 
 - [x] Izlogošanās
 - [ ] Mājokļa pievienošana saglabātajam
 - [ ] Mājokļa dzēšana saglabātajam
-- [ ] Izīrēt mājokli
+- [x] Izīrēt mājokli
 - [x] Pieteikties iegādei
 - [ ] Pievienot sludinājumu
 - [ ] Lietotāju konta aplūkošana

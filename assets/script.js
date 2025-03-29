@@ -172,6 +172,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+// Filtras pogas
 function initializeFilterToggle() {
   document.querySelectorAll(".filter-poga").forEach((button) => {
     button.addEventListener("click", function () {
@@ -222,15 +223,20 @@ function parslegtPogasKlases(clickedButton) {
 }
 
 function loadContent(page) {
-  if (currentPage === page) return;
   currentPage = page;
-
   const xhr = new XMLHttpRequest();
   xhr.open("GET", `assets/${page}.php`, true);
   xhr.onload = function () {
     if (this.status === 200) {
       contentContainer.innerHTML = this.responseText;
       initializeFilterToggle();
+
+      if (
+        typeof initMajasAsinhronieSkripti === "function" &&
+        page === "majasPardosanai"
+      ) {
+        initMajasAsinhronieSkripti();
+      }
     } else {
       console.error("Failed to load content");
     }
@@ -241,10 +247,12 @@ function loadContent(page) {
 
 atlasitaPoga.addEventListener("click", function () {
   parslegtPogasKlases(this);
+  currentPage = "";
   loadContent("majasPardosanai");
 });
 
 neAtlasitaPoga.addEventListener("click", function () {
   parslegtPogasKlases(this);
+  currentPage = "";
   loadContent("majasIresanai");
 });

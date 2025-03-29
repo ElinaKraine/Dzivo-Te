@@ -4,14 +4,22 @@ $page = "majas";
 require "assets/header.php";
 require "admin/database/con_db.php";
 
-if (isset($_GET['id'])) {
-    $maja_id = intval($_GET['id']);
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
+    $maja_id = intval($_POST['id']);
+    $no = $_POST['no'];
+    $lidz = $_POST['lidz'];
+    $total = $_POST['total'];
+    $datumsNo = new DateTime($no);
+    $datumsLidz = new DateTime($lidz);
+    $dienas = $datumsNo->diff($datumsLidz)->days + 1;
+    $formattedNo = $datumsNo->format('d.m.Y');
+    $formattedLidz = $datumsLidz->format('d.m.Y');
 
-    $stmt = $savienojums->prepare("SELECT * FROM majuvieta_pirkt 
-                                    INNER JOIN majuvieta_atteli ma ON majuvieta_pirkt.id_atteli = ma.attelu_kopums_id 
-                                    INNER JOIN majuvieta_adrese md ON majuvieta_pirkt.id_adrese = md.adrese_id
-                                    INNER JOIN majuvieta_lietotaji ml ON majuvieta_pirkt.id_ipasnieks = ml.lietotaja_id 
-                                    WHERE pirkt_id = ?");
+    $stmt = $savienojums->prepare("SELECT * FROM majuvieta_iret 
+                                    INNER JOIN majuvieta_atteli ma ON majuvieta_iret.id_atteli = ma.attelu_kopums_id 
+                                    INNER JOIN majuvieta_adrese md ON majuvieta_iret.id_adrese = md.adrese_id
+                                    INNER JOIN majuvieta_lietotaji ml ON majuvieta_iret.id_ipasnieks = ml.lietotaja_id 
+                                    WHERE iret_id = ?");
 
     if (!$stmt) {
         die("Database query failed: " . mysqli_error($savienojums));
@@ -45,11 +53,11 @@ if (isset($_GET['id'])) {
             </div>
             <div class="pamatInfo">
                 <h2><?php echo $sludinajums['iela'] . " " . $sludinajums['majas_numurs']; ?></h2>
-                <h2><?php echo $sludinajums['cena']; ?> €</h2>
+                <h2><?php echo $total; ?> € par <?php echo $dienas; ?> dienam</h2>
                 <?php if (!isset($_SESSION['lietotajaLomaMV'])) { ?>
-                    <a class="btn" href="login.php">Pieteikties iegādei</a>
+                    <a class="btn" href="login.php">Iznomāt</a>
                 <?php } else { ?>
-                    <a class="btn" data-target="#modal-ticket">Pieteikties iegādei</a>
+                    <a class="btn" data-target="#modal-ticket">Iznomāt</a>
                 <?php } ?>
             </div>
             <div class="papildInfo">
@@ -57,12 +65,17 @@ if (isset($_GET['id'])) {
                 <div class="ikoninasArInfo">
                     <p><i class='fa-solid fa-door-open'></i> <?php echo $sludinajums['istabas']; ?></p>
                     <p><i class='fa-solid fa-ruler-combined'></i> <?php echo $sludinajums['platiba']; ?> m<sup>2</sup></p>
-                    <p><i class='fa-solid fa-stairs'></i> <?php echo $sludinajums['stavs_vai_stavi']; ?></p>
+                    <p><i class='fa-solid fa-stairs'></i> <?php echo $sludinajums['stavi_vai_stavs']; ?></p>
                     <p><i class="fa-solid fa-chart-area"></i> <?php echo $sludinajums['zemes_platiba']; ?> m<sup>2</sup></p>
                 </div>
             </div>
             <div class="apraksts">
                 <p><?php echo $sludinajums['apraksts']; ?></p>
+            </div>
+            <div class="cenas">
+                <h2><?php echo $sludinajums['cena_diena']; ?> €/dienā</h2>
+                <h2><?php echo $sludinajums['cena_nedela']; ?> €/nedēļā</h2>
+                <h2><?php echo $sludinajums['cena_menesis']; ?> €/mēnesī</h2>
             </div>
             <?php if (isset($_SESSION['lietotajaLomaMV'])) { ?>
                 <div class="ipasnieks">
@@ -89,15 +102,19 @@ if (isset($_GET['id'])) {
         <div class="modal" id="modal-ticket">
             <div class="modal-box">
                 <div class="close-modal" data-target="#modal-ticket"><i class="fas fa-times"></i></div>
-                <h2 data-i18n="izveidot_jaunu_piet">Pieteikties iegādei</h2>
+                <h2>Iznomāšana</h2>
                 <div class="pamatInfo">
                     <p><i class="fa-solid fa-house"></i> <?php echo $sludinajums['iela'] . " " . $sludinajums['majas_numurs']; ?></p>
-                    <p><i class="fa-solid fa-money-bill-wave"></i> <?php echo $sludinajums['cena']; ?> €</p>
+                    <p><i class="fas fa-calendar"></i> <?php echo $formattedNo; ?> - <?php echo $formattedLidz; ?></p>
+                    <p><i class="fa-solid fa-money-bill-wave"></i> <?php echo $total; ?> € par <?php echo $dienas; ?> dienam</p>
                     <p><i class="fa-solid fa-user"></i> <?php echo $_SESSION['lietotajsMV']; ?></p>
                 </div>
-                <form action="pieteikumi.php" method="POST">
-                    <input type="hidden" name="id_majuvieta_pirkt" value="<?php echo $sludinajums['pirkt_id']; ?>">
-                    <button data-i18n="nosutit_piet" type="submit" name="nosutit" class="btn">Nosūtīt pieteikumu</button>
+                <form action="iziresana.php" method="POST">
+                    <input type="hidden" name="id_majuvieta_iret" value="<?php echo $sludinajums['iret_id']; ?>">
+                    <input type="hidden" name="cena" value="<?php echo $total; ?>">
+                    <input type="hidden" name="registresanasDatums" value="<?php echo $datumsNo->format('Y-m-d'); ?>">
+                    <input type="hidden" name="izrakstisanasDatums" value="<?php echo $datumsLidz->format('Y-m-d'); ?>">
+                    <button type="submit" name="apstiprinat" class="btn">Apstiprināt</button>
                 </form>
             </div>
         </div>

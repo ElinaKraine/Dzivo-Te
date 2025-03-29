@@ -47,10 +47,9 @@
                     </div>
                 </div>
             </div>
-            <button class="mekleteFiltrus" type="submit">Meklēt <i class="fas fa-search"></i></button>
+            <button class="mekleteFiltrusP mekleteFiltrus" type="submit" name="mekletP">Meklēt <i class="fas fa-search"></i></button>
             <a class="btn" id="izdest-filtrus">Izdzēst filtrus <i class="fa-solid fa-trash-can"></i></a>
         </form>
-
     </div>
     </div>
 
@@ -58,7 +57,7 @@
         <div class="lielaKreisaPuse">
             <h2>Mājas pārdošanai</h2>
             <form class="kartosana">
-                <select name="kartosanasOpcijas" id="kartosanasOpcijas">
+                <select name="kartosanasOpcijasP" id="kartosanasOpcijasP">
                     <option value="cena_desc">Kārtot: Cena(Aug - Zem)</option>
                     <option value="cena_asc">Kārtot: Cena(Zem - Aug)</option>
                     <option value="datums_desc" selected>Kārtot: Publicēšanas datums(Jauns - Vecs)</option>
