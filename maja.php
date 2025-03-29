@@ -9,7 +9,8 @@ if (isset($_GET['id'])) {
 
     $stmt = $savienojums->prepare("SELECT * FROM majuvieta_pirkt 
                                     INNER JOIN majuvieta_atteli ma ON majuvieta_pirkt.id_atteli = ma.attelu_kopums_id 
-                                    INNER JOIN majuvieta_adrese md ON majuvieta_pirkt.id_adrese = md.adrese_id 
+                                    INNER JOIN majuvieta_adrese md ON majuvieta_pirkt.id_adrese = md.adrese_id
+                                    INNER JOIN majuvieta_lietotaji ml ON majuvieta_pirkt.id_ipasnieks = ml.lietotaja_id 
                                     WHERE pirkt_id = ?");
 
     if (!$stmt) {

@@ -94,7 +94,7 @@ require "assets/header.php";
     <div class="zina">
         <h2>Sazinieties ar mums!</h2>
         <p>Mēs ticam sadarbībai un novērtējam jūsu ieguldījumu visā procesā. Mēs aicinām klientus aktīvi piedalīties diskusijās, dalīties ar savām idejām, vēlmēm un atsauksmēm.</p>
-        <form>
+        <form action="" method="post">
             <label>Vārds Uzvārds <span>*</span></label>
             <input type="text" name="vardsUzvards" required>
             <label>E-pasta adrese <span>*</span></label>
@@ -102,8 +102,11 @@ require "assets/header.php";
             <label>Tālrunis <span>*</span></label>
             <input type="text" name="zinaTalrunis" required>
             <label>Ziņa <span>*</span></label>
-            <textarea name="" cols="30" rows="10" required></textarea>
-            <button type="submit" class="btn">Sazināties</button>
+            <textarea name="zina" cols="30" rows="10" required></textarea>
+            <button type="submit" name="nosutit" class="btn">Sazināties</button>
+            <?php
+            require "assets/mail.php";
+            ?>
         </form>
     </div>
     <div class="karte">

@@ -831,7 +831,7 @@ footer{
 
 .karte{
     width: 65%;
-    height: 46.5rem;
+    height: 50rem;
 }
 
 .zina{
@@ -866,6 +866,7 @@ footer{
     background: none;
     border: 1px solid white;
     color: white;
+    font-size: 1.1rem;
 }
 
 #sazinaties form textarea{
@@ -885,6 +886,39 @@ footer{
 
 #sazinaties form span{
     color: red;
+}
+
+#pazinojums{
+    position: fixed;
+    z-index: 5;
+    width: 85%;
+    text-align: center;
+    background-color: darkgreen;
+    color: #fff;
+    font-size: 1.5rem;
+    padding: 1.5rem 5%;
+    top: 0;
+    border-radius: .5rem;
+    margin-top: 6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+}
+
+#pazinojums p{
+    animation: blinker 2s linear infinite;
+    margin-bottom: 0;
+}
+
+@keyframes blinker {
+    50%{
+        opacity: 20%;
+    }
+}
+
+#pazinojums i:hover{
+    cursor: pointer;
 }
 
 /* Majas.php: */

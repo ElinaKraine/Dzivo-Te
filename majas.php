@@ -1,6 +1,6 @@
 <?php
-    $page = "majas";
-    require "assets/header.php";
+$page = "majas";
+require "assets/header.php";
 ?>
 
 <div class="galvenieFiltri">
@@ -8,11 +8,11 @@
         <button type="button" name="pirkt" class="atlasits">Pirkt</button>
         <button type="button" name="iret" class="neAtlasits">Īrēt</button>
     </div>
-    
+
     <div id="contentContainer">
     </div>
 </div>
 
 <?php
-    require "assets/footer.php";
+require "assets/footer.php";
 ?>

@@ -1,4 +1,5 @@
 <?php
+session_start();
 $lietotajaLoma = $_SESSION['lietotajaLomaMV'] ?? null;
 ?>
 <!DOCTYPE html>
