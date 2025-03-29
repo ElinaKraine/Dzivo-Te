@@ -1115,24 +1115,24 @@ footer{
     gap: 1rem;
 }
 
-.majasSaturs #majas .sludinajums,  .majasSaturs #majasIret .sludinajums{
+.majasSaturs #majas .sludinajums,  .majasSaturs #majasIret .sludinajums, .kontainerSaglabatie .sludinajums{
     width: 30rem;
 }
 
-.majasSaturs #majas .sludinajums img,  .majasSaturs #majasIret .sludinajums img{
+.majasSaturs #majas .sludinajums img,  .majasSaturs #majasIret .sludinajums img, .kontainerSaglabatie .sludinajums img{
     width: 100%;
     border-radius: .5rem;
 }
 
-.majasSaturs #majas .sludinajums #adrese,  .majasSaturs #majasIret .sludinajums #adrese{
+.majasSaturs #majas .sludinajums #adrese,  .majasSaturs #majasIret .sludinajums #adrese, .kontainerSaglabatie .sludinajums #adrese{
     margin-bottom: 1rem;
 }
 
-.majasSaturs #majas .sludinajums:hover,  .majasSaturs #majasIret .sludinajums:hover{
+.majasSaturs #majas .sludinajums:hover,  .majasSaturs #majasIret .sludinajums:hover, .kontainerSaglabatie .sludinajums:hover{
     transform: scale(1.02);
 }
 
-.majasSaturs #majas .sludinajums .attela-sirds,  .majasSaturs #majasIret .sludinajums .attela-sirds{
+.majasSaturs #majas .sludinajums .attela-sirds,  .majasSaturs #majasIret .sludinajums .attela-sirds, .kontainerSaglabatie .sludinajums .attela-sirds{
     height: auto;
 }
 
@@ -1326,4 +1326,21 @@ footer{
     background-repeat: no-repeat;
     background-size: cover;
     margin-top: 1rem;
+}
+
+/* saglabatie.php */
+.kontainerSaglabatie{
+    margin: 7rem 0 3rem;
+    padding: 0 4%;
+}
+
+.sirdsSarkans i{
+    color: red;
+}
+
+.kontainerSaglabatie .sludinajumi{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 2rem;
 }
