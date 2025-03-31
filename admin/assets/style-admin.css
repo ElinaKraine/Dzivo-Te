@@ -1,0 +1,55 @@
+:root{
+    --light-violet: #D0BDD9;
+    --dark-violet: #23054E;
+    --bright-violet: #7B2CED;
+    --dark-violet-2: #5E486F;
+    --light-gray: #F5F6F7;
+    --dark-gray: #e8e9ea;
+    --dark-gray-2: #938D8D;
+    --border: .1rem solid rgba(0, 0, 0, 10%);
+    --box-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, 10%);
+}
+
+/* header.php */
+.header-admin{
+    box-shadow: none;
+    background: var(--light-violet);
+}
+
+.logo{
+    color: var(--bright-violet);
+}
+
+.sidebar {
+    margin: 0;
+    padding-top: 1rem;
+    width: 200px;
+    background: var(--light-violet);
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    margin-top: 5.1rem;
+}
+
+.sidebar a {
+    display: block;
+    color: black;
+    padding: 16px;
+    text-decoration: none;
+}
+
+.sidebar a.active {
+    background-color: #04AA6D;
+    color: white;
+}
+
+.sidebar a:hover:not(.active) {
+    background-color: var(--dark-violet-2);
+    color: white;
+}
+
+.blakusSidebar {
+    margin-left: 200px;
+    padding: 5.1rem 16px 0;
+    height: 1000px;
+}

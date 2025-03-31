@@ -32,4 +32,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["nosutit"])) {
     }
 }
 
-header("Location: https://kristovskis.lv/3pt2/kraine/Dzivo-Te/maja.php?id=" . $id_majuvieta_pirkt);
+header("Location: https://kristovskis.lv/3pt2/kraine/Dzivo-Te/maja_pirkt.php?id=" . $id_majuvieta_pirkt);
