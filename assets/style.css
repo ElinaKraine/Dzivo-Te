@@ -1289,22 +1289,15 @@ footer{
     align-items: center;
     border: 1px solid var(--dark-violet);
     border-radius: 1.3rem;
-    padding: 1rem 0 1rem 1rem;
+    padding: 1rem;
     gap: .5rem;
-}
-
-.datumi i{
-    font-size: 1rem;
 }
 
 .datumi input{
     font-size: 1rem;
     text-align: center;
     background: none;
-}
-
-.datumi input:focus{
-    background: var(--dark-gray);
+    cursor: pointer;
 }
 
 .datumi p{

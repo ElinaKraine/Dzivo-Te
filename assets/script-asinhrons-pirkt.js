@@ -14,7 +14,7 @@ function initMajasAsinhronieSkripti() {
     }
 
     $.getJSON(
-      "./assets/database/saglabatie_masivs.php",
+      "./assets/database/saglabatie_masivs.php?veids=Pirkt",
       function (saglabatieSludinajumi) {
         $.ajax({
           url: `./assets/database/majas_list.php?${queryParams.toString()}`,
@@ -120,6 +120,7 @@ function initMajasAsinhronieSkripti() {
       method: "POST",
       data: {
         id_sludinajums: sludinajumaId,
+        veids: "Pirkt",
       },
       success: function (response) {
         if (response.success) {
@@ -132,7 +133,11 @@ function initMajasAsinhronieSkripti() {
             poga.addClass("sirdsSarkans");
           }
         } else {
-          alert(response.message || "Darbība neizdevās");
+          if (response.message === "unauthorized") {
+            window.location.href = "./login.php";
+          } else {
+            alert(response.message || "Darbība neizdevās");
+          }
         }
       },
       error: function () {

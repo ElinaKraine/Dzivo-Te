@@ -16,34 +16,31 @@ if (!empty($_GET['meklet'])) {
     $prasibas[] = "md.pilseta LIKE '%$meklet%'";
 }
 
-if (!empty($_GET['minCena'])) {
-    $minCena = (int)$_GET['minCena'];
-    $prasibas[] = "mi.cena_diena >= $minCena";
-}
-if (!empty($_GET['maxCena'])) {
-    $maxCena = (int)$_GET['maxCena'];
-    $prasibas[] = "mi.cena_diena <= $maxCena";
-}
 if (!empty($_GET['minIstabas'])) {
     $minIstabas = (int)$_GET['minIstabas'];
     $prasibas[] = "mi.istabas >= $minIstabas";
 }
+
 if (!empty($_GET['maxIstabas'])) {
     $maxIstabas = (int)$_GET['maxIstabas'];
     $prasibas[] = "mi.istabas <= $maxIstabas";
 }
+
 if (!empty($_GET['minPlatiba'])) {
     $minPlatiba = (int)$_GET['minPlatiba'];
     $prasibas[] = "mi.platiba >= $minPlatiba";
 }
+
 if (!empty($_GET['maxPlatiba'])) {
     $maxPlatiba = (int)$_GET['maxPlatiba'];
     $prasibas[] = "mi.platiba <= $maxPlatiba";
 }
+
 if (!empty($_GET['minStavi'])) {
     $minStavi = (int)$_GET['minStavi'];
     $prasibas[] = "mi.stavi_vai_stavs >= $minStavi";
 }
+
 if (!empty($_GET['maxStavi'])) {
     $maxStavi = (int)$_GET['maxStavi'];
     $prasibas[] = "mi.stavi_vai_stavs <= $maxStavi";

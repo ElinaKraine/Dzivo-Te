@@ -34,7 +34,7 @@ $lietotajaLoma = $_SESSION['lietotajaLomaMV'] ?? null;
         </nav>
 
         <?php if ($lietotajaLoma): ?>
-            <a class="btn" href="./admin/database/logout.php">Log out</a>
+            <a class="btn" href="./admin/database/logout.php">Izlogoties</a>
         <?php else: ?>
             <a class="btn" href="login.php">Ielogoties</a>
         <?php endif; ?>

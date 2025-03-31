@@ -70,10 +70,13 @@
     <div class="labaPuse">
         <form class="iresanasDatumi">
             <div class="datumi">
-                <i class="fa fa-calendar"></i>
-                <input name="no" placeholder="Registresanas datums" onfocus="(this.type='date')" onblur="(this.type='text')" required>
+                <input id="registresanasDatumss" name="no" type="date"
+                    placeholder="Reģistrēšanās datums"
+                    min="<?php echo date('Y-m-d', strtotime('+1 day')); ?>" required>
                 <p>-</p>
-                <input name="lidz" placeholder="Izrakstisanas datums" onfocus="(this.type='date')" onblur="(this.type='text')" required>
+                <input id="izrakstisanasDatumss" name="lidz" type="date"
+                    placeholder="Izrakstīšanās datums"
+                    min="<?php echo date('Y-m-d', strtotime('+2 day')); ?>" required>
             </div>
             <button type="submit" class="btn" name="atlasitDatumus">Atlasiet</button>
         </form>

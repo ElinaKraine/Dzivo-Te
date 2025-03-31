@@ -3,21 +3,23 @@ session_start();
 header('Content-Type: application/json');
 
 require '../../admin/database/con_db.php';
-if (isset($_POST["id_sludinajums"])) {
+
+if (isset($_POST["id_sludinajums"], $_POST["veids"])) {
     if (!isset($_SESSION['lietotajaIdDt'])) {
-        echo json_encode(["success" => false, "message" => "Lietotājs nav pieslēdzies"]);
+        echo json_encode(["success" => false, "message" => "unauthorized"]);
         exit;
     }
 
     $lietotaja_id = $_SESSION['lietotajaIdDt'];
     $id_sludinajums = intval($_POST['id_sludinajums']);
+    $sludinajuma_veids = $_POST['veids'];
 
     $parbaudijums = $savienojums->prepare("
         SELECT COUNT(*) 
         FROM dzivote_saglabatie 
-        WHERE id_lietotajs = ? AND id_sludinajums = ?
+        WHERE id_lietotajs = ? AND id_sludinajums = ? AND sludinajuma_veids = ?
     ");
-    $parbaudijums->bind_param("ii", $lietotaja_id, $id_sludinajums);
+    $parbaudijums->bind_param("iis", $lietotaja_id, $id_sludinajums, $sludinajuma_veids);
     $parbaudijums->execute();
     $parbaudijums->bind_result($count);
     $parbaudijums->fetch();
@@ -29,11 +31,10 @@ if (isset($_POST["id_sludinajums"])) {
     }
 
     $vaicajums = $savienojums->prepare("
-        INSERT INTO dzivote_saglabatie (id_lietotajs, id_sludinajums) 
-        VALUES (?, ?)
+        INSERT INTO dzivote_saglabatie (id_lietotajs, id_sludinajums, sludinajuma_veids) 
+        VALUES (?, ?, ?)
     ");
-
-    $vaicajums->bind_param("ii", $lietotaja_id, $id_sludinajums);
+    $vaicajums->bind_param("iis", $lietotaja_id, $id_sludinajums, $sludinajuma_veids);
 
     if ($vaicajums->execute()) {
         echo json_encode(["success" => true, "message" => "Saglabāts"]);
