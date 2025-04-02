@@ -10,10 +10,10 @@ require "assets/header.php";
     </div>
     <div class="attelas">
         <div class="parMums1">
-            <img src="images/parMums1.png">
+            <img src="images/parMums1.jpg">
         </div>
         <div class="parMums2">
-            <img src="images/parMums2.png">
+            <img src="images/parMums2.jpg">
         </div>
         <div class="parMums3">
             <img src="images/parMums3.png">

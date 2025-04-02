@@ -13,43 +13,68 @@
 /* header.php */
 .header-admin{
     box-shadow: none;
+    background: var(--dark-violet-2);
+    height: 7rem;
+    color: white;
+    padding: 1rem 3rem;
+}
+
+.header-admin .btn{
+    background: white;
+    color: black;
+}
+
+.header-admin .btn:hover{
     background: var(--light-violet);
 }
 
-.logo{
-    color: var(--bright-violet);
+.header-admin .logo{
+    color: white;
 }
 
-.sidebar {
-    margin: 0;
-    padding-top: 1rem;
-    width: 200px;
-    background: var(--light-violet);
+.sidebar{
+    width: 21rem;
+    background: var(--dark-violet-2);
     position: fixed;
     height: 100%;
     overflow: auto;
-    margin-top: 5.1rem;
+    margin-top: 7rem;
+    padding-top: 2rem;
 }
 
-.sidebar a {
+.sidebar a{
     display: block;
-    color: black;
-    padding: 16px;
+    color: white;
+    padding: 1rem;
     text-decoration: none;
+    font-size: 1.1rem;
+    padding: 1rem 3rem;
+    position: relative;
+    margin: 1rem 0;
 }
 
-.sidebar a.active {
-    background-color: #04AA6D;
-    color: white;
+.sidebar a:hover {
+    font-weight: bold;
+    transition: font-weight 0.3s ease;
 }
 
-.sidebar a:hover:not(.active) {
-    background-color: var(--dark-violet-2);
-    color: white;
+.sidebar .current{
+    font-weight: bold;
+    font-size: 1.3rem;
+    border: 1px solid white;
+    border-radius: 1rem;
+    text-align: center;
+    margin: 0 0.5rem;
 }
 
-.blakusSidebar {
-    margin-left: 200px;
-    padding: 5.1rem 16px 0;
-    height: 1000px;
+.blakusSidebar{
+    padding: 11rem 0 0 24rem;
+    height: 100vh;
+}
+
+/* Tabulas */
+.lietotaji table{
+    background: var(--light-gray);
+    border-radius: 1rem;
+    padding: 1rem;
 }

@@ -21,8 +21,8 @@ if (!isset($_SESSION['lietotajaLomaMV']) || ($_SESSION['lietotajaLomaMV'] !== 'A
 
 <body>
     <header class="header-admin">
-        <a href="./" class="logo"><img src="../images/logo.png"> Dzīvo Te</a>
-        <a class="btn" href="./database/logout.php">Izlogoties</a>
+        <a href="./" class="logo"><img src="../images/logo_light.png"> Dzīvo Te - Administrācija</a>
+        <a class="btn" href="./database/logout.php"><i class="fa-solid fa-power-off"></i> Izlogoties</a>
     </header>
     <div class="sidebar">
         <a href="./" class="<?php echo ($page == 'sakums' ? 'current' : '') ?>">Sākumlapa</a>

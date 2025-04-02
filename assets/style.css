@@ -74,6 +74,7 @@ header{
     justify-content: center;
     align-items: center;
     gap: 1rem;
+    color: black;
 }
 
 .logo img{
@@ -400,49 +401,60 @@ header{
 
 /* Footer: */
 footer{
-    padding: 2rem 7%;
+    padding: 4rem 7% 3rem;
     background: black;
     color: white;
 }
 
-#lielaKasteFooter{
+.lielaKasteFooter{
     display: flex;
     justify-content: space-evenly;
     gap: 2rem;
 }
 
-#visparigaInfo{
+.visparigaInfo{
+    display: flex;
+    gap: 3rem;
+    .logo{
+        align-items: baseline;
+        img{
+            width: 7rem;
+        }
+    }
+}
+
+.visparigsTekst{
     text-align: left;
 }
 
-#visparigaInfo h1{
+.visparigaInfo h1{
     color: var(--light-violet);
     font-size: 2.4rem;
     margin-bottom: 1rem;
 }
 
-#visparigaInfo p{
+.visparigaInfo p{
     font-size: 1.3rem;
 }
 
-#kontakti{
+.kontakti{
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 1rem;
 }
 
-#kontakti ul{
+.kontakti ul{
     line-height: 2;
     list-style: none;
 }
 
-#kontakti li:hover{
+.kontakti li:hover{
     cursor: pointer;
     color: var(--bright-violet);
 }
 
-#saraksts{
+.saraksts{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -451,12 +463,12 @@ footer{
     color: var(--light-violet);
 }
 
-#saraksts i:hover{
+.saraksts i:hover{
     cursor: pointer;
     color: white;
 }
 
-#tiesibas{
+.tiesibas{
     margin-top: 2rem;
     padding: 1rem;
     border-top: 1px solid var(--light-violet);

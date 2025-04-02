@@ -4,7 +4,7 @@
 
 Dzīvo Te ir ērta platforma mājokļu meklēšanai Latvijā. Mēs piedāvājam plašu māju un dzīvokļu klāstu īrei vai iegādei. Vienkārša navigācija, aktuālie piedāvājumi un noderīgi filtri palīdzēs ātri atrast ideālo mājokli ērtai dzīvošanai vai investīcijām.
 
-### [Saite uz Māju Vieta](https://kristovskis.lv/3pt2/kraine/Maju-Vieta/)
+### [Saite uz Dzīvo Te](https://kristovskis.lv/3pt2/kraine/Dzivo-Te/)
 
 ### [Figma dizains](https://www.figma.com/design/g97rlAnhjLxV73usrF00lf/M%C4%81juVieta?node-id=0-1&t=PaySlNA2Bwvnrtxg-1)
 

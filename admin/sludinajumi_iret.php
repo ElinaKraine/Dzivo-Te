@@ -79,6 +79,7 @@ require "database/con_db.php";
     }
     ?>
 </div>
-<?php
-require "assets/footer.php";
-?>
+</div>
+</body>
+
+</html>

@@ -66,13 +66,13 @@ if (isset($_SESSION['lietotajaIdDt'])) {
     </div>
     <div class="attelas">
         <div class="pirmaAttela">
-            <img src="images/parMumsAttela1.png">
+            <img src="images/parMumsAttela1.jpg">
         </div>
         <div class="otraAttela">
-            <img src="images/parMumsAttela2.png">
+            <img src="images/parMumsAttela2.jpg">
         </div>
         <div class="tresaAttela">
-            <img src="images/parMumsAttela3.png">
+            <img src="images/parMumsAttela3.jpg">
         </div>
     </div>
 </section>
@@ -130,19 +130,19 @@ if (isset($_SESSION['lietotajaIdDt'])) {
             <img src="images/pirkt.png">
             <h3>Pirkt mājokli</h3>
             <p>Mājaslapā ir pieejami vairāk nekā 1 miljons+ pārdodamo māju, tāpēc Dzīvo Te var Jums atrast māju, kuru jūs vēlēsieties saukt par savām mājām.</p>
-            <a href="pirkt.php" class="btn">Mājās</a>
+            <a href="majas.php" class="btn">Mājās</a>
         </div>
         <div class="mazaKaste">
             <img src="images/iret.png">
             <h3>Īrēt mājokli</h3>
             <p>Izmantojot vairāk nekā 35 filtrus un pielāgotu atslēgvārdu meklēšanu, Dzīvo Te var palīdzēt Jums viegli atrast māju vai dzīvokli īrei, kas Jums patiks.</p>
-            <a href="iret.php" class="btn">Dzīvokli</a>
+            <a href="dzivokli.php" class="btn">Dzīvokli</a>
         </div>
         <div class="mazaKaste">
             <img src="images/pardot.png">
             <h3>Pievienot savu sludinājumu</h3>
             <p id="tresaisTeksts">Jūs varat ātri un ērti piedāvāt savu mājokli pārdošanai vai īrei. Aizpildiet vienkāršu veidlapu, pievienojiet fotogrāfijas un svarīgu informāciju, un Jūsu sludinājums būs pieejams tūkstošiem lietotāju.</p>
-            <a href="pievienot.php" class="btn">Pievienot sludinājumu</a>
+            <a href="login.php" class="btn">Pievienot sludinājumu</a>
         </div>
     </div>
 </section>

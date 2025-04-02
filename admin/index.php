@@ -2,6 +2,7 @@
 $page = "sakums";
 require "assets/header.php";
 ?>
-<?php
-require "assets/footer.php";
-?>
+</div>
+</body>
+
+</html>
