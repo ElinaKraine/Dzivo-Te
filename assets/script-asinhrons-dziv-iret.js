@@ -35,14 +35,19 @@ $(document).ready(function () {
     return "dienām";
   }
 
-  function fetchIresanasMajas(
+  function fetchIresanasDzivokli(
     meklet = "",
     filtri = {},
     sortBy = "datums_desc",
     no = "",
     lidz = ""
   ) {
-    let queryParams = new URLSearchParams({ meklet, sort: sortBy, no, lidz });
+    let queryParams = new URLSearchParams({
+      meklet,
+      sort: sortBy,
+      noDziv: no,
+      lidzDziv: lidz,
+    });
 
     for (let key in filtri) {
       if (filtri[key]) {
@@ -54,23 +59,23 @@ $(document).ready(function () {
       "./assets/database/saglabatie_masivs.php?veids=Iret",
       function (saglabatieSludinajumi) {
         $.ajax({
-          url: `./assets/database/pieejamie_majas_list.php?${queryParams.toString()}`,
+          url: `./assets/database/pieejami_dzivokli_list.php?${queryParams.toString()}`,
           type: "GET",
           success: function (response) {
-            const majas = JSON.parse(response);
+            const dzivokli = JSON.parse(response);
             let template = "";
 
             const minCena = parseFloat(filtri.minCena) || 0;
             const maxCena = parseFloat(filtri.maxCena) || Infinity;
 
-            if (majas.length > 0) {
-              majas.forEach((maja) => {
+            if (dzivokli.length > 0) {
+              dzivokli.forEach((dzivoklis) => {
                 const galaCena = galigaCena(
                   no,
                   lidz,
-                  parseFloat(maja.cena_diena),
-                  parseFloat(maja.cena_nedela),
-                  parseFloat(maja.cena_menesis)
+                  parseFloat(dzivoklis.cena_diena),
+                  parseFloat(dzivoklis.cena_nedela),
+                  parseFloat(dzivoklis.cena_menesis)
                 );
 
                 if (galaCena < minCena || galaCena > maxCena) return;
@@ -78,52 +83,56 @@ $(document).ready(function () {
                 const parDienas = dienasSkaitsFunkcija(no, lidz);
 
                 const irSaglabats = saglabatieSludinajumi.includes(
-                  parseInt(maja.id)
+                  parseInt(dzivoklis.id)
                 );
                 const sirdsKlase = irSaglabats ? "fa-solid" : "fa-regular";
                 const sirdsKlase2 = irSaglabats ? "sirdsSarkans" : "";
 
                 template += `
-                  <div class='sludinajums sludinajumsIresanai' 
-                    maja_id="${maja.id}"
-                    data-cena_diena="${maja.cena_diena}" 
-                    data-cena_nedela="${maja.cena_nedela}" 
-                    data-cena_menesis="${maja.cena_menesis}"
-                  >
-                    <div class='attela-sirds'>
-                      <img src="data:image/jpeg;base64,${maja.pirma_attela}" />
-                      <a class='sirds saglabatSludinajumu ${sirdsKlase2}' data-id="${
-                  maja.id
+                    <div class='sludinajums sludinajumsIresanai' 
+                      dzivoklis_id="${dzivoklis.id}"
+                      data-cena_diena="${dzivoklis.cena_diena}" 
+                      data-cena_nedela="${dzivoklis.cena_nedela}" 
+                      data-cena_menesis="${dzivoklis.cena_menesis}"
+                    >
+                      <div class='attela-sirds'>
+                        <img src="data:image/jpeg;base64,${
+                          dzivoklis.pirma_attela
+                        }" />
+                        <a class='sirds saglabatSludinajumu ${sirdsKlase2}' data-id="${
+                  dzivoklis.id
                 }">
-                        <i class='${sirdsKlase} fa-heart'></i>
-                      </a>
-                    </div>
-                    <p id='cena'>${galaCena} € par ${parDienas} ${getDienasPareizaForma(
+                          <i class='${sirdsKlase} fa-heart'></i>
+                        </a>
+                      </div>
+                      <p id='cena'>${galaCena} € par ${parDienas} ${getDienasPareizaForma(
                   parDienas
                 )}</p>
-                    <div id='papildInfo'>
-                      <p><i class='fa-solid fa-door-open'></i>${
-                        maja.istabas
-                      }</p>
-                      <p><i class='fa-solid fa-ruler-combined'></i> ${
-                        maja.platiba
-                      } m<sup>2</sup></p>
-                      <p><i class='fa-solid fa-stairs'></i> ${maja.stavi}</p>
+                      <div id='papildInfo'>
+                        <p><i class='fa-solid fa-door-open'></i>${
+                          dzivoklis.istabas
+                        }</p>
+                        <p><i class='fa-solid fa-ruler-combined'></i> ${
+                          dzivoklis.platiba
+                        } m<sup>2</sup></p>
+                        <p><i class='fa-solid fa-stairs'></i> ${
+                          dzivoklis.stavi
+                        }</p>
+                      </div>
+                      <p id='adrese'>${dzivoklis.pilseta}, ${dzivoklis.iela} ${
+                  dzivoklis.majas_numurs
+                }/${dzivoklis.dzivokla_numurs}</p>
                     </div>
-                    <p id='adrese'>${maja.pilseta}, ${maja.iela} ${
-                  maja.majas_numurs
-                }</p>
-                  </div>
-                `;
+                  `;
               });
 
-              $(".majasSaturs.iresanasBack").removeClass("iresanasBack");
+              $(".dzivokliSaturs.iresanasBack").removeClass("iresanasBack");
             } else {
               template =
                 "<p class='navRezultatus'>Nav pieejamu mājokļu izvēlētajās dienās.</p>";
             }
 
-            $("#majasIret").html(template);
+            $("#dzivokliIret").html(template);
           },
           error: function () {
             alert("Kļūda ielādējot pieejamās mājas.");
@@ -133,11 +142,11 @@ $(document).ready(function () {
     );
   }
 
-  $(document).on("submit", ".iresanasDatumi", function (e) {
+  $(document).on("submit", ".iresanasDatumiDziv", function (e) {
     e.preventDefault();
 
-    const no = $("input[name='no']").val();
-    const lidz = $("input[name='lidz']").val();
+    const no = $("input[name='noDziv']").val();
+    const lidz = $("input[name='lidzDziv']").val();
 
     if (!no || !lidz) {
       alert("Lūdzu, ievadiet abus datumus!");
@@ -168,10 +177,10 @@ $(document).ready(function () {
 
     ievaditiDatumi = true;
     tekosaMeklesana = $("#meklet-lauks").val();
-    fetchIresanasMajas(tekosaMeklesana, {}, tekosaKartosana, no, lidz);
+    fetchIresanasDzivokli(tekosaMeklesana, {}, tekosaKartosana, no, lidz);
   });
 
-  $(document).on("click", ".mekleteFiltrusI", function (e) {
+  $(document).on("click", ".mekleteFiltrusID", function (e) {
     e.preventDefault();
 
     if (!ievaditiDatumi) {
@@ -179,8 +188,8 @@ $(document).ready(function () {
       return;
     }
 
-    const no = $("input[name='no']").val();
-    const lidz = $("input[name='lidz']").val();
+    const no = $("input[name='noDziv']").val();
+    const lidz = $("input[name='lidzDziv']").val();
     tekosaMeklesana = $("#meklet-lauks").val();
 
     let filtri = {
@@ -194,18 +203,18 @@ $(document).ready(function () {
       maxStavi: $("input[name='maksimumStavus']").val(),
     };
 
-    fetchIresanasMajas(tekosaMeklesana, filtri, tekosaKartosana, no, lidz);
+    fetchIresanasDzivokli(tekosaMeklesana, filtri, tekosaKartosana, no, lidz);
   });
 
-  $(document).on("change", "#kartosanasOpcijasI", function () {
+  $(document).on("change", "#kartosanasOpcijasID", function () {
     if (!ievaditiDatumi) {
       alert("Vispirms ievadiet datumus!");
       return;
     }
 
     tekosaKartosana = $(this).val();
-    const no = $("input[name='no']").val();
-    const lidz = $("input[name='lidz']").val();
+    const no = $("input[name='noDziv']").val();
+    const lidz = $("input[name='lidzDziv']").val();
 
     let filtri = {
       minCena: $("input[name='minimalaCena']").val(),
@@ -218,10 +227,10 @@ $(document).ready(function () {
       maxStavi: $("input[name='maksimumStavus']").val(),
     };
 
-    fetchIresanasMajas(tekosaMeklesana, filtri, tekosaKartosana, no, lidz);
+    fetchIresanasDzivokli(tekosaMeklesana, filtri, tekosaKartosana, no, lidz);
   });
 
-  $(document).on("click", "#izdest-filtrus-majas-iret", function (e) {
+  $(document).on("click", "#izdest-filtrus-dzivokli-iret", function (e) {
     e.preventDefault();
 
     $("#meklet-lauks").val("");
@@ -242,18 +251,18 @@ $(document).ready(function () {
       return;
     }
 
-    const no = $("input[name='no']").val();
-    const lidz = $("input[name='lidz']").val();
+    const no = $("input[name='noDziv']").val();
+    const lidz = $("input[name='lidzDziv']").val();
 
-    fetchIresanasMajas("", {}, tekosaKartosana, no, lidz);
+    fetchIresanasDzivokli("", {}, tekosaKartosana, no, lidz);
   });
 
-  function izveidotUnNosutitFormu(majaId, no, lidz, galaCena) {
+  function izveidotUnNosutitFormu(dzivoklisId, no, lidz, galaCena) {
     const forma = document.createElement("form");
     forma.method = "POST";
-    forma.action = "maja_iret.php";
+    forma.action = "dzivoklis_iret.php";
 
-    const lauki = { id: majaId, no: no, lidz: lidz, total: galaCena };
+    const lauki = { id: dzivoklisId, no: no, lidz: lidz, total: galaCena };
 
     for (let key in lauki) {
       const input = document.createElement("input");
@@ -268,9 +277,9 @@ $(document).ready(function () {
   }
 
   $(document).on("click", ".sludinajumsIresanai", function () {
-    let majaId = $(this).attr("maja_id");
-    const no = $("input[name='no']").val();
-    const lidz = $("input[name='lidz']").val();
+    let dzivoklisId = $(this).attr("dzivoklis_id");
+    const no = $("input[name='noDziv']").val();
+    const lidz = $("input[name='lidzDziv']").val();
 
     const cena_diena = parseFloat($(this).attr("data-cena_diena"));
     const cena_nedela = parseFloat($(this).attr("data-cena_nedela"));
@@ -283,7 +292,7 @@ $(document).ready(function () {
       cena_nedela,
       cena_menesis
     );
-    izveidotUnNosutitFormu(majaId, no, lidz, galaCena);
+    izveidotUnNosutitFormu(dzivoklisId, no, lidz, galaCena);
   });
 
   $(document).on("click", ".saglabatSludinajumu", function (e) {

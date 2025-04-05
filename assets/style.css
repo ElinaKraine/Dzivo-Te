@@ -961,17 +961,17 @@ footer{
     display: flex;
 }
 
-.atlasits{
+.atlasits, .atlasitsDziv{
     border-radius: 1.3rem;
     border: 1px solid var(--dark-violet);
     background: white;
 }
 
-.neAtlasits{
+.neAtlasits, .neAtlasitsDziv{
     background: none;
 }
 
-.neAtlasits:hover{
+.neAtlasits:hover, .neAtlasitsDziv:hover{
     background: var(--dark-gray);
 }
 
@@ -1011,7 +1011,7 @@ footer{
     background: var(--dark-violet-2);
 }
 
-#izdest-filtrus{
+.izdest-filtrus{
     font-size: 1rem;
     background: darkred;
     color: white;
@@ -1019,7 +1019,7 @@ footer{
     padding: 1rem 1.2rem;
 }
 
-#izdest-filtrus:hover{
+.izdest-filtrus:hover{
     background: rgb(76, 0, 0);
 }
 
@@ -1086,7 +1086,7 @@ footer{
     border: 1px solid var(--dark-violet);
 }
 
-.majasSaturs{
+.majasSaturs, .dzivokliSaturs{
     display: flex;
     width: 100%;
 }
@@ -1104,11 +1104,11 @@ footer{
     font-weight: 400;
 }
 
-.kartosana{
+.kartosana, .kartosanaPD{
     margin-top: 1.2rem;
 }
 
-.kartosana select{
+.kartosana select, .kartosanaPD select{
     padding: .5rem 0;
     border-radius: .5rem;
     font-size: 1.1rem;
@@ -1116,35 +1116,35 @@ footer{
     border: 1px solid white;
 }
 
-.kartosana select:focus{
+.kartosana select:focus, .kartosanaPD select:focus{
     border-color: var(--bright-violet);
 }
 
-.majasSaturs #majas, .majasSaturs #majasIret{
+.majasSaturs #majas, .majasSaturs #majasIret, .dzivokliSaturs #dzivokli, .dzivokliSaturs #dzivokliIret{
     margin-top: 1rem;
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
 }
 
-.majasSaturs #majas .sludinajums,  .majasSaturs #majasIret .sludinajums, .kontainerSaglabatie .sludinajums{
+.majasSaturs .sludinajums, .kontainerSaglabatie .sludinajums, .dzivokliSaturs .sludinajums{
     width: 30rem;
 }
 
-.majasSaturs #majas .sludinajums img,  .majasSaturs #majasIret .sludinajums img, .kontainerSaglabatie .sludinajums img{
+.majasSaturs .sludinajums img, .kontainerSaglabatie .sludinajums img, .dzivokliSaturs .sludinajums img{
     width: 100%;
     border-radius: .5rem;
 }
 
-.majasSaturs #majas .sludinajums #adrese,  .majasSaturs #majasIret .sludinajums #adrese, .kontainerSaglabatie .sludinajums #adrese{
+.majasSaturs .sludinajums #adrese, .kontainerSaglabatie .sludinajums #adrese, .dzivokliSaturs .sludinajums #adrese{
     margin-bottom: 1rem;
 }
 
-.majasSaturs #majas .sludinajums:hover,  .majasSaturs #majasIret .sludinajums:hover, .kontainerSaglabatie .sludinajums:hover{
+.majasSaturs .sludinajums:hover, .kontainerSaglabatie .sludinajums:hover, .dzivokliSaturs .sludinajums:hover{
     transform: scale(1.02);
 }
 
-.majasSaturs #majas .sludinajums .attela-sirds,  .majasSaturs #majasIret .sludinajums .attela-sirds, .kontainerSaglabatie .sludinajums .attela-sirds{
+.majasSaturs .sludinajums .attela-sirds, .kontainerSaglabatie .sludinajums .attela-sirds, .dzivokliSaturs .sludinajums .attela-sirds{
     height: auto;
 }
 
@@ -1289,7 +1289,7 @@ footer{
     width: 100%;
 }
 
-.labaPuse .iresanasDatumi{
+.labaPuse .iresanasDatumi, .iresanasDatumiDziv{
     display: flex;
     padding-left: 15%;
     gap: 1rem;
@@ -1316,13 +1316,13 @@ footer{
     font-size: 1.1rem;
 }
 
-.iresanasDatumi button{
+.iresanasDatumi button, .iresanasDatumiDziv button{
     background: var(--dark-violet-2);
     font-size: 1rem;
     border-radius: 1.3rem;
 }
 
-.iresanasDatumi button:hover{
+.iresanasDatumi button:hover, .iresanasDatumiDziv button:hover{
     background: var(--dark-violet);
 }
 

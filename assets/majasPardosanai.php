@@ -1,7 +1,7 @@
     <div class="filtriKaste">
         <form class="filtri">
             <div class="meklesana">
-                <input type="text" placeholder="Meklēt pilsētu" id="meklet-lauks" name="meklet-lauks">
+                <input type="text" placeholder="Meklēt pilsētu, ielu" id="meklet-lauks" name="meklet-lauks">
             </div>
             <div class="kaste">
                 <button type="button" name="cenaPoga" class="filter-poga">Cena <i class="fa-solid fa-chevron-down"></i></button>
@@ -48,7 +48,7 @@
                 </div>
             </div>
             <button class="mekleteFiltrusP mekleteFiltrus" type="submit" name="mekletP">Meklēt <i class="fas fa-search"></i></button>
-            <a class="btn" id="izdest-filtrus">Izdzēst filtrus <i class="fa-solid fa-trash-can"></i></a>
+            <a class="btn izdest-filtrus" id="izdest-filtrus-majas-pirkt">Izdzēst filtrus <i class="fa-solid fa-trash-can"></i></a>
         </form>
     </div>
     </div>

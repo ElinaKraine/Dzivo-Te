@@ -10,7 +10,6 @@ require "assets/header.php";
     </div>
 
     <?php
-    // получаем список сохранённых ID
     $saglabatieId = [];
     if (isset($_SESSION['lietotajaIdDt'])) {
         require_once "admin/database/con_db.php";

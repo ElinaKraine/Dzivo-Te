@@ -37,9 +37,9 @@
             </div>
         </div>
         <div class="kaste">
-            <button type="button" name="staviPoga" class="filter-poga">Stāvi <i class="fa-solid fa-chevron-down"></i></button>
+            <button type="button" name="staviPoga" class="filter-poga">Stāvs <i class="fa-solid fa-chevron-down"></i></button>
             <div class="staviDiapozons">
-                <p>Stāvus skaits</p>
+                <p>Stāvs</p>
                 <div class="pdiapozons">
                     <input type="number" name="minimumStavus" min="1" placeholder="No">
                     <p>-</p>
@@ -47,17 +47,17 @@
                 </div>
             </div>
         </div>
-        <button class="mekleteFiltrusI mekleteFiltrus" type="submit" name="mekletI">Meklēt <i class="fas fa-search"></i></button>
-        <a class="btn izdest-filtrus" id="izdest-filtrus-majas-iret">Izdzēst filtrus <i class="fa-solid fa-trash-can"></i></a>
+        <button class="mekleteFiltrusID mekleteFiltrus" type="submit" name="mekletID">Meklēt <i class="fas fa-search"></i></button>
+        <a class="btn izdest-filtrus" id="izdest-filtrus-dzivokli-iret">Izdzēst filtrus <i class="fa-solid fa-trash-can"></i></a>
     </form>
 </div>
 </div>
 
 <div class="iresanasLapa">
     <div class="kreisaPuse">
-        <h2>Mājas īrešanai</h2>
+        <h2>Dzīvokļi īrešanai</h2>
         <form class="kartosana">
-            <select name="kartosanasOpcijasI" id="kartosanasOpcijasI">
+            <select name="kartosanasOpcijasID" id="kartosanasOpcijasID">
                 <option value="cena_desc">Kārtot: Cena(Aug - Zem)</option>
                 <option value="cena_asc">Kārtot: Cena(Zem - Aug)</option>
                 <option value="datums_desc" selected>Kārtot: Publicēšanas datums(Jauns - Vecs)</option>
@@ -68,23 +68,23 @@
         </form>
     </div>
     <div class="labaPuse">
-        <form class="iresanasDatumi">
+        <form class="iresanasDatumiDziv">
             <div class="datumi">
-                <input id="registresanasDatumss" name="no" type="date"
+                <input id="registresanasDatumssDziv" name="noDziv" type="date"
                     placeholder="Reģistrēšanās datums"
                     min="<?php echo date('Y-m-d', strtotime('+1 day')); ?>" required>
                 <p>-</p>
-                <input id="izrakstisanasDatumss" name="lidz" type="date"
+                <input id="izrakstisanasDatumssDziv" name="lidzDziv" type="date"
                     placeholder="Izrakstīšanās datums"
                     min="<?php echo date('Y-m-d', strtotime('+2 day')); ?>" required>
             </div>
-            <button type="submit" class="btn" name="atlasitDatumus">Atlasiet</button>
+            <button type="submit" class="btn" name="atlasitDatumusDziv">Atlasiet</button>
         </form>
     </div>
 </div>
-<div class="majasSaturs iresanasBack">
+<div class="dzivokliSaturs iresanasBack">
     <div class="lielaKreisaPuse">
-        <div class="sludinajumasKartinas" id="majasIret">
+        <div class="sludinajumasKartinas" id="dzivokliIret">
 
         </div>
     </div>

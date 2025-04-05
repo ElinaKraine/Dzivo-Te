@@ -164,12 +164,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   initializeFilterToggle();
-
-  if (atlasitaPoga.classList.contains("atlasits")) {
-    loadContent("majasPardosanai");
-  } else {
-    loadContent("majasIresanai");
-  }
 });
 
 // Filtras pogas
@@ -206,7 +200,7 @@ function initializeFilterToggle() {
   });
 }
 
-// Pirk un Iret pogas:
+// Pirk un Iret pogas Mājam:
 const atlasitaPoga = document.querySelector(".atlasits");
 const neAtlasitaPoga = document.querySelector(".neAtlasits");
 const contentContainer = document.getElementById("contentContainer");
@@ -245,14 +239,106 @@ function loadContent(page) {
   xhr.send();
 }
 
-atlasitaPoga.addEventListener("click", function () {
-  parslegtPogasKlases(this);
-  currentPage = "";
-  loadContent("majasPardosanai");
-});
+if (atlasitaPoga && neAtlasitaPoga && contentContainer) {
+  atlasitaPoga.addEventListener("click", function () {
+    parslegtPogasKlases(this);
+    currentPage = "";
+    loadContent("majasPardosanai");
+  });
 
-neAtlasitaPoga.addEventListener("click", function () {
-  parslegtPogasKlases(this);
-  currentPage = "";
-  loadContent("majasIresanai");
-});
+  neAtlasitaPoga.addEventListener("click", function () {
+    parslegtPogasKlases(this);
+    currentPage = "";
+    loadContent("majasIresanai");
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    if (atlasitaPoga.classList.contains("atlasits")) {
+      loadContent("majasPardosanai");
+    } else {
+      loadContent("majasIresanai");
+    }
+  });
+}
+
+// Pirk un Iret pogas Dzīvokļiem:
+const atlasitaPogaDziv = document.querySelector(".atlasitsDziv");
+const neAtlasitaPogaDziv = document.querySelector(".neAtlasitsDziv");
+const contentContainerDzivokli = document.getElementById(
+  "contentContainerDzivokli"
+);
+let currentPageDziv = "";
+
+function parslegtPogasKlasesDzivokli(clickedButton) {
+  atlasitaPogaDziv.classList.toggle(
+    "atlasitsDziv",
+    clickedButton === atlasitaPogaDziv
+  );
+  atlasitaPogaDziv.classList.toggle(
+    "neAtlasitsDziv",
+    clickedButton !== atlasitaPogaDziv
+  );
+  neAtlasitaPogaDziv.classList.toggle(
+    "atlasitsDziv",
+    clickedButton === neAtlasitaPogaDziv
+  );
+  neAtlasitaPogaDziv.classList.toggle(
+    "neAtlasitsDziv",
+    clickedButton !== neAtlasitaPogaDziv
+  );
+}
+
+function loadContentDziv(page) {
+  currentPageDziv = page;
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", `assets/${page}.php`, true);
+  xhr.onload = function () {
+    if (this.status === 200) {
+      contentContainerDzivokli.innerHTML = this.responseText;
+      initializeFilterToggle();
+
+      if (page === "dzivokliPardosanai") {
+        const script = document.createElement("script");
+        script.src = "assets/script-asinhrons-dziv-pirkt.js";
+        script.onload = function () {
+          if (typeof initDzivokliAsinhronieSkripti === "function") {
+            initDzivokliAsinhronieSkripti();
+          }
+        };
+        document.body.appendChild(script);
+      }
+
+      if (page === "dzivokliIresanai") {
+        const script = document.createElement("script");
+        script.src = "assets/script-asinhrons-dziv-iret.js";
+        document.body.appendChild(script);
+      }
+    } else {
+      console.error("Failed to load content");
+    }
+  };
+  contentContainerDzivokli.innerHTML = "";
+  xhr.send();
+}
+
+if (atlasitaPogaDziv && neAtlasitaPogaDziv && contentContainerDzivokli) {
+  atlasitaPogaDziv.addEventListener("click", function () {
+    parslegtPogasKlasesDzivokli(this);
+    currentPageDziv = "";
+    loadContentDziv("dzivokliPardosanai");
+  });
+
+  neAtlasitaPogaDziv.addEventListener("click", function () {
+    parslegtPogasKlasesDzivokli(this);
+    currentPageDziv = "";
+    loadContentDziv("dzivokliIresanai");
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    if (atlasitaPogaDziv.classList.contains("atlasitsDziv")) {
+      loadContentDziv("dzivokliPardosanai");
+    } else {
+      loadContentDziv("dzivokliIresanai");
+    }
+  });
+}

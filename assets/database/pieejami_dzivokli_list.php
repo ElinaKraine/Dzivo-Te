@@ -1,15 +1,15 @@
 <?php
 require '../../admin/database/con_db.php';
 
-if (!isset($_GET['no']) || !isset($_GET['lidz'])) {
+if (!isset($_GET['noDziv']) || !isset($_GET['lidzDziv'])) {
     echo json_encode([]);
     exit;
 }
 
-$no = mysqli_real_escape_string($savienojums, $_GET['no']);
-$lidz = mysqli_real_escape_string($savienojums, $_GET['lidz']);
+$no = mysqli_real_escape_string($savienojums, $_GET['noDziv']);
+$lidz = mysqli_real_escape_string($savienojums, $_GET['lidzDziv']);
 
-$prasibas = ["mi.majokla_tips = 'Mājas'"];
+$prasibas = ["mi.majokla_tips = 'Dzīvoklis'"];
 
 if (!empty($_GET['meklet'])) {
     $meklet = mysqli_real_escape_string($savienojums, htmlspecialchars($_GET['meklet']));
@@ -75,7 +75,8 @@ $vaicajums = "SELECT
                 mi.stavi_vai_stavs AS stavi, 
                 md.pilseta AS pilseta, 
                 md.iela AS iela, 
-                md.majas_numurs AS majas_numurs, 
+                md.majas_numurs AS majas_numurs,
+                md.dzivokla_numurs AS dzivokla_numurs,
                 ma.pirma_attela AS pirma_attela 
              FROM 
                 majuvieta_iret mi
@@ -109,6 +110,7 @@ while ($ieraksts = mysqli_fetch_assoc($rezultats)) {
         'pilseta' => htmlspecialchars($ieraksts['pilseta']),
         'iela' => htmlspecialchars($ieraksts['iela']),
         'majas_numurs' => htmlspecialchars($ieraksts['majas_numurs']),
+        'dzivokla_numurs' => htmlspecialchars($ieraksts['dzivokla_numurs']),
         'pirma_attela' => base64_encode($ieraksts['pirma_attela']),
     ];
 }

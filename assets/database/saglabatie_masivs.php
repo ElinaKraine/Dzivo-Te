@@ -1,6 +1,6 @@
 <?php
 session_start();
-header('Content-Type: application/json');
+// header('Content-Type: application/json');
 
 require '../../admin/database/con_db.php';
 
@@ -9,7 +9,8 @@ if (!isset($_SESSION['lietotajaIdDt'])) {
     exit;
 } else {
     $lietotaja_id = $_SESSION['lietotajaIdDt'];
-    $veids = isset($_GET['veids']) && $_GET['veids'] === 'Iret' ? 'Iret' : 'Pirkt';
+    // $veids = isset($_GET['veids']) && $_GET['veids'] === 'Iret' ? 'Iret' : 'Pirkt';
+    $veids = isset($_GET['veids']);
 
     $rezultats = $savienojums->prepare("
         SELECT id_sludinajums 

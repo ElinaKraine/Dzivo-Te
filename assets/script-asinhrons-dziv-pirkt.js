@@ -1,10 +1,10 @@
-function initMajasAsinhronieSkripti() {
+function initDzivokliAsinhronieSkripti() {
   let tekosaMeklesana = "";
   let tekosaKartosana = "datums_desc";
 
-  fetchMajas();
+  fetchDzivokli();
 
-  function fetchMajas(meklet = "", filtri = {}, sortBy = "datums_desc") {
+  function fetchDzivokli(meklet = "", filtri = {}, sortBy = "datums_desc") {
     let queryParams = new URLSearchParams({ meklet, sort: sortBy });
 
     for (let key in filtri) {
@@ -17,43 +17,43 @@ function initMajasAsinhronieSkripti() {
       "./assets/database/saglabatie_masivs.php?veids=Pirkt",
       function (saglabatieSludinajumi) {
         $.ajax({
-          url: `./assets/database/majas_list.php?${queryParams.toString()}`,
+          url: `./assets/database/dzivokli_list.php?${queryParams.toString()}`,
           type: "GET",
           success: function (response) {
-            const majas = JSON.parse(response);
+            const dzivokli = JSON.parse(response);
             let template = "";
 
-            if (majas.length > 0) {
-              majas.forEach((maja) => {
+            if (dzivokli.length > 0) {
+              dzivokli.forEach((dzivoklis) => {
                 const irSaglabats = saglabatieSludinajumi.includes(
-                  parseInt(maja.id)
+                  parseInt(dzivoklis.id)
                 );
                 const sirdsKlase = irSaglabats ? "fa-solid" : "fa-regular";
                 const sirdsKlase2 = irSaglabats ? "sirdsSarkans" : "";
 
                 template += `
-                <div class='sludinajums sludinajumsPardosanai' maja_id="${maja.id}">
-                  <div class='attela-sirds'>
-                    <img src="data:image/jpeg;base64,${maja.pirma_attela}" />
-                    <a class='sirds saglabaSludinajumu ${sirdsKlase2}' data-id="${maja.id}">
-                      <i class='${sirdsKlase} fa-heart'></i>
-                    </a>
+                  <div class='sludinajums sludinajumsPardosanaiDziv' dzivoklis_id="${dzivoklis.id}">
+                    <div class='attela-sirds'>
+                      <img src="data:image/jpeg;base64,${dzivoklis.pirma_attela}" />
+                      <a class='sirds saglabaSludinajumu ${sirdsKlase2}' data-id="${dzivoklis.id}">
+                        <i class='${sirdsKlase} fa-heart'></i>
+                      </a>
+                    </div>
+                    <p id='cena'>${dzivoklis.cena} €</p>
+                    <div id='papildInfo'>
+                      <p><i class='fa-solid fa-door-open'></i>${dzivoklis.istabas}</p>
+                      <p><i class='fa-solid fa-ruler-combined'></i> ${dzivoklis.platiba} m<sup>2</sup></p>
+                      <p><i class='fa-solid fa-stairs'></i> ${dzivoklis.stavs}</p>
+                    </div>
+                    <p id='adrese'>${dzivoklis.pilseta}, ${dzivoklis.iela} ${dzivoklis.majas_numurs}/${dzivoklis.dzivokla_numurs}</p>
                   </div>
-                  <p id='cena'>${maja.cena} €</p>
-                  <div id='papildInfo'>
-                    <p><i class='fa-solid fa-door-open'></i>${maja.istabas}</p>
-                    <p><i class='fa-solid fa-ruler-combined'></i> ${maja.platiba} m<sup>2</sup></p>
-                    <p><i class='fa-solid fa-stairs'></i> ${maja.stavi}</p>
-                  </div>
-                  <p id='adrese'>${maja.pilseta}, ${maja.iela} ${maja.majas_numurs}</p>
-                </div>
-              `;
+                `;
               });
             } else {
               template = `<p class='navRezultatus'>Nav rezultātu atbilstošu meklēšanai</p>`;
             }
 
-            $("#majas").html(template);
+            $("#dzivokli").html(template);
           },
           error: function () {
             alert("Neizdevas ieladet datus");
@@ -63,7 +63,7 @@ function initMajasAsinhronieSkripti() {
     );
   }
 
-  $(document).on("click", ".mekleteFiltrusP", function (e) {
+  $(document).on("click", ".mekleteFiltrusPD", function (e) {
     e.preventDefault();
     tekosaMeklesana = $("#meklet-lauks").val();
 
@@ -78,27 +78,10 @@ function initMajasAsinhronieSkripti() {
       maxStavi: $("input[name='maksimumStavus']").val(),
     };
 
-    fetchMajas(tekosaMeklesana, filtri, tekosaKartosana);
+    fetchDzivokli(tekosaMeklesana, filtri, tekosaKartosana);
   });
 
-  $(document).on("change", ".kartosana select", function () {
-    tekosaKartosana = $(this).val();
-
-    let filtri = {
-      minCena: $("input[name='minimalaCena']").val(),
-      maxCena: $("input[name='maksimalaCena']").val(),
-      minIstabas: $("input[name='minimumIstabas']").val(),
-      maxIstabas: $("input[name='maksimumIstabas']").val(),
-      minPlatiba: $("input[name='minimalaPlatiba']").val(),
-      maxPlatiba: $("input[name='maksimalaPlatiba']").val(),
-      minStavi: $("input[name='minimumStavus']").val(),
-      maxStavi: $("input[name='maksimumStavus']").val(),
-    };
-
-    fetchMajas(tekosaMeklesana, filtri, tekosaKartosana);
-  });
-
-  $(document).on("click", "#izdest-filtrus-majas-pirkt", function (e) {
+  $(document).on("click", "#izdest-filtrus-dzivokli-pirkt", function (e) {
     e.preventDefault();
 
     $("#meklet-lauks").val("");
@@ -114,12 +97,29 @@ function initMajasAsinhronieSkripti() {
     tekosaMeklesana = "";
     tekosaKartosana = "datums_desc";
 
-    fetchMajas("", {}, tekosaKartosana);
+    fetchDzivokli("", {}, tekosaKartosana);
   });
 
-  $(document).on("click", ".sludinajumsPardosanai", function () {
-    let majaId = $(this).attr("maja_id");
-    window.location.href = `maja_pirkt.php?id=${majaId}`;
+  $(document).on("change", ".kartosanaPD select", function () {
+    tekosaKartosana = $(this).val();
+
+    let filtri = {
+      minCena: $("input[name='minimalaCena']").val(),
+      maxCena: $("input[name='maksimalaCena']").val(),
+      minIstabas: $("input[name='minimumIstabas']").val(),
+      maxIstabas: $("input[name='maksimumIstabas']").val(),
+      minPlatiba: $("input[name='minimalaPlatiba']").val(),
+      maxPlatiba: $("input[name='maksimalaPlatiba']").val(),
+      minStavi: $("input[name='minimumStavus']").val(),
+      maxStavi: $("input[name='maksimumStavus']").val(),
+    };
+
+    fetchDzivokli(tekosaMeklesana, filtri, tekosaKartosana);
+  });
+
+  $(document).on("click", ".sludinajumsPardosanaiDziv", function () {
+    let dzivoklisId = $(this).attr("dzivoklis_id");
+    window.location.href = `dzivoklis_pirkt.php?id=${dzivoklisId}`;
   });
 
   $(document).on("click", ".saglabaSludinajumu", function (e) {

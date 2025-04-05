@@ -3,7 +3,12 @@ $page = "pardosanas";
 require "assets/header.php";
 require "database/con_db.php";
 ?>
-<div class="lietotaji">
+<div class="sludinajumi_pirkt">
+    <div class="pievienotKaste">
+        <form method='POST' action='pievienot_sludinajumu_pirkt.php'>
+            <button type='submit' class="pievienotBtn"><i class="fas fa-add"></i> Pievienot sludinājumu</button>
+        </form>
+    </div>
     <table>
         <tr class="heading">
             <th>Mājokļa tips</th>
@@ -16,14 +21,15 @@ require "database/con_db.php";
             <th>Stāvu skaits</th>
             <th>Izveidošanas datums</th>
             <th>Statuss</th>
-            <th class="thButton">Rediģet</th>
-            <th class="thButton">Dzēst</th>
+            <th></th>
         </tr>
         <?php
         $pirkt_sludinajumi_SQL = "SELECT * FROM majuvieta_pirkt ORDER BY izveidosanas_datums DESC";
         $atlasa_pirkt_sludinajumi_SQL = mysqli_query($savienojums, $pirkt_sludinajumi_SQL);
 
         while ($ieraksts = mysqli_fetch_array($atlasa_pirkt_sludinajumi_SQL)) {
+            $formatted_datums = date('d.m.Y H:i', strtotime($ieraksts['izveidosanas_datums']));
+
             echo "
                     <tr>
                         <td>{$ieraksts['majokla_tips']}</td>
@@ -34,30 +40,22 @@ require "database/con_db.php";
                         <td>{$ieraksts['zemes_platiba']}</td>
                         <td>{$ieraksts['istabas']}</td>
                         <td>{$ieraksts['stavs_vai_stavi']}</td>
-                        <td>{$ieraksts['izveidosanas_datums']}</td>
+                        <td>$formatted_datums</td>
                         <td>{$ieraksts['statuss']}</td>
-                        <td>
-                            <form method='POST' action='edit_lietotaju.php'>
-                                <button type='submit' name='apskatitIeraksts' class='Tbtn' value='{$ieraksts['pirkt_id']}'><i class='fas fa-edit'></i></button>
+                        <td class='ierakstaDarbibas'>
+                            <form method='POST' action='edit_pieteikumu.php'>
+                                <button type='submit' name='apskatitIeraksts' class='editBtn' value='{$ieraksts['pirkt_id']}'><i class='fas fa-edit'></i></button>
                             </form>
-                        </td>
-                        <td>
+
                             <form method='POST' onsubmit='return confirm(\"Vai tiešām vēlēs dzēst?\");'>
                                 <input type='hidden' name='delete_id' value='{$ieraksts['pirkt_id']}'>
-                                <button type='submit' name='nodzestIeraksts' class='Tbtn' value='{$ieraksts['pirkt_id']}'><i class='fas fa-trash'></i></button>
+                                <button type='submit' name='nodzestIeraksts' class='deleteBtn' value='{$ieraksts['pirkt_id']}'><i class='fas fa-trash'></i></button>
                             </form>
                         </td>
                     </tr>
                 ";
         }
         ?>
-        <tr>
-            <td colspan="6">
-                <form method='POST' action='pievienot_lietotaju.php'>
-                    <button type='submit' class="btn"><i class="fas fa-add"></i></button>
-                </form>
-            </td>
-        </tr>
     </table>
     <?php
     if (isset($_POST['nodzestIeraksts'])) {

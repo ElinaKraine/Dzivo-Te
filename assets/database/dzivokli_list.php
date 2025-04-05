@@ -1,7 +1,7 @@
 <?php
 require '../../admin/database/con_db.php';
 
-$prasibas = ["mp.majokla_tips = 'Mājas'"];
+$prasibas = ["mp.majokla_tips = 'Dzīvoklis'"];
 
 if (!empty($_GET['meklet'])) {
     $meklet = mysqli_real_escape_string($savienojums, htmlspecialchars($_GET['meklet']));
@@ -70,10 +70,11 @@ $vaicajums = "SELECT
                 mp.cena AS cena, 
                 mp.platiba AS platiba, 
                 mp.istabas AS istabas, 
-                mp.stavs_vai_stavi AS stavi, 
+                mp.stavs_vai_stavi AS stavs, 
                 md.pilseta AS pilseta, 
                 md.iela AS iela, 
-                md.majas_numurs AS majas_numurs, 
+                md.majas_numurs AS majas_numurs,
+                md.dzivokla_numurs AS dzivokla_numurs,
                 ma.pirma_attela AS pirma_attela 
              FROM 
                 majuvieta_pirkt mp 
@@ -93,10 +94,11 @@ while ($ieraksts = $rezultats->fetch_assoc()) {
         'cena' => htmlspecialchars($ieraksts['cena']),
         'platiba' => htmlspecialchars($ieraksts['platiba']),
         'istabas' => htmlspecialchars($ieraksts['istabas']),
-        'stavi' => htmlspecialchars($ieraksts['stavi']),
+        'stavs' => htmlspecialchars($ieraksts['stavs']),
         'pilseta' => htmlspecialchars($ieraksts['pilseta']),
         'iela' => htmlspecialchars($ieraksts['iela']),
         'majas_numurs' => htmlspecialchars($ieraksts['majas_numurs']),
+        'dzivokla_numurs' => htmlspecialchars($ieraksts['dzivokla_numurs']),
         'pirma_attela' => base64_encode($ieraksts['pirma_attela']),
     );
 }
