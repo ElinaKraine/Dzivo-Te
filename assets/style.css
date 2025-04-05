@@ -66,6 +66,18 @@ header{
     background: white;
 }
 
+.iconProfils{
+    font-size: 1.2rem;
+    color: white;
+    background: var(--dark-violet-2);
+    border-radius: .5rem;
+    padding: .5rem 1rem;
+}
+
+.iconProfils:hover{
+    background: var(--bright-violet);
+}
+
 .logo{
     font-size: 2rem;
     font-weight: 700;
@@ -1348,4 +1360,98 @@ footer{
     flex-wrap: wrap;
     gap: 2rem;
     margin-top: 2rem;
+}
+
+/* profils.php */
+.profilsKaste{
+    margin-top: 5.9rem;
+}
+
+.profilsKaste .fons{
+    background-image: url("../images/profilsBackground.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 22rem;
+    width: 100%;
+}
+
+.melnsFons{
+    opacity: 0.5;
+    background: black;
+    position: absolute;
+    height: 22rem;
+    width: 100%;
+    bottom: 32.2rem;
+}
+
+.profilsKaste .kaste{
+    margin: 0 5%;
+    display: flex;
+    bottom: 7rem;
+    position: relative;
+
+    .profilaInfo{
+        width: 20%;
+    }
+
+    .tabulas{
+        width: 80%;
+    }
+}
+
+.kasteCentra{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.profilaAttela{
+    border: 1px solid var(--dark-violet);
+    box-shadow: var(--box-shadow);
+    border-radius: 50%;
+    padding: 3rem 7rem;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    background: white;
+}
+
+.profilaAttela i{
+    font-size: 7rem;
+}
+
+.profilaInfo{
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+
+    .kastite{
+        font-size: 1.3rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        .btn{
+            background: var(--dark-violet);
+        }
+
+        .btn:hover{
+            background: var(--bright-violet);
+        }
+    }
+} 
+
+.profilsKaste .btn{
+    text-align: center;
+    border-radius: 1rem;
+    text-align: center;
+    background: darkred;
+    font-size: 1.3rem;
+}
+
+.profilsKaste .btn:hover{
+    background: black;
 }
