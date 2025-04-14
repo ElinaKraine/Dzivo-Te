@@ -88,7 +88,4 @@
 
         </div>
     </div>
-    <div class="karte">
-
-    </div>
 </div>

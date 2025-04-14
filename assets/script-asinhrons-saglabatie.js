@@ -11,6 +11,7 @@ $(document).ready(function () {
       if (saraksts.length > 0) {
         saraksts.forEach((ieraksts) => {
           let cenaBloks = "";
+
           if (ieraksts.veids === "Pirkt") {
             cenaBloks = `<p id='cena'>${ieraksts.cena} €</p>`;
           } else if (ieraksts.veids === "Iret") {
@@ -24,10 +25,13 @@ $(document).ready(function () {
           }
 
           template += `
-            <div class='sludinajums' data-id="${ieraksts.id}" data-veids="${ieraksts.veids}">
+            <div class='sludinajums' data-id="${ieraksts.id}" data-veids="${ieraksts.veids}" data-tips="${ieraksts.majokla_tips}">
               <div class='attela-sirds'>
                 <img src="data:image/jpeg;base64,${ieraksts.pirma_attela}" />
-                <a class='sirds saglabataSludinajumu sirdsSarkans' data-id="${ieraksts.id}" data-veids="${ieraksts.veids}">
+                <a class='sirds saglabataSludinajumu sirdsSarkans' 
+                   data-id="${ieraksts.id}" 
+                   data-veids="${ieraksts.veids}" 
+                   data-tips="${ieraksts.majokla_tips}">
                   <i class='fa-solid fa-heart'></i>
                 </a>
               </div>
@@ -56,13 +60,18 @@ $(document).ready(function () {
   $(document).on("click", ".sludinajums", function () {
     const id = $(this).data("id");
     const veids = $(this).data("veids");
+    const tips = $(this).data("tips");
 
-    if (!id || !veids) return;
+    if (!id || !veids || !tips) return;
 
-    if (veids === "Pirkt") {
+    if (veids === "Pirkt" && tips === "Maja") {
       window.location.href = `maja_pirkt.php?id=${id}`;
-    } else if (veids === "Iret") {
+    } else if (veids === "Pirkt" && tips === "Dzivoklis") {
+      window.location.href = `dzivoklis_pirkt.php?id=${id}`;
+    } else if (veids === "Iret" && tips === "Maja") {
       window.location.href = `maja_iret_saglabats.php?id=${id}`;
+    } else if (veids === "Iret" && tips === "Dzivoklis") {
+      window.location.href = `dzivoklis_iret_saglabats.php?id=${id}`;
     }
   });
 
@@ -76,6 +85,7 @@ $(document).ready(function () {
     const poga = $(this);
     const id = poga.data("id");
     const veids = poga.data("veids");
+    const tips = poga.data("tips");
 
     $.ajax({
       url: "./assets/database/dzest_saglabatu.php",
@@ -84,16 +94,19 @@ $(document).ready(function () {
       data: {
         id_sludinajums: id,
         veids: veids,
+        tips: tips,
       },
       success: function (response) {
         if (response.success) {
-          poga.closest(".sludinajums").remove();
+          poga.closest(".sludinajums").fadeOut(300, function () {
+            $(this).remove();
 
-          if ($(".sludinajums").length === 0) {
-            $("#saglabatie").html(
-              "<p class='navRezultatus'>Jums nav saglabātu sludinājumu.</p>"
-            );
-          }
+            if ($(".sludinajums").length === 0) {
+              $("#saglabatie").html(
+                "<p class='navRezultatus'>Jums nav saglabātu sludinājumu.</p>"
+              );
+            }
+          });
         } else {
           if (response.message === "unauthorized") {
             window.location.href = "./login.php";

@@ -14,7 +14,7 @@ function initDzivokliAsinhronieSkripti() {
     }
 
     $.getJSON(
-      "./assets/database/saglabatie_masivs.php?veids=Pirkt",
+      "./assets/database/saglabatie_masivs.php?veids=Pirkt&tips=Dzivoklis",
       function (saglabatieSludinajumi) {
         $.ajax({
           url: `./assets/database/dzivokli_list.php?${queryParams.toString()}`,
@@ -140,6 +140,7 @@ function initDzivokliAsinhronieSkripti() {
       data: {
         id_sludinajums: sludinajumaId,
         veids: "Pirkt",
+        tips: "Dzivoklis",
       },
       success: function (response) {
         if (response.success) {

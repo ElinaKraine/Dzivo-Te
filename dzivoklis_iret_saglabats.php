@@ -1,12 +1,12 @@
 <?php
 session_start();
-$page = "majas";
+$page = "dzivokli";
 require "assets/header.php";
 require "admin/database/con_db.php";
 
 if (isset($_GET['id'])) {
-    $maja_id = intval($_GET['id']);
-    $tips = "Mājas";
+    $dzivoklis_id = intval($_GET['id']);
+    $tips = "Dzīvoklis";
 
     $stmt = $savienojums->prepare("SELECT * FROM majuvieta_iret 
                                     INNER JOIN majuvieta_atteli ma ON majuvieta_iret.id_atteli = ma.attelu_kopums_id 
@@ -18,7 +18,7 @@ if (isset($_GET['id'])) {
         die("Database query failed: " . mysqli_error($savienojums));
     }
 
-    $stmt->bind_param("is", $maja_id, $tips);
+    $stmt->bind_param("is", $dzivoklis_id, $tips);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -29,9 +29,9 @@ if (isset($_GET['id'])) {
             $lietotajsId = $_SESSION['lietotajaIdDt'];
             $stmtSaglabats = $savienojums->prepare("
                 SELECT 1 FROM dzivote_saglabatie 
-                WHERE id_lietotajs = ? AND id_sludinajums = ? AND sludinajuma_veids = 'Iret' AND majokla_tips = 'Maja'
+                WHERE id_lietotajs = ? AND id_sludinajums = ? AND sludinajuma_veids = 'Iret' AND majokla_tips = 'Dzivoklis'
             ");
-            $stmtSaglabats->bind_param("ii", $lietotajsId, $maja_id);
+            $stmtSaglabats->bind_param("ii", $lietotajsId, $dzivoklis_id);
             $stmtSaglabats->execute();
             $stmtSaglabats->store_result();
             $isSaved = $stmtSaglabats->num_rows > 0;
@@ -61,10 +61,10 @@ if (isset($_GET['id'])) {
                 <?php } ?>
             </div>
             <div class="pamatInfo">
-                <h2><?php echo $sludinajums['iela'] . " " . $sludinajums['majas_numurs']; ?></h2>
+                <h2><?php echo $sludinajums['iela'] . " " . $sludinajums['majas_numurs'] . "/" . $sludinajums['dzivokla_numurs']; ?></h2>
             </div>
             <div class="papildInfo">
-                <p>Latvija, <?php echo $sludinajums['pilseta'] . " " . $sludinajums['pasts_indekss']; ?></p>
+                <p>Latvija, <?php echo $sludinajums['pilseta']; ?></p>
                 <div class="ikoninasArInfo">
                     <p><i class='fa-solid fa-door-open'></i> <?php echo $sludinajums['istabas']; ?></p>
                     <p><i class='fa-solid fa-ruler-combined'></i> <?php echo $sludinajums['platiba']; ?> m<sup>2</sup></p>
@@ -150,7 +150,7 @@ if (isset($_GET['id'])) {
 
 <?php
     } else {
-        echo "<p class='neveiksmigsPazinojums'>Māja nav atrasta</p>";
+        echo "<p class='neveiksmigsPazinojums'>Dzīvoklis nav atrasta</p>";
     }
     $stmt->close();
 } else {

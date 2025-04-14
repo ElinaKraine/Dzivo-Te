@@ -204,11 +204,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
 
 <?php
     } else {
-        echo "<p>Māja nav atrasta</p>";
+        echo "<p class='neveiksmigsPazinojums'>Māja nav atrasta</p>";
     }
     $stmt->close();
 } else {
-    echo "<p>Kļūda: ID nav norādīts</p>";
+    echo "<p class='neveiksmigsPazinojums'>Kļūda: ID nav norādīts</p>";
 }
 
 require "assets/footer.php";

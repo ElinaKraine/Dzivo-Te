@@ -14,7 +14,7 @@ function initMajasAsinhronieSkripti() {
     }
 
     $.getJSON(
-      "./assets/database/saglabatie_masivs.php?veids=Pirkt",
+      "./assets/database/saglabatie_masivs.php?veids=Pirkt&tips=Maja",
       function (saglabatieSludinajumi) {
         $.ajax({
           url: `./assets/database/majas_list.php?${queryParams.toString()}`,
@@ -140,6 +140,7 @@ function initMajasAsinhronieSkripti() {
       data: {
         id_sludinajums: sludinajumaId,
         veids: "Pirkt",
+        tips: "Maja",
       },
       success: function (response) {
         if (response.success) {

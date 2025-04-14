@@ -51,7 +51,7 @@ $(document).ready(function () {
     }
 
     $.getJSON(
-      "./assets/database/saglabatie_masivs.php?veids=Iret",
+      "./assets/database/saglabatie_masivs.php?veids=Iret&tips=Maja",
       function (saglabatieSludinajumi) {
         $.ajax({
           url: `./assets/database/pieejamie_majas_list.php?${queryParams.toString()}`,
@@ -305,6 +305,7 @@ $(document).ready(function () {
       data: {
         id_sludinajums: sludinajumaId,
         veids: "Iret",
+        tips: "Maja",
       },
       success: function (response) {
         if (response.success) {

@@ -56,7 +56,7 @@ $(document).ready(function () {
     }
 
     $.getJSON(
-      "./assets/database/saglabatie_masivs.php?veids=Iret",
+      "./assets/database/saglabatie_masivs.php?veids=Iret&tips=Dzivoklis",
       function (saglabatieSludinajumi) {
         $.ajax({
           url: `./assets/database/pieejami_dzivokli_list.php?${queryParams.toString()}`,
@@ -99,7 +99,7 @@ $(document).ready(function () {
                         <img src="data:image/jpeg;base64,${
                           dzivoklis.pirma_attela
                         }" />
-                        <a class='sirds saglabatSludinajumu ${sirdsKlase2}' data-id="${
+                        <a class='sirds saglabatSludinajumuDziv ${sirdsKlase2}' data-id="${
                   dzivoklis.id
                 }">
                           <i class='${sirdsKlase} fa-heart'></i>
@@ -295,7 +295,7 @@ $(document).ready(function () {
     izveidotUnNosutitFormu(dzivoklisId, no, lidz, galaCena);
   });
 
-  $(document).on("click", ".saglabatSludinajumu", function (e) {
+  $(document).on("click", ".saglabatSludinajumuDziv", function (e) {
     e.stopPropagation();
     e.preventDefault();
 
@@ -314,6 +314,7 @@ $(document).ready(function () {
       data: {
         id_sludinajums: sludinajumaId,
         veids: "Iret",
+        tips: "Dzivoklis",
       },
       success: function (response) {
         if (response.success) {

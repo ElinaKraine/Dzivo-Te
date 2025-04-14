@@ -6,18 +6,19 @@ require "admin/database/con_db.php";
 
 if (isset($_GET['id'])) {
     $maja_id = intval($_GET['id']);
+    $tips = "Mājas";
 
     $stmt = $savienojums->prepare("SELECT * FROM majuvieta_pirkt 
                                     INNER JOIN majuvieta_atteli ma ON majuvieta_pirkt.id_atteli = ma.attelu_kopums_id 
                                     INNER JOIN majuvieta_adrese md ON majuvieta_pirkt.id_adrese = md.adrese_id
                                     INNER JOIN majuvieta_lietotaji ml ON majuvieta_pirkt.id_ipasnieks = ml.lietotaja_id 
-                                    WHERE pirkt_id = ?");
+                                    WHERE pirkt_id = ? AND majokla_tips = ?");
 
     if (!$stmt) {
         die("Database query failed: " . mysqli_error($savienojums));
     }
 
-    $stmt->bind_param("i", $maja_id);
+    $stmt->bind_param("is", $maja_id, $tips);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -180,11 +181,11 @@ if (isset($_GET['id'])) {
 
 <?php
     } else {
-        echo "<p>Māja nav atrasta</p>";
+        echo "<p class='neveiksmigsPazinojums'>Māja nav atrasta</p>";
     }
     $stmt->close();
 } else {
-    echo "<p>Kļūda: ID nav norādīts</p>";
+    echo "<p class='neveiksmigsPazinojums'>Kļūda: ID nav norādīts</p>";
 }
 
 require "assets/footer.php";

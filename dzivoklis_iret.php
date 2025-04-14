@@ -1,24 +1,31 @@
 <?php
 session_start();
-$page = "majas";
+$page = "dzivokli";
 require "assets/header.php";
 require "admin/database/con_db.php";
 
-if (isset($_GET['id'])) {
-    $maja_id = intval($_GET['id']);
-    $tips = "Mājas";
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
+    $maja_id = intval($_POST['id']);
+    $no = $_POST['no'];
+    $lidz = $_POST['lidz'];
+    $total = $_POST['total'];
+    $datumsNo = new DateTime($no);
+    $datumsLidz = new DateTime($lidz);
+    $dienas = $datumsNo->diff($datumsLidz)->days;
+    $formattedNo = $datumsNo->format('d.m.Y');
+    $formattedLidz = $datumsLidz->format('d.m.Y');
 
     $stmt = $savienojums->prepare("SELECT * FROM majuvieta_iret 
                                     INNER JOIN majuvieta_atteli ma ON majuvieta_iret.id_atteli = ma.attelu_kopums_id 
                                     INNER JOIN majuvieta_adrese md ON majuvieta_iret.id_adrese = md.adrese_id
                                     INNER JOIN majuvieta_lietotaji ml ON majuvieta_iret.id_ipasnieks = ml.lietotaja_id 
-                                    WHERE iret_id = ? AND majokla_tips = ?");
+                                    WHERE iret_id = ?");
 
     if (!$stmt) {
         die("Database query failed: " . mysqli_error($savienojums));
     }
 
-    $stmt->bind_param("is", $maja_id, $tips);
+    $stmt->bind_param("i", $maja_id);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -29,13 +36,21 @@ if (isset($_GET['id'])) {
             $lietotajsId = $_SESSION['lietotajaIdDt'];
             $stmtSaglabats = $savienojums->prepare("
                 SELECT 1 FROM dzivote_saglabatie 
-                WHERE id_lietotajs = ? AND id_sludinajums = ? AND sludinajuma_veids = 'Iret' AND majokla_tips = 'Maja'
+                WHERE id_lietotajs = ? AND id_sludinajums = ? AND sludinajuma_veids = 'Iret'
             ");
             $stmtSaglabats->bind_param("ii", $lietotajsId, $maja_id);
             $stmtSaglabats->execute();
             $stmtSaglabats->store_result();
             $isSaved = $stmtSaglabats->num_rows > 0;
             $stmtSaglabats->close();
+        }
+
+        function pareizaDienasForma($skaits)
+        {
+            if ($skaits === 1 || ($skaits % 10 === 1 && $skaits % 100 !== 11)) {
+                return "dienu";
+            }
+            return "dienām";
         }
 ?>
 
@@ -61,15 +76,20 @@ if (isset($_GET['id'])) {
                 <?php } ?>
             </div>
             <div class="pamatInfo">
-                <h2><?php echo $sludinajums['iela'] . " " . $sludinajums['majas_numurs']; ?></h2>
+                <h2><?php echo $sludinajums['iela'] . " " . $sludinajums['majas_numurs'] . "/" . $sludinajums['dzivokla_numurs']; ?></h2>
+                <h2><?php echo $total; ?> € par <?php echo $dienas . " " . pareizaDienasForma($dienas); ?></h2>
+                <?php if (!isset($_SESSION['lietotajaLomaMV'])) { ?>
+                    <a class="btn" href="login.php">Iznomāt</a>
+                <?php } else { ?>
+                    <a class="btn" data-target="#modal-ticket">Iznomāt</a>
+                <?php } ?>
             </div>
             <div class="papildInfo">
-                <p>Latvija, <?php echo $sludinajums['pilseta'] . " " . $sludinajums['pasts_indekss']; ?></p>
+                <p>Latvija, <?php echo $sludinajums['pilseta']; ?></p>
                 <div class="ikoninasArInfo">
                     <p><i class='fa-solid fa-door-open'></i> <?php echo $sludinajums['istabas']; ?></p>
                     <p><i class='fa-solid fa-ruler-combined'></i> <?php echo $sludinajums['platiba']; ?> m<sup>2</sup></p>
                     <p><i class='fa-solid fa-stairs'></i> <?php echo $sludinajums['stavi_vai_stavs']; ?></p>
-                    <p><i class="fa-solid fa-chart-area"></i> <?php echo $sludinajums['zemes_platiba']; ?> m<sup>2</sup></p>
                 </div>
             </div>
             <div class="apraksts">
@@ -88,6 +108,39 @@ if (isset($_GET['id'])) {
             <?php } ?>
         </section>
 
+        <?php if (isset($_SESSION['pazinojumsMV'])): ?>
+            <div class="modal modal-active" id="modal-message">
+                <div class="modal-box">
+                    <div class="close-modal" data-target="#modal-message"><i class="fas fa-times"></i></div>
+                    <h2>
+                        <?php
+                        echo $_SESSION['pazinojumsMV'];
+                        unset($_SESSION['pazinojumsMV']);
+                        ?>
+                    </h2>
+                </div>
+            </div>
+        <?php endif; ?>
+
+        <div class="modal" id="modal-ticket">
+            <div class="modal-box">
+                <div class="close-modal" data-target="#modal-ticket"><i class="fas fa-times"></i></div>
+                <h2>Iznomāšana</h2>
+                <div class="pamatInfo">
+                    <p><i class="fa-solid fa-house"></i> <?php echo $sludinajums['iela'] . " " . $sludinajums['majas_numurs'] . "/" . $sludinajums['dzivokla_numurs']; ?></p>
+                    <p><i class="fas fa-calendar"></i> <?php echo $formattedNo; ?> - <?php echo $formattedLidz; ?></p>
+                    <p><i class="fa-solid fa-money-bill-wave"></i> <?php echo $total; ?> € par <?php echo $dienas . " " . pareizaDienasForma($dienas); ?></p>
+                    <p><i class="fa-solid fa-user"></i> <?php echo $_SESSION['lietotajsMV']; ?></p>
+                </div>
+                <form action="iziresana.php" method="POST">
+                    <input type="hidden" name="id_majuvieta_iret" value="<?php echo $sludinajums['iret_id']; ?>">
+                    <input type="hidden" name="cena" value="<?php echo $total; ?>">
+                    <input type="hidden" name="registresanasDatums" value="<?php echo $datumsNo->format('Y-m-d'); ?>">
+                    <input type="hidden" name="izrakstisanasDatums" value="<?php echo $datumsLidz->format('Y-m-d'); ?>">
+                    <button type="submit" name="apstiprinat" class="btn">Apstiprināt</button>
+                </form>
+            </div>
+        </div>
         <script>
             document.addEventListener("DOMContentLoaded", function() {
                 let saglabasanaNotiek = false;

@@ -12,7 +12,8 @@ if (!isset($_SESSION['lietotajaIdDt'])) {
 $lietotaja_id = $_SESSION['lietotajaIdDt'];
 $json = [];
 
-$pirkt_vaicajums = "
+// Maja - Pirkt
+$query = "
     SELECT mv.pirkt_id AS id, mv.cena, mv.istabas, mv.platiba, mv.stavs_vai_stavi AS stavi,
            ad.pilseta, ad.iela, ad.majas_numurs,
            att.pirma_attela
@@ -20,18 +21,18 @@ $pirkt_vaicajums = "
     JOIN majuvieta_pirkt mv ON ds.id_sludinajums = mv.pirkt_id
     JOIN majuvieta_adrese ad ON mv.id_adrese = ad.adrese_id
     JOIN majuvieta_atteli att ON mv.id_atteli = att.attelu_kopums_id
-    WHERE ds.id_lietotajs = ? AND ds.sludinajuma_veids = 'Pirkt'
+    WHERE ds.id_lietotajs = ? AND ds.sludinajuma_veids = 'Pirkt' AND ds.majokla_tips = 'Maja'
 ";
 
-$stmt1 = $savienojums->prepare($pirkt_vaicajums);
-$stmt1->bind_param("i", $lietotaja_id);
-$stmt1->execute();
-$rez1 = $stmt1->get_result();
-
-while ($row = $rez1->fetch_assoc()) {
+$stmt = $savienojums->prepare($query);
+$stmt->bind_param("i", $lietotaja_id);
+$stmt->execute();
+$res = $stmt->get_result();
+while ($row = $res->fetch_assoc()) {
     $json[] = [
         'id' => htmlspecialchars($row['id']),
         'veids' => 'Pirkt',
+        'majokla_tips' => 'Maja',
         'cena' => htmlspecialchars($row['cena']),
         'istabas' => htmlspecialchars($row['istabas']),
         'platiba' => htmlspecialchars($row['platiba']),
@@ -42,9 +43,43 @@ while ($row = $rez1->fetch_assoc()) {
         'pirma_attela' => base64_encode($row['pirma_attela']),
     ];
 }
-$stmt1->close();
+$stmt->close();
 
-$iret_vaicajums = "
+// Dzivoklis - Pirkt
+$query = "
+    SELECT mv.pirkt_id AS id, mv.cena, mv.istabas, mv.platiba, mv.stavs_vai_stavi AS stavi,
+           ad.pilseta, ad.iela, ad.majas_numurs,
+           att.pirma_attela
+    FROM dzivote_saglabatie ds
+    JOIN majuvieta_pirkt mv ON ds.id_sludinajums = mv.pirkt_id
+    JOIN majuvieta_adrese ad ON mv.id_adrese = ad.adrese_id
+    JOIN majuvieta_atteli att ON mv.id_atteli = att.attelu_kopums_id
+    WHERE ds.id_lietotajs = ? AND ds.sludinajuma_veids = 'Pirkt' AND ds.majokla_tips = 'Dzivoklis'
+";
+
+$stmt = $savienojums->prepare($query);
+$stmt->bind_param("i", $lietotaja_id);
+$stmt->execute();
+$res = $stmt->get_result();
+while ($row = $res->fetch_assoc()) {
+    $json[] = [
+        'id' => htmlspecialchars($row['id']),
+        'veids' => 'Pirkt',
+        'majokla_tips' => 'Dzivoklis',
+        'cena' => htmlspecialchars($row['cena']),
+        'istabas' => htmlspecialchars($row['istabas']),
+        'platiba' => htmlspecialchars($row['platiba']),
+        'stavi' => htmlspecialchars($row['stavi']),
+        'pilseta' => htmlspecialchars($row['pilseta']),
+        'iela' => htmlspecialchars($row['iela']),
+        'majas_numurs' => htmlspecialchars($row['majas_numurs']),
+        'pirma_attela' => base64_encode($row['pirma_attela']),
+    ];
+}
+$stmt->close();
+
+// Māja - Iret
+$query = "
     SELECT mv.iret_id AS id, mv.cena_diena, mv.cena_nedela, mv.cena_menesis,
            mv.istabas, mv.platiba, mv.stavi_vai_stavs AS stavi,
            ad.pilseta, ad.iela, ad.majas_numurs,
@@ -53,18 +88,18 @@ $iret_vaicajums = "
     JOIN majuvieta_iret mv ON ds.id_sludinajums = mv.iret_id
     JOIN majuvieta_adrese ad ON mv.id_adrese = ad.adrese_id
     JOIN majuvieta_atteli att ON mv.id_atteli = att.attelu_kopums_id
-    WHERE ds.id_lietotajs = ? AND ds.sludinajuma_veids = 'Iret'
+    WHERE ds.id_lietotajs = ? AND ds.sludinajuma_veids = 'Iret' AND ds.majokla_tips = 'Maja'
 ";
 
-$stmt2 = $savienojums->prepare($iret_vaicajums);
-$stmt2->bind_param("i", $lietotaja_id);
-$stmt2->execute();
-$rez2 = $stmt2->get_result();
-
-while ($row = $rez2->fetch_assoc()) {
+$stmt = $savienojums->prepare($query);
+$stmt->bind_param("i", $lietotaja_id);
+$stmt->execute();
+$res = $stmt->get_result();
+while ($row = $res->fetch_assoc()) {
     $json[] = [
         'id' => htmlspecialchars($row['id']),
         'veids' => 'Iret',
+        'majokla_tips' => 'Maja',
         'cena_diena' => htmlspecialchars($row['cena_diena']),
         'cena_nedela' => htmlspecialchars($row['cena_nedela']),
         'cena_menesis' => htmlspecialchars($row['cena_menesis']),
@@ -77,7 +112,44 @@ while ($row = $rez2->fetch_assoc()) {
         'pirma_attela' => base64_encode($row['pirma_attela']),
     ];
 }
-$stmt2->close();
+$stmt->close();
+
+// Dzīvoklis - Iret
+$query = "
+    SELECT mv.iret_id AS id, mv.cena_diena, mv.cena_nedela, mv.cena_menesis,
+           mv.istabas, mv.platiba, mv.stavi_vai_stavs AS stavi,
+           ad.pilseta, ad.iela, ad.majas_numurs,
+           att.pirma_attela
+    FROM dzivote_saglabatie ds
+    JOIN majuvieta_iret mv ON ds.id_sludinajums = mv.iret_id
+    JOIN majuvieta_adrese ad ON mv.id_adrese = ad.adrese_id
+    JOIN majuvieta_atteli att ON mv.id_atteli = att.attelu_kopums_id
+    WHERE ds.id_lietotajs = ? AND ds.sludinajuma_veids = 'Iret' AND ds.majokla_tips = 'Dzivoklis'
+";
+
+$stmt = $savienojums->prepare($query);
+$stmt->bind_param("i", $lietotaja_id);
+$stmt->execute();
+$res = $stmt->get_result();
+while ($row = $res->fetch_assoc()) {
+    $json[] = [
+        'id' => htmlspecialchars($row['id']),
+        'veids' => 'Iret',
+        'majokla_tips' => 'Dzivoklis',
+        'cena_diena' => htmlspecialchars($row['cena_diena']),
+        'cena_nedela' => htmlspecialchars($row['cena_nedela']),
+        'cena_menesis' => htmlspecialchars($row['cena_menesis']),
+        'istabas' => htmlspecialchars($row['istabas']),
+        'platiba' => htmlspecialchars($row['platiba']),
+        'stavi' => htmlspecialchars($row['stavi']),
+        'pilseta' => htmlspecialchars($row['pilseta']),
+        'iela' => htmlspecialchars($row['iela']),
+        'majas_numurs' => htmlspecialchars($row['majas_numurs']),
+        'pirma_attela' => base64_encode($row['pirma_attela']),
+    ];
+}
+$stmt->close();
+
 $savienojums->close();
 
 echo json_encode($json);
