@@ -15,21 +15,21 @@ if (!isset($_SESSION['lietotajaLomaMV'])) {
     </div>
     <div class="kaste">
         <div class="profilaInfo">
-            <div class="kasteCentra">
-                <div class="profilaAttela">
-                    <i class="fa-solid fa-user"></i>
-                </div>
-                <h2>Sveiks, Jānis Ozols!</h2>
-            </div>
-            <div class="kastite">
-                <p><i class="fa-solid fa-envelope"></i> janis.ozols@gmail.com</p>
-                <p><i class="fa-solid fa-phone"></i> +371 20000</p>
-                <a href="./" class="btn">Rediģēt profilu</a>
+            <div id="profila_info">
             </div>
             <a class="btn" href="admin/database/logout.php"><i class="fa-solid fa-right-from-bracket"></i> Izlogoties</a>
         </div>
         <div class="tabulas">
+            <div class="tabulasSaraksts">
+                <button class="tabulaPoga atlasitaTabula" data-tab="sludinajumi_list">Sludinājumi</button>
+                <button class="tabulaPoga neAtlasitaTabula" data-tab="pieteikumi_list">Mani pieteikumi</button>
+                <button class="tabulaPoga neAtlasitaTabula" data-tab="ire_list">Mana īre</button>
+                <button class="tabulaPoga neAtlasitaTabula" data-tab="liet_pieteikumi_list">Lietotāju pieteikumi</button>
+                <button class="tabulaPoga neAtlasitaTabula" data-tab="liet_ire_list">Lietotāju īre</button>
+            </div>
+            <div id="tabula">
 
+            </div>
         </div>
     </div>
 </div>

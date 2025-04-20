@@ -64,7 +64,7 @@ Dzīvo Te ir ērta platforma mājokļu meklēšanai Latvijā. Mēs piedāvājam 
 - [x] Izīrēt mājokli
 - [x] Pieteikties iegādei
 - [ ] Pievienot sludinājumu
-- [ ] Lietotāju konta aplūkošana
+- [x] Lietotāju konta aplūkošana
 - [ ] Administratoru un moderatoru kontu aplūkošana
 - [ ] Lietotāja un moderatora pievienošana
 - [ ] Lietotāja un moderatora rediģēšana

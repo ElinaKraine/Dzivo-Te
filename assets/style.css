@@ -1399,14 +1399,99 @@ footer{
     display: flex;
     bottom: 7rem;
     position: relative;
+    gap: 5rem;
 
     .profilaInfo{
         width: 20%;
     }
 
     .tabulas{
-        width: 80%;
+        width: 100%;
+        margin-top: 9rem;
+
+        #tabula{
+            background: var(--light-gray);
+            border-radius: 1rem;
+            padding: 1rem;
+
+            .addBtn{
+                background: darkgreen;
+                color: white;
+                padding: .5rem;
+                cursor: pointer;
+                border-radius: .5rem;
+                margin: 1rem 0;
+                display: block;
+                width: 18%;
+                text-align: center;
+            }
+
+            .addBtn:hover{
+                background: green;
+            }
+            
+            table{
+                border-collapse: white;
+                width: 100%;
+
+                th{
+                    padding: .5rem 1rem;
+                    font-weight: 420;
+                    text-align: left;
+                    color: var(--dark-violet);
+                }
+            
+                td{
+                    padding: .5rem 1rem;
+                }
+            
+                tr:hover{
+                    background: var(--dark-gray);
+                }
+            
+                .ierakstaDarbibas{
+                    display: flex;
+                    gap: 1rem;
+                }
+            
+                .editBtn, .deleteBtn{
+                    cursor: pointer;
+                    color: var(--dark-violet);
+                }
+            
+                .deleteBtn{
+                    color: darkred;
+                    margin-left: 1rem;
+                }
+            
+                .deleteBtn:hover{
+                    color: red;
+                }
+
+                .editBtn:hover{
+                    color: var(--bright-violet);
+                }
+            }
+        }
     }
+}
+
+.tabulaPoga{
+    font-size: 1.2rem;
+    padding: .5rem 2rem;
+    cursor: pointer;
+    background: none;
+}
+
+.tabulaPoga:hover{
+    color: var(--bright-violet);
+}
+
+.atlasitaTabula{
+    background: var(--light-gray);
+    border-radius: 1rem 1rem 0 0;
+    font-weight: bold;
+    color: var(--dark-violet);
 }
 
 .kasteCentra{
@@ -1417,19 +1502,13 @@ footer{
     gap: 1.5rem;
 }
 
-.profilaAttela{
-    border: 1px solid var(--dark-violet);
+.profilaAttela img{
     box-shadow: var(--box-shadow);
     border-radius: 50%;
-    padding: 3rem 7rem;
-    width: 50%;
+    width: 15rem;
     display: flex;
-    justify-content: center;
-    background: white;
-}
-
-.profilaAttela i{
-    font-size: 7rem;
+    height: 15rem;
+    object-fit: cover;
 }
 
 .profilaInfo{
@@ -1442,6 +1521,7 @@ footer{
         display: flex;
         flex-direction: column;
         gap: 1rem;
+        margin-top: 1rem;
 
         .btn{
             background: var(--dark-violet);
@@ -1462,5 +1542,5 @@ footer{
 }
 
 .profilsKaste .btn:hover{
-    background: black;
+    background: red;
 }
