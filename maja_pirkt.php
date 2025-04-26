@@ -1,5 +1,4 @@
 <?php
-session_start();
 $page = "majas";
 require "assets/header.php";
 require "admin/database/con_db.php";
@@ -7,18 +6,25 @@ require "admin/database/con_db.php";
 if (isset($_GET['id'])) {
     $maja_id = intval($_GET['id']);
     $tips = "Mājas";
+    $veids = "Pirkt";
+    $statuss = "Apsiprināts | Publicēts";
 
     $stmt = $savienojums->prepare("SELECT * FROM majuvieta_pirkt 
-                                    INNER JOIN majuvieta_atteli ma ON majuvieta_pirkt.id_atteli = ma.attelu_kopums_id 
-                                    INNER JOIN majuvieta_adrese md ON majuvieta_pirkt.id_adrese = md.adrese_id
+                                    INNER JOIN majuvieta_adrese md ON majuvieta_pirkt.pirkt_id = md.id_sludinajums
+                                    INNER JOIN majuvieta_atteli ma ON majuvieta_pirkt.pirkt_id = ma.id_sludinajums 
                                     INNER JOIN majuvieta_lietotaji ml ON majuvieta_pirkt.id_ipasnieks = ml.lietotaja_id 
-                                    WHERE pirkt_id = ? AND majokla_tips = ?");
+                                    WHERE pirkt_id = ? 
+                                    AND majokla_tips = ? 
+                                    AND md.sludinajuma_veids = ?
+                                    AND ma.sludinajuma_veids = ?
+                                    AND majuvieta_pirkt.statuss = ?
+                                ");
 
     if (!$stmt) {
         die("Database query failed: " . mysqli_error($savienojums));
     }
 
-    $stmt->bind_param("is", $maja_id, $tips);
+    $stmt->bind_param("issss", $maja_id, $tips, $veids, $veids, $statuss);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -70,7 +76,7 @@ if (isset($_GET['id'])) {
                 <?php } ?>
             </div>
             <div class="papildInfo">
-                <p>Latvija, <?php echo $sludinajums['pilseta'] . " " . $sludinajums['pasts_indekss']; ?></p>
+                <p>Latvija, <?php echo $sludinajums['pilseta']; ?></p>
                 <div class="ikoninasArInfo">
                     <p><i class='fa-solid fa-door-open'></i> <?php echo $sludinajums['istabas']; ?></p>
                     <p><i class='fa-solid fa-ruler-combined'></i> <?php echo $sludinajums['platiba']; ?> m<sup>2</sup></p>

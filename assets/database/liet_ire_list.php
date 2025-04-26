@@ -6,7 +6,7 @@ if (isset($_SESSION['lietotajaIdDt'])) {
     $lietotajaId = $_SESSION['lietotajaIdDt'];
 
     $stmt = $savienojums->prepare(
-        'SELECT 
+        "SELECT 
             mi.iziresana_id AS id,
             mi.registresanas_datums,
             mi.izrakstisanas_datums,
@@ -19,9 +19,10 @@ if (isset($_SESSION['lietotajaIdDt'])) {
             ml.epasts
         FROM majuvieta_iziresana mi
         JOIN majuvieta_iret mr ON mi.id_majuvieta_iret = mr.iret_id
-        JOIN majuvieta_adrese ad ON mr.id_adrese = ad.adrese_id
+        INNER JOIN majuvieta_adrese ad ON mr.iret_id = ad.id_sludinajums
         JOIN majuvieta_lietotaji ml ON mi.id_lietotajs = ml.lietotaja_id 
-        WHERE mr.id_ipasnieks = ?'
+        WHERE mr.id_ipasnieks = ? AND ad.sludinajuma_veids = 'Iret'
+        ORDER BY mi.izveidosanas_datums DESC"
     );
     $stmt->bind_param('i', $lietotajaId);
 

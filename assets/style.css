@@ -28,26 +28,18 @@
     color: #fff;
 }
 
-html{
-    scroll-behavior: smooth;
-}
+html{ scroll-behavior: smooth; }
 
-html::-webkit-scrollbar{
-    width: 1rem;
-}
+html::-webkit-scrollbar{ width: 1rem; }
 
-html::-webkit-scrollbar-track{
-    background: black;
-}
+html::-webkit-scrollbar-track{ background: black; }
 
 html::-webkit-scrollbar-thumb{
     background: var(--light-violet);
     border-radius: 1rem;
 }
 
-section{
-    padding: 4rem 5%;
-}
+section{ padding: 4rem 5%; }
 
 /* Header: */
 header{
@@ -74,9 +66,7 @@ header{
     padding: .5rem 1rem;
 }
 
-.iconProfils:hover{
-    background: var(--bright-violet);
-}
+.iconProfils:hover{ background: var(--bright-violet); }
 
 .logo{
     font-size: 2rem;
@@ -89,9 +79,7 @@ header{
     color: black;
 }
 
-.logo img{
-    width: 4rem;
-}
+.logo img{ width: 4rem; }
 
 .navbar{
     width: 70%;
@@ -121,17 +109,11 @@ header{
     cursor: pointer;
 }
 
-.btn:hover{
-    background: var(--dark-violet-2);
-}
+.btn:hover{ background: var(--dark-violet-2); }
 
-.current{
-    font-weight: 600;
-}
+.current{ font-weight: 600; }
 
-.navbar .current{
-    color: var(--dark-violet);
-}
+.navbar .current{ color: var(--dark-violet); }
 
 /* index.php: */
 .galvena {
@@ -186,9 +168,7 @@ header{
     align-items: center;
 }
 
-.galvenaStatistika img{
-    width: 5rem;
-}
+.galvenaStatistika img{ width: 5rem; }
 
 .kasteInfo{
     display: flex;
@@ -256,17 +236,11 @@ header{
     gap: 1rem;
 }
 
-.pirmaAttela, .tresaAttela{
-    flex: 25%;
-}
+.pirmaAttela, .tresaAttela{ flex: 25%; }
 
-.pirmaAttela img, .tresaAttela img{
-    height: 87%;
-}
+.pirmaAttela img, .tresaAttela img{ height: 87%; }
 
-.otraAttela{
-    flex: 50%;
-}
+.otraAttela{ flex: 50%; }
 
 .attelas img{
     width: 100%;
@@ -325,9 +299,7 @@ header{
     border-radius: 2rem;
 }
 
-.mazaKaste img{
-    width: 10rem;
-}
+.mazaKaste img{ width: 10rem; }
 
 .mazaKaste h3{
     color: var(--dark-violet-2);
@@ -342,21 +314,13 @@ header{
     line-height: 2;
 }
 
-#tresaisTeksts{
-    width: 80%;
-}
+#tresaisTeksts{ width: 80%; }
 
-#pedejiSludinajumi{
-    padding: 0 5% 5rem;
-}
+#pedejiSludinajumi{ padding: 0 5% 5rem; }
 
-#pedejiSludinajumi .lielaKaste{
-    align-items: flex-start;
-}
+#pedejiSludinajumi .lielaKaste{ align-items: flex-start; }
 
-.sludinajums{
-    position: relative;
-}
+.sludinajums{ position: relative; }
 
 .sludinajums:hover{
     transform: translate(0, -2rem);
@@ -374,9 +338,7 @@ header{
     font-size: 1.5rem;
 }
 
-#adrese, #papildInfo{
-    font-size: 1.1rem;
-}
+#adrese, #papildInfo{ font-size: 1.1rem; }
 
 #papildInfo{
     display: flex;
@@ -385,9 +347,7 @@ header{
     margin: .5rem 0;
 }
 
-#papildInfo i{
-    color: var(--dark-violet-2);
-}
+#papildInfo i{ color: var(--dark-violet-2); }
 
 .sirds{
     position: absolute;
@@ -401,9 +361,7 @@ header{
     color: white;
 }
 
-.sirds i:hover{
-    color: red;
-}
+.sirds i:hover{ color: red; }
 
 .attela-sirds {
     position: relative;
@@ -429,15 +387,11 @@ footer{
     gap: 3rem;
     .logo{
         align-items: baseline;
-        img{
-            width: 7rem;
-        }
+        img{ width: 7rem; }
     }
 }
 
-.visparigsTekst{
-    text-align: left;
-}
+.visparigsTekst{ text-align: left; }
 
 .visparigaInfo h1{
     color: var(--light-violet);
@@ -445,9 +399,7 @@ footer{
     margin-bottom: 1rem;
 }
 
-.visparigaInfo p{
-    font-size: 1.3rem;
-}
+.visparigaInfo p{ font-size: 1.3rem; }
 
 .kontakti{
     display: flex;
@@ -506,9 +458,7 @@ footer{
     border-radius: 5rem;
 }
 
-.attela, .loginDala {
-    flex: 1;
-}
+.attela, .loginDala { flex: 1; }
 
 .attela img {
     width: 100%;
@@ -527,9 +477,7 @@ footer{
     gap: 3rem;
 }
 
-.loginDala h2{
-    font-size: 2rem;
-}
+.loginDala h2{ font-size: 2rem; }
 
 .loginDala form, .registracijasKaste form{
     display: flex;
@@ -566,9 +514,7 @@ footer{
     color: var(--dark-violet);
 }
 
-.loginDala a:hover{
-    color: var(--bright-violet);
-}
+.loginDala a:hover{ color: var(--bright-violet); }
 
 .pazinojums{
     text-align: center;
@@ -624,9 +570,7 @@ footer{
     margin-bottom: 1rem;
 }
 
-.majuVieta img{
-    width: 5rem;
-}
+.majuVieta img{ width: 5rem; }
 
 #vardsUzvards{
     display: flex;
@@ -634,9 +578,7 @@ footer{
     margin-top: 1rem;
 }
 
-.registracijasKaste form{
-    width: 65%;
-}
+.registracijasKaste form{ width: 65%; }
 
 .registracijasKaste a{
     font-size: .9rem;
@@ -660,15 +602,13 @@ footer{
     left: 0;
     bottom: 0;
     right: 0;
-    z-index: 1;
+    z-index: 3;
     display: none;
     justify-content: center;
     align-items: center;
 }
 
-.modal.modal-active{
-    display: flex;
-}
+.modal.modal-active{ display: flex; }
 
 .modal-box{
     background: white;
@@ -708,9 +648,7 @@ footer{
     font-size: 1rem;
 }
 
-.modal.modal-active{
-    display: flex;
-}
+.modal.modal-active{ display: flex; }
 
 /* ParMums.php: */
 .parMums{
@@ -737,21 +675,13 @@ footer{
     margin-bottom: 2rem;
 }
 
-.parMums img{
-    height: 100%;
-}
+.parMums img{ height: 100%; }
 
-.parMums1{
-    flex: 25%;
-}
+.parMums1{ flex: 25%; }
 
-.parMums2{
-    flex: 45%;
-}
+.parMums2{ flex: 45%; }
 
-.parMums3{
-    flex: 30%;
-}
+.parMums3{ flex: 30%; }
 
 .komentariji{
     background: var(--light-violet);
@@ -791,27 +721,21 @@ footer{
     justify-content: center;
 }
 
-.teksts p{
-    line-height: 1.5;
-}
+.teksts p{ line-height: 1.5; }
 
 .komentarijaIpasnieks{
     font-weight: bold;
     color: var(--dark-violet);
 }
 
-.komentarijaIpasnieks span{
-    font-weight: 300;
-}
+.komentarijaIpasnieks span{ font-weight: 300; }
 
 .lietotajaDarbibas h1{
     text-align: center;
     font-size: 2.5rem;
 }
 
-.lietotajaDarbibas h1 span{
-    color: var(--dark-violet-2);
-}
+.lietotajaDarbibas h1 span{ color: var(--dark-violet-2); }
 
 .darbibas{
     display: flex;
@@ -893,9 +817,7 @@ footer{
     font-size: 1.1rem;
 }
 
-#sazinaties form textarea{
-    resize: none;
-}
+#sazinaties form textarea, #modal-admin-sludinajums textarea{ resize: none; }
 
 #sazinaties form .btn{
     color: var(--dark-violet);
@@ -908,9 +830,7 @@ footer{
     font-weight: bold;
 }
 
-#sazinaties form span{
-    color: red;
-}
+#sazinaties form span{ color: red; }
 
 #pazinojums{
     position: fixed;
@@ -936,14 +856,10 @@ footer{
 }
 
 @keyframes blinker {
-    50%{
-        opacity: 20%;
-    }
+    50%{ opacity: 20%; }
 }
 
-#pazinojums i:hover{
-    cursor: pointer;
-}
+#pazinojums i:hover{ cursor: pointer; }
 
 /* Majas.php: */
 .galvenieFiltri{
@@ -979,13 +895,9 @@ footer{
     background: white;
 }
 
-.neAtlasits, .neAtlasitsDziv{
-    background: none;
-}
+.neAtlasits, .neAtlasitsDziv{ background: none; }
 
-.neAtlasits:hover, .neAtlasitsDziv:hover{
-    background: var(--dark-gray);
-}
+.neAtlasits:hover, .neAtlasitsDziv:hover{ background: var(--dark-gray); }
 
 .darijumuVeids button{
     border-radius: 1.3rem;
@@ -995,9 +907,7 @@ footer{
     cursor: pointer;
 }
 
-.meklesana{
-    display: flex;
-}
+.meklesana{ display: flex; }
 
 .meklesana input{
     font-size: 1.1rem;
@@ -1014,9 +924,7 @@ footer{
     padding: 1rem 1.3rem;
 }
 
-.mekleteFiltrus i{
-    padding-left: .5rem;
-}
+.mekleteFiltrus i{ padding-left: .5rem; }
 
 .mekleteFiltrus:hover{
     cursor: pointer;
@@ -1031,9 +939,7 @@ footer{
     padding: 1rem 1.2rem;
 }
 
-.izdest-filtrus:hover{
-    background: rgb(76, 0, 0);
-}
+.izdest-filtrus:hover{ background: rgb(76, 0, 0); }
 
 .galvenieFiltri .kaste button{
     font-size: 1.1rem;
@@ -1042,9 +948,7 @@ footer{
     padding: 1rem 1.3rem;
 }
 
-.galvenieFiltri .kaste button i{
-    margin-left: 1rem;
-}
+.galvenieFiltri .kaste button i{ margin-left: 1rem; }
 
 .galvenieFiltri .kaste button:hover{
     cursor: pointer;
@@ -1108,17 +1012,11 @@ footer{
     margin-top: 1.5rem;
 }
 
-.karte{
-    flex: 35%;
-}
+.karte{ flex: 35%; }
 
-.lielaKreisaPuse h2, .iresanasLapa h2{
-    font-weight: 400;
-}
+.lielaKreisaPuse h2, .iresanasLapa h2{ font-weight: 400; }
 
-.kartosana, .kartosanaPD{
-    margin-top: 1.2rem;
-}
+.kartosana, .kartosanaPD{ margin-top: 1.2rem; }
 
 .kartosana select, .kartosanaPD select{
     padding: .5rem 0;
@@ -1167,13 +1065,9 @@ footer{
 }
 
 /* maja_pirkt.php: */
-.majaLapa{
-    padding: 4rem 15%;
-}
+.majaLapa{ padding: 4rem 15%; }
 
-.majaLapa .attela-sirds{
-    height: auto;
-}
+.majaLapa .attela-sirds{ height: auto; }
 
 .majaLapa .attela-sirds .sirds i{
     filter: drop-shadow(2px 4px 6px black);
@@ -1189,13 +1083,9 @@ footer{
     border-radius: .5rem;
 }
 
-.visasBildes .viensAttela{
-    width: 70%;
-}
+.visasBildes .viensAttela{ width: 70%; }
 
-.visasBildes .viensAttela img{
-    height: 40.5rem;
-}
+.visasBildes .viensAttela img{ height: 40.5rem; }
 
 .visasBildes .diviAttela img, .visasBildes .trisAttela img, .visasBildes .diviAttela{
     height: 20rem;
@@ -1221,9 +1111,7 @@ footer{
     padding: 0 1rem;
 }
 
-.pamatInfo h2{
-    font-size: 2.5rem;
-}
+.pamatInfo h2{ font-size: 2.5rem; }
 
 .pamatInfo .btn{
     background: var(--dark-violet-2);
@@ -1232,9 +1120,7 @@ footer{
     align-items: center;
 }
 
-.pamatInfo .btn:hover{
-    background: var(--dark-violet);
-}
+.pamatInfo .btn:hover{ background: var(--dark-violet); }
 
 .papildInfo{
     margin-top: 1rem;
@@ -1301,13 +1187,9 @@ footer{
     align-items: center;
 }
 
-.iresanasLapa .kreisaPuse{
-    margin-top: 1.5rem;
-}
+.iresanasLapa .kreisaPuse{ margin-top: 1.5rem; }
 
-.labaPuse{
-    width: 100%;
-}
+.labaPuse{ width: 100%; }
 
 .labaPuse .iresanasDatumi, .iresanasDatumiDziv{
     display: flex;
@@ -1332,9 +1214,7 @@ footer{
     cursor: pointer;
 }
 
-.datumi p{
-    font-size: 1.1rem;
-}
+.datumi p{ font-size: 1.1rem; }
 
 .iresanasDatumi button, .iresanasDatumiDziv button{
     background: var(--dark-violet-2);
@@ -1360,9 +1240,7 @@ footer{
     padding: 0 4%;
 }
 
-.sirdsSarkans i{
-    color: red;
-}
+.sirdsSarkans i{ color: red; }
 
 .kontainerSaglabatie .sludinajumi{
     display: flex;
@@ -1372,9 +1250,7 @@ footer{
 }
 
 /* profils.php */
-.profilsKaste{
-    margin-top: 5.9rem;
-}
+.profilsKaste{ margin-top: 5.9rem; }
 
 .profilsKaste .fons{
     background-image: url("../images/profilsBackground.jpg");
@@ -1401,9 +1277,7 @@ footer{
     position: relative;
     gap: 5rem;
 
-    .profilaInfo{
-        width: 20%;
-    }
+    .profilaInfo{ width: 20%; }
 
     .tabulas{
         width: 100%;
@@ -1426,9 +1300,7 @@ footer{
                 text-align: center;
             }
 
-            .addBtn:hover{
-                background: green;
-            }
+            .addBtn:hover{ background: green; }
             
             table{
                 border-collapse: white;
@@ -1441,13 +1313,9 @@ footer{
                     color: var(--dark-violet);
                 }
             
-                td{
-                    padding: .5rem 1rem;
-                }
+                td{ padding: .5rem 1rem; }
             
-                tr:hover{
-                    background: var(--dark-gray);
-                }
+                tr:hover{ background: var(--dark-gray); }
             
                 .ierakstaDarbibas{
                     display: flex;
@@ -1464,13 +1332,16 @@ footer{
                     margin-left: 1rem;
                 }
             
-                .deleteBtn:hover{
-                    color: red;
+                .deleteBtn:hover{ color: red; }
+
+                .editBtn:hover{ color: var(--bright-violet); }
+
+                .sarkans, .zals{ 
+                    color: darkred;
+                    font-weight: bold;
                 }
 
-                .editBtn:hover{
-                    color: var(--bright-violet);
-                }
+                .zals{ color: darkgreen; }
             }
         }
     }
@@ -1483,9 +1354,7 @@ footer{
     background: none;
 }
 
-.tabulaPoga:hover{
-    color: var(--bright-violet);
-}
+.tabulaPoga:hover{ color: var(--bright-violet); }
 
 .atlasitaTabula{
     background: var(--light-gray);
@@ -1523,13 +1392,9 @@ footer{
         gap: 1rem;
         margin-top: 1rem;
 
-        .btn{
-            background: var(--dark-violet);
-        }
+        .btn{ background: var(--dark-violet); }
 
-        .btn:hover{
-            background: var(--bright-violet);
-        }
+        .btn:hover{ background: var(--bright-violet); }
     }
 } 
 
@@ -1541,6 +1406,92 @@ footer{
     font-size: 1.3rem;
 }
 
-.profilsKaste .btn:hover{
-    background: red;
+.profilsKaste .btn:hover{ background: red; }
+
+#modal-admin-sludinajums, #modal-admin-pieteikums{
+    .modal-box{ padding: 0; max-width: 90rem; }
+
+    .virsraksts{
+        padding: 1rem 3rem;
+        display: flex;
+        justify-content: space-between;
+        background: var(--dark-violet);
+        color: white;
+        border-radius: .5rem .5rem 0 0;
+        h2{
+            font-size: 1.1rem;
+            font-weight: normal;
+            text-align: left;
+            padding: 0;
+        }
+    }
+
+    .close-modal{
+        font-size: 1.1rem;
+        position: relative;
+        top: 0;
+        right: 0;
+        background: none;
+        padding: 0;
+    }
+
+    .close-modal:hover{ color: red; }
+
+    #sludinajumaForma{
+        max-height: 42rem;
+        overflow-y: auto;
+    }
+
+    .formElements{
+        display: flex;
+        flex-direction: column;
+        width: 60rem;
+        padding: 2rem 3rem 1rem;
+        font-size: 1.1rem;
+        gap: 2rem;
+
+        .rinda{
+            display: flex;
+
+            label{ 
+                width: 30%;
+                display: flex;
+                align-items: center; 
+            }
+
+            input, select, textarea{ 
+                width: 70%;
+                font-size: 1.1rem;
+                padding: .5rem 1rem;
+                border-radius: .5rem;
+                background: var(--light-gray);
+            }
+        }
+    }
+
+    .btn{
+        background: darkgreen;
+        border-radius: .5rem;
+        font-size: 1.1rem;
+        margin: 1rem 3rem;
+        width: auto;
+    }
+
+    .btn:hover{ background: green; }
+}
+
+#modal-admin-pieteikums{
+    .formElements{
+        display: grid;
+        grid-template-columns: 35% 65%;
+        align-items: center;
+        width: 45rem;
+
+        input, select{
+            font-size: 1.1rem;
+            padding: .5rem 1rem;
+            border-radius: .5rem;
+            background: var(--light-gray);
+        }
+    }
 }

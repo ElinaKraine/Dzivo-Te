@@ -1,11 +1,10 @@
 <?php
-session_start();
 $page = "dzivokli";
 require "assets/header.php";
 require "admin/database/con_db.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
-    $maja_id = intval($_POST['id']);
+    $dzivoklis_id = intval($_POST['id']);
     $no = $_POST['no'];
     $lidz = $_POST['lidz'];
     $total = $_POST['total'];
@@ -14,18 +13,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
     $dienas = $datumsNo->diff($datumsLidz)->days;
     $formattedNo = $datumsNo->format('d.m.Y');
     $formattedLidz = $datumsLidz->format('d.m.Y');
+    $tips = "Dzīvoklis";
+    $veids = "Iret";
+    $statuss = "Apsiprināts | Publicēts";
 
     $stmt = $savienojums->prepare("SELECT * FROM majuvieta_iret 
-                                    INNER JOIN majuvieta_atteli ma ON majuvieta_iret.id_atteli = ma.attelu_kopums_id 
-                                    INNER JOIN majuvieta_adrese md ON majuvieta_iret.id_adrese = md.adrese_id
+                                    INNER JOIN majuvieta_adrese md ON majuvieta_iret.iret_id = md.id_sludinajums
+                                    INNER JOIN majuvieta_atteli ma ON majuvieta_iret.iret_id = ma.id_sludinajums
                                     INNER JOIN majuvieta_lietotaji ml ON majuvieta_iret.id_ipasnieks = ml.lietotaja_id 
-                                    WHERE iret_id = ?");
+                                    WHERE iret_id = ?
+                                    AND majokla_tips = ?
+                                    AND md.sludinajuma_veids = ?
+                                    AND ma.sludinajuma_veids = ?
+                                    AND majuvieta_iret.statuss = ?");
 
     if (!$stmt) {
         die("Database query failed: " . mysqli_error($savienojums));
     }
 
-    $stmt->bind_param("i", $maja_id);
+    $stmt->bind_param("issss", $dzivoklis_id, $tips, $veids, $veids, $statuss);
     $stmt->execute();
     $result = $stmt->get_result();
 

@@ -11,7 +11,6 @@ if (!isset($_SESSION['lietotajaIdDt'])) {
 
 $lietotaja_id = $_SESSION['lietotajaIdDt'];
 $json = [];
-
 // Maja - Pirkt
 $query = "
     SELECT mv.pirkt_id AS id, mv.cena, mv.istabas, mv.platiba, mv.stavs_vai_stavi AS stavi,
@@ -19,9 +18,14 @@ $query = "
            att.pirma_attela
     FROM dzivote_saglabatie ds
     JOIN majuvieta_pirkt mv ON ds.id_sludinajums = mv.pirkt_id
-    JOIN majuvieta_adrese ad ON mv.id_adrese = ad.adrese_id
-    JOIN majuvieta_atteli att ON mv.id_atteli = att.attelu_kopums_id
-    WHERE ds.id_lietotajs = ? AND ds.sludinajuma_veids = 'Pirkt' AND ds.majokla_tips = 'Maja'
+    INNER JOIN majuvieta_adrese ad ON mv.pirkt_id = ad.id_sludinajums
+    INNER JOIN majuvieta_atteli att ON mv.pirkt_id = att.id_sludinajums
+    WHERE ds.id_lietotajs = ?
+    AND ds.sludinajuma_veids = 'Pirkt'
+    AND ds.majokla_tips = 'Maja'
+    AND att.sludinajuma_veids = 'Pirkt'
+    AND ad.sludinajuma_veids = 'Pirkt'
+    AND mv.statuss = 'Apsiprināts | Publicēts'
 ";
 
 $stmt = $savienojums->prepare($query);
@@ -52,9 +56,14 @@ $query = "
            att.pirma_attela
     FROM dzivote_saglabatie ds
     JOIN majuvieta_pirkt mv ON ds.id_sludinajums = mv.pirkt_id
-    JOIN majuvieta_adrese ad ON mv.id_adrese = ad.adrese_id
-    JOIN majuvieta_atteli att ON mv.id_atteli = att.attelu_kopums_id
-    WHERE ds.id_lietotajs = ? AND ds.sludinajuma_veids = 'Pirkt' AND ds.majokla_tips = 'Dzivoklis'
+    INNER JOIN majuvieta_adrese ad ON mv.pirkt_id = ad.id_sludinajums
+    INNER JOIN majuvieta_atteli att ON mv.pirkt_id = att.id_sludinajums
+    WHERE ds.id_lietotajs = ?
+    AND ds.sludinajuma_veids = 'Pirkt'
+    AND ds.majokla_tips = 'Dzivoklis'
+    AND att.sludinajuma_veids = 'Pirkt'
+    AND ad.sludinajuma_veids = 'Pirkt'
+    AND mv.statuss = 'Apsiprināts | Publicēts'
 ";
 
 $stmt = $savienojums->prepare($query);
@@ -86,9 +95,14 @@ $query = "
            att.pirma_attela
     FROM dzivote_saglabatie ds
     JOIN majuvieta_iret mv ON ds.id_sludinajums = mv.iret_id
-    JOIN majuvieta_adrese ad ON mv.id_adrese = ad.adrese_id
-    JOIN majuvieta_atteli att ON mv.id_atteli = att.attelu_kopums_id
-    WHERE ds.id_lietotajs = ? AND ds.sludinajuma_veids = 'Iret' AND ds.majokla_tips = 'Maja'
+    INNER JOIN majuvieta_adrese ad ON mv.iret_id = ad.id_sludinajums
+    INNER JOIN majuvieta_atteli att ON mv.iret_id = att.id_sludinajums
+    WHERE ds.id_lietotajs = ?
+    AND ds.sludinajuma_veids = 'Iret'
+    AND ds.majokla_tips = 'Maja'
+    AND att.sludinajuma_veids = 'Iret'
+    AND ad.sludinajuma_veids = 'Iret'
+    AND mv.statuss = 'Apsiprināts | Publicēts'
 ";
 
 $stmt = $savienojums->prepare($query);
@@ -122,9 +136,14 @@ $query = "
            att.pirma_attela
     FROM dzivote_saglabatie ds
     JOIN majuvieta_iret mv ON ds.id_sludinajums = mv.iret_id
-    JOIN majuvieta_adrese ad ON mv.id_adrese = ad.adrese_id
-    JOIN majuvieta_atteli att ON mv.id_atteli = att.attelu_kopums_id
-    WHERE ds.id_lietotajs = ? AND ds.sludinajuma_veids = 'Iret' AND ds.majokla_tips = 'Dzivoklis'
+    INNER JOIN majuvieta_adrese ad ON mv.iret_id = ad.id_sludinajums
+    INNER JOIN majuvieta_atteli att ON mv.iret_id = att.id_sludinajums
+    WHERE ds.id_lietotajs = ?
+    AND ds.sludinajuma_veids = 'Iret'
+    AND ds.majokla_tips = 'Dzivoklis'
+    AND att.sludinajuma_veids = 'Iret'
+    AND ad.sludinajuma_veids = 'Iret'
+    AND mv.statuss = 'Apsiprināts | Publicēts'
 ";
 
 $stmt = $savienojums->prepare($query);

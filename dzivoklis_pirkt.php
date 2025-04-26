@@ -1,5 +1,4 @@
 <?php
-session_start();
 $page = "dzivokli";
 require "assets/header.php";
 require "admin/database/con_db.php";
@@ -7,18 +6,24 @@ require "admin/database/con_db.php";
 if (isset($_GET['id'])) {
     $dzivoklis_id = intval($_GET['id']);
     $tips = "Dzīvoklis";
+    $veids = "Pirkt";
+    $statuss = "Apsiprināts | Publicēts";
 
     $stmt = $savienojums->prepare("SELECT * FROM majuvieta_pirkt 
-                                    INNER JOIN majuvieta_atteli ma ON majuvieta_pirkt.id_atteli = ma.attelu_kopums_id 
-                                    INNER JOIN majuvieta_adrese md ON majuvieta_pirkt.id_adrese = md.adrese_id
+                                    INNER JOIN majuvieta_adrese md ON majuvieta_pirkt.pirkt_id = md.id_sludinajums
+                                    INNER JOIN majuvieta_atteli ma ON majuvieta_pirkt.pirkt_id = ma.id_sludinajums 
                                     INNER JOIN majuvieta_lietotaji ml ON majuvieta_pirkt.id_ipasnieks = ml.lietotaja_id 
-                                    WHERE pirkt_id = ? AND majokla_tips = ?");
+                                    WHERE pirkt_id = ?
+                                    AND majokla_tips = ?
+                                    AND md.sludinajuma_veids = ?
+                                    AND ma.sludinajuma_veids = ?
+                                    AND majuvieta_pirkt.statuss = ?");
 
     if (!$stmt) {
         die("Database query failed: " . mysqli_error($savienojums));
     }
 
-    $stmt->bind_param("is", $dzivoklis_id, $tips);
+    $stmt->bind_param("issss", $dzivoklis_id, $tips, $veids, $veids, $statuss);
     $stmt->execute();
     $result = $stmt->get_result();
 

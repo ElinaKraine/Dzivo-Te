@@ -1,5 +1,4 @@
 <?php
-session_start();
 $page = "majas";
 require "assets/header.php";
 require "admin/database/con_db.php";
@@ -14,18 +13,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
     $dienas = $datumsNo->diff($datumsLidz)->days;
     $formattedNo = $datumsNo->format('d.m.Y');
     $formattedLidz = $datumsLidz->format('d.m.Y');
+    $veids = "Iret";
+    $statuss = "Apsiprināts | Publicēts";
 
     $stmt = $savienojums->prepare("SELECT * FROM majuvieta_iret 
-                                    INNER JOIN majuvieta_atteli ma ON majuvieta_iret.id_atteli = ma.attelu_kopums_id 
-                                    INNER JOIN majuvieta_adrese md ON majuvieta_iret.id_adrese = md.adrese_id
+                                    INNER JOIN majuvieta_adrese md ON majuvieta_iret.iret_id = md.id_sludinajums
+                                    INNER JOIN majuvieta_atteli ma ON majuvieta_iret.iret_id = ma.id_sludinajums
                                     INNER JOIN majuvieta_lietotaji ml ON majuvieta_iret.id_ipasnieks = ml.lietotaja_id 
-                                    WHERE iret_id = ?");
+                                    WHERE iret_id = ? 
+                                    AND md.sludinajuma_veids = ?
+                                    AND ma.sludinajuma_veids = ?
+                                    AND majuvieta_iret.statuss = ?");
 
     if (!$stmt) {
         die("Database query failed: " . mysqli_error($savienojums));
     }
 
-    $stmt->bind_param("i", $maja_id);
+    $stmt->bind_param("isss", $maja_id, $veids, $veids, $statuss);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -85,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
                 <?php } ?>
             </div>
             <div class="papildInfo">
-                <p>Latvija, <?php echo $sludinajums['pilseta'] . " " . $sludinajums['pasts_indekss']; ?></p>
+                <p>Latvija, <?php echo $sludinajums['pilseta']; ?></p>
                 <div class="ikoninasArInfo">
                     <p><i class='fa-solid fa-door-open'></i> <?php echo $sludinajums['istabas']; ?></p>
                     <p><i class='fa-solid fa-ruler-combined'></i> <?php echo $sludinajums['platiba']; ?> m<sup>2</sup></p>

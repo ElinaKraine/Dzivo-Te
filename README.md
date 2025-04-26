@@ -24,7 +24,7 @@ Dzīvo Te ir ērta platforma mājokļu meklēšanai Latvijā. Mēs piedāvājam 
 
 ## To do list:
 
-- [ ] Izstrādāt mājaslapas dizainu (Figma)
+- [x] Izstrādāt mājaslapas dizainu (Figma)
 - [x] Izveidot datu bāzi
 - [ ] Realizēt mājaslapas dizainu (Front-end)
 - [ ] Izveidot mājaslapas funkcionālu daļu (Back-end)
@@ -39,14 +39,16 @@ Dzīvo Te ir ērta platforma mājokļu meklēšanai Latvijā. Mēs piedāvājam 
 - [x] Mājās
 - [x] Dzīvokļi
 - [x] Saglabātie
-- [ ] Lietotāja konts
+- [x] Lietotāja konts
 - [x] Ielogošanas lapa
 - [x] Reģistrēšanas lapa
 - [ ] Responsivitātie mājaslapā
 - [ ] Admin daļa: Sākumlapa
-- [ ] Admin daļa: Sludinājumi
 - [ ] Admin daļa: Lietotāji
-- [ ] Admin daļa: Pieteikumi
+- [ ] Admin daļa: Pārdošanas sludinājumi
+- [ ] Admin daļa: Izīrēšanas sludinājumi
+- [ ] Admin daļa: Pieteikumi iegādei
+- [ ] Admin daļa: Īres ieraksti
 
 ### Back-end:
 
@@ -63,17 +65,25 @@ Dzīvo Te ir ērta platforma mājokļu meklēšanai Latvijā. Mēs piedāvājam 
 - [x] Mājokļa dzēšana saglabātajam
 - [x] Izīrēt mājokli
 - [x] Pieteikties iegādei
-- [ ] Pievienot sludinājumu
+- [x] Pievienot sludinājumu (lietotājs)
 - [x] Lietotāju konta aplūkošana
+- [x] Dzēst sludinājumu (lietotājs)
+- [ ] Rediģēt sludinājumu (lietotājs)
+- [x] Dzēst pieteikumu (lietotājs)
+- [x] Nomainīt lietotāja pieteikuma statusu (lietotājs)
+- [ ] Nomainīt lietotāja informāciju
 - [ ] Administratoru un moderatoru kontu aplūkošana
 - [ ] Lietotāja un moderatora pievienošana
 - [ ] Lietotāja un moderatora rediģēšana
 - [ ] Lietotāja un moderatora dzēšana
-- [ ] Mājokļa pievienošana
-- [ ] Mājokļa rediģēšana
-- [ ] Mājokļa dzēšana
-- [ ] Pieteikuma statusa izmaiņas
-- [ ] Sludinājuma statusa izmaiņas
+- [ ] Sludinājuma pievienošana
+- [ ] Sludinājuma rediģēšana
+- [ ] Sludinājuma dzēšana
+- [ ] Pieteikuma rediģēšana
+- [ ] Pieteikuma dzēšana
+- [ ] Īres ieraksts pievienošana
+- [ ] Īres ieraksts rediģēšana
+- [ ] Īres ieraksts dzēšana
 
 ### Dizaina iedvesma:
 

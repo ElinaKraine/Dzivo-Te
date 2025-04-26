@@ -34,4 +34,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["apstiprinat"])) {
     }
 }
 
-header("Location: https://kristovskis.lv/3pt2/kraine/Dzivo-Te/majas.php");
+header("Location: profils.php");

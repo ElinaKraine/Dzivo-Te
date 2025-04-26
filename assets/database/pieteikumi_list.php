@@ -6,19 +6,19 @@ if (isset($_SESSION['lietotajaIdDt'])) {
     $lietotajaId = $_SESSION['lietotajaIdDt'];
 
     $stmt = $savienojums->prepare(
-        'SELECT 
-                                        mp.pieteikums_id,
-                                        mp.izveidosanas_datums,
-                                        mp.statuss,
-                                        mr.majokla_tips,
-                                        ad.pilseta,
-                                        ad.iela,
-                                        ad.majas_numurs,
-                                        mr.cena
-                                    FROM majuvieta_pieteikumi mp
-                                    JOIN majuvieta_pirkt mr ON mp.id_majuvieta_pirkt = mr.pirkt_id
-                                    JOIN majuvieta_adrese ad ON mr.id_adrese = ad.adrese_id
-                                    WHERE mp.id_lietotajs = ?'
+        "SELECT 
+            mp.pieteikums_id,
+            mp.izveidosanas_datums,
+            mp.statuss,
+            mr.majokla_tips,
+            ad.pilseta,
+            ad.iela,
+            ad.majas_numurs,
+            mr.cena
+        FROM majuvieta_pieteikumi mp
+        JOIN majuvieta_pirkt mr ON mp.id_majuvieta_pirkt = mr.pirkt_id
+        INNER JOIN majuvieta_adrese ad ON mr.pirkt_id = ad.id_sludinajums
+        WHERE mp.id_lietotajs = ? AND ad.sludinajuma_veids = 'Pirkt'"
     );
     $stmt->bind_param('i', $lietotajaId);
 

@@ -5,22 +5,24 @@ session_start();
 if (isset($_SESSION['lietotajaIdDt'])) {
     $lietotajaId = $_SESSION['lietotajaIdDt'];
 
-    $stmt = $savienojums->prepare('SELECT 
-                                        mp.pieteikums_id AS id,
-                                        mp.statuss,
-                                        mp.izveidosanas_datums,
-                                        mv.cena,
-                                        mv.majokla_tips,
-                                        ad.pilseta,
-                                        ad.iela,
-                                        ad.majas_numurs,
-                                        ml.epasts
-                                    FROM majuvieta_pieteikumi mp
-                                    JOIN majuvieta_pirkt mv ON mp.id_majuvieta_pirkt = mv.pirkt_id
-                                    JOIN majuvieta_adrese ad ON mv.id_adrese = ad.adrese_id
-                                    JOIN majuvieta_lietotaji ml ON mp.id_lietotajs = ml.lietotaja_id 
-                                    WHERE mv.id_ipasnieks = ?
-                                ');
+    $stmt = $savienojums->prepare(
+        "SELECT 
+            mp.pieteikums_id AS id,
+            mp.statuss,
+            mp.izveidosanas_datums,
+            mv.cena,
+            mv.majokla_tips,
+            ad.pilseta,
+            ad.iela,
+            ad.majas_numurs,
+            ml.epasts
+        FROM majuvieta_pieteikumi mp
+        JOIN majuvieta_pirkt mv ON mp.id_majuvieta_pirkt = mv.pirkt_id
+        INNER JOIN majuvieta_adrese ad ON mv.pirkt_id = ad.id_sludinajums
+        JOIN majuvieta_lietotaji ml ON mp.id_lietotajs = ml.lietotaja_id 
+        WHERE mv.id_ipasnieks = ? AND ad.sludinajuma_veids = 'Pirkt'
+        ORDER BY mp.izveidosanas_datums DESC"
+    );
     $stmt->bind_param('i', $lietotajaId);
 
     if ($stmt->execute()) {

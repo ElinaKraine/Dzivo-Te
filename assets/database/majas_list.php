@@ -1,7 +1,12 @@
 <?php
 require '../../admin/database/con_db.php';
 
-$prasibas = ["mp.majokla_tips = 'Mājas'"];
+$prasibas = [
+    "mp.majokla_tips = 'Mājas'
+    AND md.sludinajuma_veids = 'Pirkt'
+    AND ma.sludinajuma_veids = 'Pirkt'
+    AND mp.statuss = 'Apsiprināts | Publicēts'"
+];
 
 if (!empty($_GET['meklet'])) {
     $meklet = mysqli_real_escape_string($savienojums, htmlspecialchars($_GET['meklet']));
@@ -75,12 +80,9 @@ $vaicajums = "SELECT
                 md.iela AS iela, 
                 md.majas_numurs AS majas_numurs, 
                 ma.pirma_attela AS pirma_attela 
-             FROM 
-                majuvieta_pirkt mp 
-             INNER JOIN 
-                majuvieta_atteli ma ON mp.id_atteli = ma.attelu_kopums_id 
-             INNER JOIN 
-                majuvieta_adrese md ON mp.id_adrese = md.adrese_id 
+             FROM majuvieta_pirkt mp 
+             INNER JOIN majuvieta_adrese md ON mp.pirkt_id = md.id_sludinajums
+             INNER JOIN majuvieta_atteli ma ON mp.pirkt_id = ma.id_sludinajums
              WHERE $prasibasRezultats 
              ORDER BY $sortBy";
 

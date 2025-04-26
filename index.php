@@ -82,12 +82,25 @@ if (isset($_SESSION['lietotajaIdDt'])) {
     <div class="lielaKaste">
         <?php
         $pedejiSludinajumiSQL = "
-            SELECT majuvieta_pirkt.*, majuvieta_atteli.pirma_attela AS attela, 
-                   majuvieta_adrese.* 
-            FROM majuvieta_pirkt 
-            INNER JOIN majuvieta_atteli ON majuvieta_pirkt.id_atteli = majuvieta_atteli.attelu_kopums_id 
-            INNER JOIN majuvieta_adrese ON majuvieta_pirkt.id_adrese = majuvieta_adrese.adrese_id 
-            ORDER BY izveidosanas_datums DESC LIMIT 4";
+            SELECT 
+                majuvieta_pirkt.*, 
+                majuvieta_atteli.pirma_attela AS attela, 
+                majuvieta_adrese.* 
+            FROM 
+                majuvieta_pirkt 
+            INNER JOIN 
+                majuvieta_atteli 
+                ON majuvieta_pirkt.pirkt_id = majuvieta_atteli.id_sludinajums 
+            INNER JOIN 
+                majuvieta_adrese 
+                ON majuvieta_pirkt.pirkt_id = majuvieta_adrese.id_sludinajums 
+            WHERE 
+                majuvieta_atteli.sludinajuma_veids = 'Pirkt'
+                AND majuvieta_adrese.sludinajuma_veids = 'Pirkt' AND majuvieta_pirkt.statuss = 'Apsiprināts | Publicēts'
+            ORDER BY 
+                izveidosanas_datums DESC 
+            LIMIT 4;
+        ";
 
         $atlasaPedejiSludinajumi = mysqli_query($savienojums, $pedejiSludinajumiSQL);
 

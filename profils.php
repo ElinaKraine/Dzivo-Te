@@ -31,6 +31,141 @@ if (!isset($_SESSION['lietotajaLomaMV'])) {
 
             </div>
         </div>
+
+        <div class="modal modalSludinajums" id="modal-admin-sludinajums">
+            <div class="modal-box">
+                <div class="virsraksts">
+                    <h2>Sludinājums</h2>
+                    <div class="close-modal"><i class="fas fa-times"></i></div>
+                </div>
+                <form id="sludinajumaForma">
+                    <div class="formElements">
+                        <div class="rinda">
+                            <label>Mājokļa tips:</label>
+                            <select id="majoklaTips" name="majoklaTips" required>
+                                <option value="maja">Māja</option>
+                                <option value="dzivoklis">Dzīvoklis</option>
+                            </select>
+                        </div>
+                        <div class="rinda">
+                            <label>Darījuma veids:</label>
+                            <select id="majoklaVeids" name="majoklaVeids" required>
+                                <option value="pirkt">Pirkt</option>
+                                <option value="iret">Īrēt</option>
+                            </select>
+                        </div>
+                        <div class="rinda">
+                            <label>Pilsēta:</label>
+                            <input type="text" id="pilseta" name="pilseta" required>
+                        </div>
+                        <div class="rinda">
+                            <label>Iela:</label>
+                            <input type="text" id="iela" name="iela" required>
+                        </div>
+                        <div class="rinda">
+                            <label>Mājas numurs:</label>
+                            <input type="text" id="majasNumurs" name="majasNumurs" required>
+                        </div>
+                        <div class="rinda" id="dzivokla-numurs">
+                            <label>Dzīvokļa numurs:</label>
+                            <input type="text" id="dzivoklaNumurs" name="dzivoklaNumurs">
+                        </div>
+                        <div class="rinda" id="pirkt-cena">
+                            <label>Cena (€):</label>
+                            <input type="number" id="cenaPirkt" name="cenaPirkt" min="1">
+                        </div>
+                        <div class="rinda iret-cena">
+                            <label>€/dienā:</label>
+                            <input type="number" id="cenaDiena" name="cenaDiena" min="1">
+                        </div>
+                        <div class="rinda iret-cena">
+                            <label>€/nedēļā:</label>
+                            <input type="number" id="cenaNedela" name="cenaNedela" min="1">
+                        </div>
+                        <div class="rinda iret-cena">
+                            <label>€/mēnesī:</label>
+                            <input type="number" id="cenaMenesi" name="cenaMenesi" min="1">
+                        </div>
+                        <div class="rinda">
+                            <label>Platība (m<sup>2</sup>):</label>
+                            <input type="number" id="platiba" name="platiba" min="1" required>
+                        </div>
+                        <div class="rinda" id="zemes-platiba">
+                            <label>Zemes platība (m<sup>2</sup>):</label>
+                            <input type="number" id="zemesPlatiba" name="zemesPlatiba" min="1">
+                        </div>
+                        <div class="rinda">
+                            <label>Istabas:</label>
+                            <input type="number" id="istabas" name="istabas" min="1">
+                        </div>
+                        <div class="rinda" id="maja-stavi">
+                            <label>Stāvi:</label>
+                            <input type="number" id="stavi" name="stavi" min="1">
+                        </div>
+                        <div class="rinda" id="dziv-stavs">
+                            <label>Stāvs:</label>
+                            <input type="text" id="stavs" name="stavs">
+                        </div>
+                        <div class="rinda">
+                            <label>Apraksts:</label>
+                            <textarea id="apraksts" name="apraksts" rows="5"></textarea>
+                        </div>
+                        <div class="rinda">
+                            <label>Attēli:</label>
+                            <input type="file" id="atteli" name="atteli[]" accept="image/png, image/jpeg" multiple>
+                        </div>
+                    </div>
+                    <button type="submit" name="sludinajums_saglabat" id="sludinajums_saglabat" class="btn">Izveidot</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal modalStatuss" id="modal-admin-pieteikums">
+            <div class="modal-box">
+                <div class="virsraksts">
+                    <h2>Pieteikums</h2>
+                    <div class="close-modal"><i class="fas fa-times"></i></div>
+                </div>
+                <form id="pieteikumaForma">
+                    <div class="formElements">
+                        <label>Lietotājs:</label>
+                        <input type="text" id="pietlietotajs" name="pietlietotajs" disabled>
+                        <label>Mājokļa tips:</label>
+                        <input type="text" id="pietMajoklaTips" name="pietMajoklaTips" disabled>
+                        <label>Adrese:</label>
+                        <input type="text" id="pietAdrese" name="pietAdrese" disabled>
+                        <label>Cena (€):</label>
+                        <input type="text" id="pietCena" name="pietCena" disabled>
+                        <label>Datums:</label>
+                        <input type="text" id="pietDatums" name="pietDatums" disabled>
+                        <label>Statuss:</label>
+                        <select id="pietStatuss" name="pietStatuss" required>
+                            <option value="iesniegtsPieteikums">Iesniegts pieteikums</option>
+                            <option value="pieteikumaParskatisana">Pieteikuma pārskatīšana</option>
+                            <option value="majoklaIegadesProcesa">Mājokļa iegādes procesā</option>
+                            <option value="majoklisIrIegadats">Mājoklis ir iegādāts</option>
+                            <option value="atteikums">Atteikums</option>
+                        </select>
+                        <input type="hidden" id="pieteikums_ID">
+                    </div>
+                    <button type="submit" name="pieteikums_saglabat" id="pieteikums_saglabat" class="btn">Saglabāt</button>
+                </form>
+            </div>
+        </div>
+
+        <?php if (isset($_SESSION['pazinojumsMV'])): ?>
+            <div class="modal modal-active" id="modal-message">
+                <div class="modal-box">
+                    <div class="close-modal" data-target="#modal-message"><i class="fas fa-times"></i></div>
+                    <h2>
+                        <?php
+                        echo $_SESSION['pazinojumsMV'];
+                        unset($_SESSION['pazinojumsMV']);
+                        ?>
+                    </h2>
+                </div>
+            </div>
+        <?php endif; ?>
     </div>
 </div>
 

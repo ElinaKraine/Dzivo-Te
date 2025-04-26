@@ -9,7 +9,12 @@ if (!isset($_GET['noDziv']) || !isset($_GET['lidzDziv'])) {
 $no = mysqli_real_escape_string($savienojums, $_GET['noDziv']);
 $lidz = mysqli_real_escape_string($savienojums, $_GET['lidzDziv']);
 
-$prasibas = ["mi.majokla_tips = 'Dzīvoklis'"];
+$prasibas = [
+    "mi.majokla_tips = 'Dzīvoklis'
+    AND md.sludinajuma_veids = 'Iret'
+    AND ma.sludinajuma_veids = 'Iret'
+    AND mi.statuss = 'Apsiprināts | Publicēts'"
+];
 
 if (!empty($_GET['meklet'])) {
     $meklet = mysqli_real_escape_string($savienojums, htmlspecialchars($_GET['meklet']));
@@ -78,12 +83,9 @@ $vaicajums = "SELECT
                 md.majas_numurs AS majas_numurs,
                 md.dzivokla_numurs AS dzivokla_numurs,
                 ma.pirma_attela AS pirma_attela 
-             FROM 
-                majuvieta_iret mi
-             INNER JOIN 
-                majuvieta_atteli ma ON mi.id_atteli = ma.attelu_kopums_id 
-             INNER JOIN 
-                majuvieta_adrese md ON mi.id_adrese = md.adrese_id 
+             FROM majuvieta_iret mi
+             INNER JOIN majuvieta_adrese md ON mi.iret_id = md.id_sludinajums
+             INNER JOIN majuvieta_atteli ma ON mi.iret_id = ma.id_sludinajums 
              WHERE mi.iret_id NOT IN (
                 SELECT id_majuvieta_iret
                 FROM majuvieta_iziresana

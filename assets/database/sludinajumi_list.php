@@ -7,8 +7,7 @@ if (isset($_SESSION['lietotajaIdDt'])) {
     $json = [];
 
     // Pirkt sludinājumi
-    $query = "
-                SELECT 
+    $query = "SELECT 
                     'Pirkt' AS veids, 
                     'majuvieta_pirkt' AS tabula, 
                     mv.pirkt_id AS id, 
@@ -21,9 +20,10 @@ if (isset($_SESSION['lietotajaIdDt'])) {
                     ad.iela, 
                     ad.majas_numurs
                 FROM majuvieta_pirkt mv
-                JOIN majuvieta_adrese ad ON mv.id_adrese = ad.adrese_id
-                WHERE mv.id_ipasnieks = ?
-            ";
+                INNER JOIN majuvieta_adrese ad ON mv.pirkt_id = ad.id_sludinajums
+                WHERE mv.id_ipasnieks = ? AND ad.sludinajuma_veids = 'Pirkt' 
+                AND mv.statuss != 'Dzēsts'
+                ORDER BY mv.izveidosanas_datums DESC";
     $stmt = $savienojums->prepare($query);
     $stmt->bind_param('i', $lietotajaId);
     $stmt->execute();
@@ -47,8 +47,7 @@ if (isset($_SESSION['lietotajaIdDt'])) {
     $stmt->close();
 
     // Iret sludinājumi
-    $query = "
-                SELECT 
+    $query = "SELECT 
                     'Iret' AS veids, 
                     'majuvieta_iret' AS tabula, 
                     mv.iret_id AS id, 
@@ -61,9 +60,10 @@ if (isset($_SESSION['lietotajaIdDt'])) {
                     ad.iela, 
                     ad.majas_numurs
                 FROM majuvieta_iret mv
-                JOIN majuvieta_adrese ad ON mv.id_adrese = ad.adrese_id
-                WHERE mv.id_ipasnieks = ?
-            ";
+                INNER JOIN majuvieta_adrese ad ON mv.iret_id = ad.id_sludinajums
+                WHERE mv.id_ipasnieks = ? AND ad.sludinajuma_veids = 'Iret'
+                AND mv.statuss != 'Dzēsts'
+                ORDER BY mv.izveidosanas_datums DESC";
     $stmt = $savienojums->prepare($query);
     $stmt->bind_param('i', $lietotajaId);
     $stmt->execute();
