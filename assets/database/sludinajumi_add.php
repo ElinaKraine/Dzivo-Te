@@ -71,7 +71,7 @@ if (!empty($majokla_tips) && !empty($majokla_veids) && !empty($pilseta) && !empt
                 } elseif ($majokla_veids === 'iret' && !empty($cenaDiena) && !empty($cenaNedela) && !empty($cenaMenesi) && $cenaDiena >= 1 && $cenaNedela >= 1 && $cenaMenesi >= 1) {
                     // Māja īrēšanai
                     $tips = "Mājas";
-                    $vaicajums = $savienojums->prepare("INSERT INTO majuvieta_iret (majokla_tips, id_ipasnieks, cena_diena, cena_nedela, cena_menesis, platiba, zemes_platiba, istabas, stavi_vai_stavs, apraksts, ip_adrese) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    $vaicajums = $savienojums->prepare("INSERT INTO majuvieta_iret (majokla_tips, id_ipasnieks, cena_diena, cena_nedela, cena_menesis, platiba, zemes_platiba, istabas, stavs_vai_stavi, apraksts, ip_adrese) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
                     $vaicajums->bind_param("siiiiiiisss", $tips, $lietotajaId, $cenaDiena, $cenaNedela, $cenaMenesi, $platiba, $zemes_platiba, $istabas, $stavi, $apraksts, $ip_adrese);
                     if (!$vaicajums->execute()) throw new Exception($vaicajums->error);
                     $sludinajuma_id = $vaicajums->insert_id;
@@ -136,7 +136,7 @@ if (!empty($majokla_tips) && !empty($majokla_veids) && !empty($pilseta) && !empt
                     $_SESSION['pazinojums'] = "Sludinājums veiksmīgi izveidots!";
                 } elseif ($majokla_veids === 'iret' && !empty($cenaDiena) && !empty($cenaNedela) && !empty($cenaMenesi) && $cenaDiena >= 1 && $cenaNedela >= 1 && $cenaMenesi >= 1) {
                     // Dzīvoklis īrēšanai
-                    $vaicajums = $savienojums->prepare("INSERT INTO majuvieta_iret (majokla_tips, id_ipasnieks, cena_diena, cena_nedela, cena_menesis, platiba, istabas, stavi_vai_stavs, apraksts, ip_adrese) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    $vaicajums = $savienojums->prepare("INSERT INTO majuvieta_iret (majokla_tips, id_ipasnieks, cena_diena, cena_nedela, cena_menesis, platiba, istabas, stavs_vai_stavi, apraksts, ip_adrese) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
                     $vaicajums->bind_param("siiiiiisss", $tips, $lietotajaId, $cenaDiena, $cenaNedela, $cenaMenesi, $platiba, $istabas, $stavs, $apraksts, $ip_adrese);
                     if (!$vaicajums->execute()) throw new Exception($vaicajums->error);
 

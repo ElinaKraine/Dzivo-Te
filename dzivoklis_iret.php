@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
                 <div class="ikoninasArInfo">
                     <p><i class='fa-solid fa-door-open'></i> <?php echo $sludinajums['istabas']; ?></p>
                     <p><i class='fa-solid fa-ruler-combined'></i> <?php echo $sludinajums['platiba']; ?> m<sup>2</sup></p>
-                    <p><i class='fa-solid fa-stairs'></i> <?php echo $sludinajums['stavi_vai_stavs']; ?></p>
+                    <p><i class='fa-solid fa-stairs'></i> <?php echo $sludinajums['stavs_vai_stavi']; ?></p>
                 </div>
             </div>
             <div class="apraksts">

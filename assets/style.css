@@ -1369,6 +1369,7 @@ footer{
     align-items: center;
     flex-direction: column;
     gap: 1.5rem;
+    text-align: center;
 }
 
 .profilaAttela img{
@@ -1408,7 +1409,7 @@ footer{
 
 .profilsKaste .btn:hover{ background: red; }
 
-#modal-admin-sludinajums, #modal-admin-pieteikums{
+#modal-admin-sludinajums, #modal-admin-pieteikums, #modal-admin-lietotajs{
     .modal-box{ padding: 0; max-width: 90rem; }
 
     .virsraksts{
@@ -1440,6 +1441,14 @@ footer{
     #sludinajumaForma{
         max-height: 42rem;
         overflow-y: auto;
+    }
+
+    #majoklaTips-text{
+        width: 70%;
+        font-size: 1.1rem;
+        padding: .5rem 1rem;
+        border-radius: .5rem;
+        background: var(--light-gray);
     }
 
     .formElements{
@@ -1493,5 +1502,46 @@ footer{
             border-radius: .5rem;
             background: var(--light-gray);
         }
+    }
+}
+
+#atteluGalerija{
+    display: flex;
+    gap: 1rem;
+    img{
+        width: 5rem;
+        height: 5rem;
+        object-fit: cover;
+        
+    }
+}
+
+#imageModal{
+    display: none;
+
+    /* .modal-atteli{
+        display: flex;
+        width: 50%;
+    } */
+
+    #prevImage{
+        position: absolute;
+        left: 20px; 
+        font-size: 40px; 
+        color: white; 
+        cursor: pointer;
+    }
+
+    #modalImage{
+        max-width:90%;
+        max-height:90%;
+    }
+
+    #nextImage{
+        position: absolute; 
+        right: 20px; 
+        font-size: 40px; 
+        color: white; 
+        cursor: pointer;
     }
 }

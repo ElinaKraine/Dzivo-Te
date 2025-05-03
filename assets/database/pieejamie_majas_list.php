@@ -43,12 +43,12 @@ if (!empty($_GET['maxPlatiba'])) {
 
 if (!empty($_GET['minStavi'])) {
     $minStavi = (int)$_GET['minStavi'];
-    $prasibas[] = "mi.stavi_vai_stavs >= $minStavi";
+    $prasibas[] = "mi.stavs_vai_stavi >= $minStavi";
 }
 
 if (!empty($_GET['maxStavi'])) {
     $maxStavi = (int)$_GET['maxStavi'];
-    $prasibas[] = "mi.stavi_vai_stavs <= $maxStavi";
+    $prasibas[] = "mi.stavs_vai_stavi <= $maxStavi";
 }
 
 $prasibasSQL = "";
@@ -77,7 +77,7 @@ $vaicajums = "SELECT
                 mi.cena_menesis AS cena_menesis, 
                 mi.platiba AS platiba, 
                 mi.istabas AS istabas, 
-                mi.stavi_vai_stavs AS stavi, 
+                mi.stavs_vai_stavi AS stavi, 
                 md.pilseta AS pilseta, 
                 md.iela AS iela, 
                 md.majas_numurs AS majas_numurs, 

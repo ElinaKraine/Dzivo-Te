@@ -68,10 +68,10 @@ Dzīvo Te ir ērta platforma mājokļu meklēšanai Latvijā. Mēs piedāvājam 
 - [x] Pievienot sludinājumu (lietotājs)
 - [x] Lietotāju konta aplūkošana
 - [x] Dzēst sludinājumu (lietotājs)
-- [ ] Rediģēt sludinājumu (lietotājs)
+- [x] Rediģēt sludinājumu (lietotājs)
 - [x] Dzēst pieteikumu (lietotājs)
 - [x] Nomainīt lietotāja pieteikuma statusu (lietotājs)
-- [ ] Nomainīt lietotāja informāciju
+- [x] Rediģēt lietotāju informacīju
 - [ ] Administratoru un moderatoru kontu aplūkošana
 - [ ] Lietotāja un moderatora pievienošana
 - [ ] Lietotāja un moderatora rediģēšana

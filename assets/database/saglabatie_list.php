@@ -90,7 +90,7 @@ $stmt->close();
 // Māja - Iret
 $query = "
     SELECT mv.iret_id AS id, mv.cena_diena, mv.cena_nedela, mv.cena_menesis,
-           mv.istabas, mv.platiba, mv.stavi_vai_stavs AS stavi,
+           mv.istabas, mv.platiba, mv.stavs_vai_stavi AS stavi,
            ad.pilseta, ad.iela, ad.majas_numurs,
            att.pirma_attela
     FROM dzivote_saglabatie ds
@@ -131,7 +131,7 @@ $stmt->close();
 // Dzīvoklis - Iret
 $query = "
     SELECT mv.iret_id AS id, mv.cena_diena, mv.cena_nedela, mv.cena_menesis,
-           mv.istabas, mv.platiba, mv.stavi_vai_stavs AS stavi,
+           mv.istabas, mv.platiba, mv.stavs_vai_stavi AS stavi,
            ad.pilseta, ad.iela, ad.majas_numurs,
            att.pirma_attela
     FROM dzivote_saglabatie ds

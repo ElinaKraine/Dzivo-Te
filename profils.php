@@ -46,6 +46,7 @@ if (!isset($_SESSION['lietotajaLomaMV'])) {
                                 <option value="maja">Māja</option>
                                 <option value="dzivoklis">Dzīvoklis</option>
                             </select>
+                            <p id="majoklaTips-text"></p>
                         </div>
                         <div class="rinda">
                             <label>Darījuma veids:</label>
@@ -110,12 +111,24 @@ if (!isset($_SESSION['lietotajaLomaMV'])) {
                             <label>Apraksts:</label>
                             <textarea id="apraksts" name="apraksts" rows="5"></textarea>
                         </div>
-                        <div class="rinda">
+                        <div class="rinda" id="atteluGalerijaContainer" style="display: none;">
+                            <label>Attēli:</label>
+                            <div id="atteluGalerija"></div>
+                        </div>
+                        <div class="rinda nomainitAttelusRinda">
+                            <label>Nomainīt attēlus?</label>
+                            <select id="sludNomainitAtteliSelect" name="nomainitAtteli">
+                                <option value="ne">Nē</option>
+                                <option value="ja">Jā</option>
+                            </select>
+                        </div>
+                        <div class="rinda nomainit-slud-atteli">
                             <label>Attēli:</label>
                             <input type="file" id="atteli" name="atteli[]" accept="image/png, image/jpeg" multiple>
                         </div>
+                        <input type="hidden" id="id_sludinajums" name="id_sludinajums">
                     </div>
-                    <button type="submit" name="sludinajums_saglabat" id="sludinajums_saglabat" class="btn">Izveidot</button>
+                    <button type="submit" name="sludinajums_saglabat" id="sludinajums_saglabat" class="btn">Saglabāt</button>
                 </form>
             </div>
         </div>
@@ -150,6 +163,73 @@ if (!isset($_SESSION['lietotajaLomaMV'])) {
                     </div>
                     <button type="submit" name="pieteikums_saglabat" id="pieteikums_saglabat" class="btn">Saglabāt</button>
                 </form>
+            </div>
+        </div>
+
+        <div class="modal modalLietotajs" id="modal-admin-lietotajs">
+            <div class="modal-box">
+                <div class="virsraksts">
+                    <h2>Lietotāja informācija</h2>
+                    <div class="close-modal"><i class="fas fa-times"></i></div>
+                </div>
+                <form id="lietotajaForma">
+                    <div class="formElements">
+                        <div class="rinda">
+                            <label>Vārds:</label>
+                            <input type="text" id="lietVards" name="lietVards" required>
+                        </div>
+                        <div class="rinda">
+                            <label>Uzvārds:</label>
+                            <input type="text" id="lietUzvards" name="lietUzvards" required>
+                        </div>
+                        <div class="rinda">
+                            <label>Epasts:</label>
+                            <input type="text" id="lietEpasts" name="lietEpasts" required>
+                        </div>
+                        <div class="rinda">
+                            <label>Tālrunis:</label>
+                            <input type="text" id="lietTalrunis" name="lietTalrunis" required>
+                        </div>
+                        <div class="rinda">
+                            <label>Nomainīt parole?</label>
+                            <select id="nomainitParoleSelect" name="nomainitParole">
+                                <option value="ne">Nē</option>
+                                <option value="ja">Jā</option>
+                            </select>
+                        </div>
+                        <div class="rinda nomainitParole">
+                            <label>Parole:</label>
+                            <input type="password" id="lietParole" name="lietParole">
+                        </div>
+                        <div class="rinda nomainitParole">
+                            <label>Parole (atkārtoti):</label>
+                            <input type="password" id="lietParoleOtrais" name="lietParoleOtrais">
+                        </div>
+                        <div class="rinda">
+                            <label>Nomainīt attēlu?</label>
+                            <select id="nomainitAtteluSelect" name="nomainitAttelu">
+                                <option value="ne">Nē</option>
+                                <option value="ja">Jā</option>
+                            </select>
+                        </div>
+                        <div class="rinda" id="nomainitAttelu">
+                            <label>Attēls:</label>
+                            <input type="file" id="attels" name="attels" accept="image/png, image/jpeg">
+                        </div>
+                        <div class="rinda">
+                            <input type="hidden" id="liet_ID" name="liet_ID">
+                        </div>
+                    </div>
+                    <button type="submit" name="lietotajs_saglabat" id="lietotajs_saglabat" class="btn">Saglabāt</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="imageModal" class="modal">
+            <div class="modal-atteli"><span class="close-modal">&times;</span>
+                <span id="prevImage">&#10094;</span>
+                <img id="modalImage" />
+                <span id="nextImage">&#10095;</span>
             </div>
         </div>
 

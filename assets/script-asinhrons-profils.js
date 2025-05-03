@@ -2,7 +2,13 @@ $(document).ready(function () {
   fetchProfilaInfo();
   ieladetSludinajumus();
   $("#majoklaTips, #majoklaVeids").on("change", toggleFormFields);
-  let editSludinajums = false;
+  $("#nomainitAtteluSelect, #nomainitParoleSelect").on(
+    "change",
+    toggleFormFields2
+  );
+  $("#sludNomainitAtteliSelect").on("change", toggleSludAtteluSelect);
+  let galleryImages = [];
+  let currentImageIndex = 0;
 
   //#region Profila informācija
   function fetchProfilaInfo() {
@@ -24,7 +30,7 @@ $(document).ready(function () {
                                 <div class="kastite">
                                     <p><i class="fa-solid fa-envelope"></i> ${lietotajs.epasts}</p>
                                     <p><i class="fa-solid fa-phone"></i> +371 ${lietotajs.talrunis}</p>
-                                    <a href="./" class="btn">Rediģēt profilu</a>
+                                    <a class="btn profila-item">Rediģēt profilu</a>
                                 </div>
                             </div>
                         `;
@@ -36,6 +42,64 @@ $(document).ready(function () {
       },
     });
   }
+
+  function toggleFormFields2() {
+    const nomainitParole = $("#nomainitParoleSelect").val();
+    const nomainitAttelu = $("#nomainitAtteluSelect").val();
+
+    if (nomainitParole === "ja") {
+      $(".nomainitParole").show();
+    } else if (nomainitParole === "ne") {
+      $(".nomainitParole").hide();
+    }
+
+    if (nomainitAttelu === "ja") {
+      $("#nomainitAttelu").show();
+    } else if (nomainitAttelu === "ne") {
+      $("#nomainitAttelu").hide();
+    }
+  }
+
+  $(document).on("click", ".profila-item", (e) => {
+    $(".modalLietotajs").css("display", "flex");
+    toggleFormFields2();
+
+    const element = $(e.currentTarget).closest("div[liet_ID]");
+    const id = $(element).attr("liet_ID");
+
+    $.post("./assets/database/profila_single.php", { id }, (response) => {
+      const lietotajs = JSON.parse(response);
+      $("#lietVards").val(lietotajs.vards);
+      $("#lietUzvards").val(lietotajs.uzvards);
+      $("#lietEpasts").val(lietotajs.epasts);
+      $("#lietTalrunis").val(lietotajs.talrunis);
+      $("#liet_ID").val(lietotajs.id);
+    });
+  });
+
+  $("#lietotajaForma").submit((e) => {
+    e.preventDefault();
+
+    const formData = new FormData($("#lietotajaForma")[0]);
+
+    $.ajax({
+      url: "./assets/database/profila_edit.php",
+      type: "POST",
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function (response) {
+        $(".modalLietotajs").hide();
+        $("#lietotajaForma").trigger("reset");
+        fetchProfilaInfo();
+        ieladetSludinajumus();
+      },
+      error: function () {
+        alert("Neizdevās saglabāt lietotāja informāciju!");
+      },
+    });
+  });
+
   // #endregion
 
   //#region Sludinājumi
@@ -124,98 +188,97 @@ $(document).ready(function () {
 
   $(document).on("click", "#new-btn", (e) => {
     $(".modalSludinajums").css("display", "flex");
+    $("#sludinajumaForma").trigger("reset");
+    $(".nomainitAttelusRinda").hide();
+    $(".nomainit-slud-atteli").show();
+    $("#atteluGalerijaContainer").hide();
+    $("#majoklaTips").show();
+    $("#majoklaTips-text").hide();
+    $("#id_sludinajums").val("");
+    $("#sludinajums_saglabat").text("Izveidot");
     toggleFormFields();
   });
 
   $(document).on("click", ".close-modal", (e) => {
+    const modalToClose = $(e.currentTarget).closest(".modal");
+
+    if (modalToClose.attr("id") === "imageModal") {
+      modalToClose.hide();
+      return;
+    }
+
     $(".modal").hide();
     $("#sludinajumaForma").trigger("reset");
     $("#pieteikumaForma").trigger("reset");
     edit = false;
   });
 
-  //   $(document).on('click','.sludinajums-item', (e)=>{
-  //     $(".modal").css('display','flex')
+  $(document).on("click", ".sludinajums-item", (e) => {
+    $(".modalSludinajums").css("display", "flex");
 
-  //     const element = $(e.currentTarget).closest('tr')
-  //     const id = $(element).attr("sludinajuma_ID")
-  //     // console.log(id)
+    const element = $(e.currentTarget).closest("tr");
+    const id = $(element).attr("sludinajuma_ID");
+    const veids = $(element).data("veids");
 
-  //     $.post('./assets/database/sludinajumi_single.php',{id},(response) => {
-  //         const sludinajums = JSON.parse(response)
-  //         $('#majoklaTips').val(sludinajums.vards)
-  //         $('#uzvards').val(sludinajums.uzvards)
-  //         $('#epasts').val(sludinajums.epasts)
-  //         $('#talrunis').val(sludinajums.talrunis)
-  //         $('#apraksts').val(sludinajums.apraksts)
-  //         $('#statuss').val(sludinajums.statuss)
-  //         $('#piet_ID').val(sludinajums.id)
-  //         $('#izveidots').text(sludinajums.datums);
-  //         majoklaTips: $("#majoklaTips").val(),
-  //         majoklaVeids: $("#majoklaVeids").val(),
-  //         pilseta: $("#pilseta").val(),
-  //         iela: $("#iela").val(),
-  //         majasNumurs: $("#majasNumurs").val(),
-  //         dzivoklaNumurs: $("#dzivoklaNumurs").val(),
-  //         cenaPirkt: $("#cenaPirkt").val(),
-  //         cenaDiena: $("#cenaDiena").val(),
-  //         cenaNedela: $("#cenaNedela").val(),
-  //         cenaMenesi: $("#cenaMenesi").val(),
-  //         platiba: $("#platiba").val(),
-  //         zemesPlatiba: $("#zemesPlatiba").val(),
-  //         istabas: $("#istabas").val(),
-  //         stavi: $("#stavi").val(),
-  //         stavs: $("#stavs").val(),
-  //         apraksts: $("#apraksts").val(),
+    $.post(
+      "./assets/database/sludinajumi_single.php",
+      { id, veids },
+      (response) => {
+        const data = JSON.parse(response);
 
-  //         edit = true
-  //     })
-  // })
+        const majoklaTips =
+          data.majokla_tips === "Mājas" ? "maja" : "dzivoklis";
+        const majoklaTipsText = majoklaTips === "maja" ? "Māja" : "Dzīvoklis";
 
-  // $("#sludinajumaForma").submit((e) => {
-  //   e.preventDefault();
-  //   const postData = {
-  //     majoklaTips: $("#majoklaTips").val(),
-  //     majoklaVeids: $("#majoklaVeids").val(),
-  //     pilseta: $("#pilseta").val(),
-  //     iela: $("#iela").val(),
-  //     majasNumurs: $("#majasNumurs").val(),
-  //     dzivoklaNumurs: $("#dzivoklaNumurs").val(),
-  //     cenaPirkt: $("#cenaPirkt").val(),
-  //     cenaDiena: $("#cenaDiena").val(),
-  //     cenaNedela: $("#cenaNedela").val(),
-  //     cenaMenesi: $("#cenaMenesi").val(),
-  //     platiba: $("#platiba").val(),
-  //     zemesPlatiba: $("#zemesPlatiba").val(),
-  //     istabas: $("#istabas").val(),
-  //     stavi: $("#stavi").val(),
-  //     stavs: $("#stavs").val(),
-  //     apraksts: $("#apraksts").val(),
-  //   };
+        $("#majoklaTips").val(majoklaTips);
+        $("#majoklaTips").hide();
+        $("#majoklaTips-text").text(majoklaTipsText).show();
 
-  //   // url = !edit ? 'database/pieteikums_add.php' : 'database/pieteikums_edit.php';
-  //   url = "./assets/database/sludinajumi_add.php";
-  //   console.log(postData, url);
-  //   $.post(url, postData, () => {
-  //     $(".modal").hide();
-  //     $("#sludinajumaForma").trigger("reset");
-  //     ieladetSludinajumus();
-  //     // edit = false
-  //   });
-  // });
+        $("#majoklaVeids").val(veids.toLowerCase());
+        $("#pilseta").val(data.pilseta);
+        $("#iela").val(data.iela);
+        $("#majasNumurs").val(data.majas_numurs);
+        $("#dzivoklaNumurs").val(data.dzivokla_numurs || "");
+        $("#cenaPirkt").val(data.cena || "");
+        $("#cenaDiena").val(data.cena_diena || "");
+        $("#cenaNedela").val(data.cena_nedela || "");
+        $("#cenaMenesi").val(data.cena_menesis || "");
+        $("#platiba").val(data.platiba);
+        $("#zemesPlatiba").val(data.zemes_platiba || "");
+        $("#istabas").val(data.istabas);
+        $("#stavi").val(data.stavi || "");
+        $("#stavs").val(data.stavs || "");
+        $("#apraksts").val(data.apraksts || "");
+
+        $("#id_sludinajums").val(id);
+        $("#sludinajums_saglabat").text("Saglabāt");
+
+        toggleFormFields();
+        renderGallery(data.atteli);
+        $("#atteluGalerijaContainer").show();
+        $(".nomainitAttelusRinda").show();
+        toggleSludAtteluSelect();
+      }
+    );
+  });
+
   $("#sludinajumaForma").submit((e) => {
     e.preventDefault();
 
     const formData = new FormData($("#sludinajumaForma")[0]);
 
+    const isEdit = $("#id_sludinajums").val() !== "";
+    const url = isEdit
+      ? "./assets/database/sludinajumi_edit.php"
+      : "./assets/database/sludinajumi_add.php";
+
     $.ajax({
-      url: "./assets/database/sludinajumi_add.php",
+      url,
       type: "POST",
       data: formData,
       processData: false,
       contentType: false,
       success: function (response) {
-        console.log("Server response:", response);
         $(".modal").hide();
         $("#sludinajumaForma").trigger("reset");
         ieladetSludinajumus();
@@ -224,6 +287,66 @@ $(document).ready(function () {
         alert("Neizdevās nosūtīt sludinājumu!");
       },
     });
+  });
+
+  function toggleSludAtteluSelect() {
+    const val = $("#sludNomainitAtteliSelect").val();
+    if (val === "ja") {
+      $(".nomainit-slud-atteli").show();
+    } else {
+      $(".nomainit-slud-atteli").hide();
+    }
+  }
+
+  function renderGallery(images) {
+    galleryImages = images;
+    currentImageIndex = 0;
+
+    const gallery = $("#atteluGalerija");
+    gallery.empty();
+    images.forEach((src, index) => {
+      const imgEl = $(`
+        <div class="viensAttela">
+          <img src="data:image/jpeg;base64,${src}" />
+        </div>
+      `);
+      imgEl.find("img").on("click", function () {
+        currentImageIndex = index;
+        showModalImage();
+      });
+      gallery.append(imgEl);
+    });
+  }
+
+  function showModalImage() {
+    const src = galleryImages[currentImageIndex];
+    if (src) {
+      $("#modalImage").attr("src", "data:image/jpeg;base64," + src);
+      $("#imageModal").css("display", "flex");
+    }
+  }
+
+  $("#prevImage").on("click", () => {
+    currentImageIndex =
+      (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+    showModalImage();
+  });
+
+  $("#nextImage").on("click", () => {
+    currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+    showModalImage();
+  });
+
+  $(document).on("keydown", function (e) {
+    if ($("#imageModal").is(":visible")) {
+      if (e.key === "ArrowLeft") {
+        $("#prevImage").click();
+      } else if (e.key === "ArrowRight") {
+        $("#nextImage").click();
+      } else if (e.key === "Escape") {
+        $("#imageModal").hide();
+      }
+    }
   });
 
   $(document).on("click", ".sludinajums-delete", (e) => {
