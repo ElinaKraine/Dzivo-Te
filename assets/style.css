@@ -1065,7 +1065,15 @@ footer{
 }
 
 /* maja_pirkt.php: */
-.majaLapa{ padding: 4rem 15%; }
+.majaLapa{ 
+    padding: 4rem 15%;
+    .wrapper{
+        max-width: 1344px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-top: 2rem;
+    } 
+}
 
 .majaLapa .attela-sirds{ height: auto; }
 
@@ -1372,13 +1380,25 @@ footer{
     text-align: center;
 }
 
-.profilaAttela img{
+.profilaAttela img, .placeHolder{
     box-shadow: var(--box-shadow);
     border-radius: 50%;
     width: 15rem;
     display: flex;
     height: 15rem;
     object-fit: cover;
+}
+
+.placeHolder{ 
+    background-color: var(--dark-gray-2);
+    i{
+        width: 100%;
+        color: white;
+        font-size: 8rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
 
 .profilaInfo{
@@ -1409,7 +1429,7 @@ footer{
 
 .profilsKaste .btn:hover{ background: red; }
 
-#modal-admin-sludinajums, #modal-admin-pieteikums, #modal-admin-lietotajs{
+#modal-admin-sludinajums, #modal-admin-pieteikums, #modal-admin-lietotajs, #modal-lietotajs-admin, #modal-lietotajs-tabula-admin, #modal-ires-ieraksts{
     .modal-box{ padding: 0; max-width: 90rem; }
 
     .virsraksts{
@@ -1438,7 +1458,7 @@ footer{
 
     .close-modal:hover{ color: red; }
 
-    #sludinajumaForma{
+    #sludinajumaForma, #lietotajaFormaTabulaAdmin{
         max-height: 42rem;
         overflow-y: auto;
     }
@@ -1495,6 +1515,7 @@ footer{
         grid-template-columns: 35% 65%;
         align-items: center;
         width: 45rem;
+        padding: 2rem 5rem 1rem 3rem;
 
         input, select{
             font-size: 1.1rem;
@@ -1543,5 +1564,14 @@ footer{
         font-size: 40px; 
         color: white; 
         cursor: pointer;
+    }
+}
+
+/* Media */
+@media(min-width: 1920px){
+    header{
+        max-width: 1920px;
+        margin-right: auto;
+        margin-left: auto;
     }
 }

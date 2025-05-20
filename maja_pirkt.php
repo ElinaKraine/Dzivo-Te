@@ -46,53 +46,55 @@ if (isset($_GET['id'])) {
 ?>
 
         <section class="galvena majaLapa">
-            <div class="visasBildes attela-sirds">
-                <div class="viensAttela">
-                    <img src='data:image/jpeg;base64,<?php echo base64_encode($sludinajums['pirma_attela']); ?>' />
-                </div>
-                <div class="diviAtteliKopa">
-                    <div class="diviAttela">
-                        <img src='data:image/jpeg;base64,<?php echo base64_encode($sludinajums['otra_attela']); ?>' />
+            <div class="wrapper">
+                <div class="visasBildes attela-sirds">
+                    <div class="viensAttela">
+                        <img src='data:image/jpeg;base64,<?php echo base64_encode($sludinajums['pirma_attela']); ?>' />
                     </div>
-                    <div class="trisAttela">
-                        <img src='data:image/jpeg;base64,<?php echo base64_encode($sludinajums['tresa_attela']); ?>' />
+                    <div class="diviAtteliKopa">
+                        <div class="diviAttela">
+                            <img src='data:image/jpeg;base64,<?php echo base64_encode($sludinajums['otra_attela']); ?>' />
+                        </div>
+                        <div class="trisAttela">
+                            <img src='data:image/jpeg;base64,<?php echo base64_encode($sludinajums['tresa_attela']); ?>' />
+                        </div>
+                    </div>
+                    <?php if (!isset($_SESSION['lietotajaLomaMV'])) { ?>
+                        <a href="login.php" class='sirds'><i class='fa-regular fa-heart'></i></a>
+                    <?php } else { ?>
+                        <a class='sirds <?php echo $isSaved ? "sirdsSarkans" : ""; ?>' data-id="<?php echo $sludinajums['pirkt_id']; ?>" data-veids="Pirkt">
+                            <i class='<?php echo $isSaved ? "fa-solid" : "fa-regular"; ?> fa-heart'></i>
+                        </a>
+                    <?php } ?>
+                </div>
+                <div class="pamatInfo">
+                    <h2><?php echo $sludinajums['iela'] . " " . $sludinajums['majas_numurs']; ?></h2>
+                    <h2><?php echo $sludinajums['cena']; ?> €</h2>
+                    <?php if (!isset($_SESSION['lietotajaLomaMV'])) { ?>
+                        <a class="btn" href="login.php">Pieteikties iegādei</a>
+                    <?php } else { ?>
+                        <a class="btn" data-target="#modal-ticket">Pieteikties iegādei</a>
+                    <?php } ?>
+                </div>
+                <div class="papildInfo">
+                    <p>Latvija, <?php echo $sludinajums['pilseta']; ?></p>
+                    <div class="ikoninasArInfo">
+                        <p><i class='fa-solid fa-door-open'></i> <?php echo $sludinajums['istabas']; ?></p>
+                        <p><i class='fa-solid fa-ruler-combined'></i> <?php echo $sludinajums['platiba']; ?> m<sup>2</sup></p>
+                        <p><i class='fa-solid fa-stairs'></i> <?php echo $sludinajums['stavs_vai_stavi']; ?></p>
+                        <p><i class="fa-solid fa-chart-area"></i> <?php echo $sludinajums['zemes_platiba']; ?> m<sup>2</sup></p>
                     </div>
                 </div>
-                <?php if (!isset($_SESSION['lietotajaLomaMV'])) { ?>
-                    <a href="login.php" class='sirds'><i class='fa-regular fa-heart'></i></a>
-                <?php } else { ?>
-                    <a class='sirds <?php echo $isSaved ? "sirdsSarkans" : ""; ?>' data-id="<?php echo $sludinajums['pirkt_id']; ?>" data-veids="Pirkt">
-                        <i class='<?php echo $isSaved ? "fa-solid" : "fa-regular"; ?> fa-heart'></i>
-                    </a>
+                <div class="apraksts">
+                    <p><?php echo $sludinajums['apraksts']; ?></p>
+                </div>
+                <?php if (isset($_SESSION['lietotajaLomaMV'])) { ?>
+                    <div class="ipasnieks">
+                        <h3>Jautājumi par sludinājumu?</h3>
+                        <p><i class="fa-solid fa-envelope"></i> <?php echo $sludinajums['epasts']; ?></p>
+                    </div>
                 <?php } ?>
             </div>
-            <div class="pamatInfo">
-                <h2><?php echo $sludinajums['iela'] . " " . $sludinajums['majas_numurs']; ?></h2>
-                <h2><?php echo $sludinajums['cena']; ?> €</h2>
-                <?php if (!isset($_SESSION['lietotajaLomaMV'])) { ?>
-                    <a class="btn" href="login.php">Pieteikties iegādei</a>
-                <?php } else { ?>
-                    <a class="btn" data-target="#modal-ticket">Pieteikties iegādei</a>
-                <?php } ?>
-            </div>
-            <div class="papildInfo">
-                <p>Latvija, <?php echo $sludinajums['pilseta']; ?></p>
-                <div class="ikoninasArInfo">
-                    <p><i class='fa-solid fa-door-open'></i> <?php echo $sludinajums['istabas']; ?></p>
-                    <p><i class='fa-solid fa-ruler-combined'></i> <?php echo $sludinajums['platiba']; ?> m<sup>2</sup></p>
-                    <p><i class='fa-solid fa-stairs'></i> <?php echo $sludinajums['stavs_vai_stavi']; ?></p>
-                    <p><i class="fa-solid fa-chart-area"></i> <?php echo $sludinajums['zemes_platiba']; ?> m<sup>2</sup></p>
-                </div>
-            </div>
-            <div class="apraksts">
-                <p><?php echo $sludinajums['apraksts']; ?></p>
-            </div>
-            <?php if (isset($_SESSION['lietotajaLomaMV'])) { ?>
-                <div class="ipasnieks">
-                    <h3>Jautājumi par sludinājumu?</h3>
-                    <p><i class="fa-solid fa-envelope"></i> <?php echo $sludinajums['epasts']; ?></p>
-                </div>
-            <?php } ?>
         </section>
 
         <?php if (isset($_SESSION['pazinojumsMV'])): ?>

@@ -19,21 +19,24 @@ $(document).ready(function () {
         const lietotaji = JSON.parse(response);
         let template = "";
         lietotaji.forEach((lietotajs) => {
+          const attels = lietotajs.attels
+            ? `<img src="data:image/jpeg;base64,${lietotajs.attels}" />`
+            : '<div class="placeHolder"><i class="fa-solid fa-user"></i></div>';
           template += `
-                            <div liet_ID="${lietotajs.id}">
-                                <div class="kasteCentra">
-                                    <div class="profilaAttela">
-                                        <img src="data:image/jpeg;base64,${lietotajs.attels}" />
-                                    </div>
-                                    <h2>Sveiks, ${lietotajs.vards} ${lietotajs.uzvards}!</h2>
+                        <div liet_ID="${lietotajs.id}">
+                            <div class="kasteCentra">
+                                <div class="profilaAttela">
+                                    ${attels}
                                 </div>
-                                <div class="kastite">
-                                    <p><i class="fa-solid fa-envelope"></i> ${lietotajs.epasts}</p>
-                                    <p><i class="fa-solid fa-phone"></i> +371 ${lietotajs.talrunis}</p>
-                                    <a class="btn profila-item">Rediģēt profilu</a>
-                                </div>
+                                <h2>Sveiks, ${lietotajs.vards} ${lietotajs.uzvards}!</h2>
                             </div>
-                        `;
+                            <div class="kastite">
+                                <p><i class="fa-solid fa-envelope"></i> ${lietotajs.epasts}</p>
+                                <p><i class="fa-solid fa-phone"></i> +371 ${lietotajs.talrunis}</p>
+                                <a class="btn profila-item">Rediģēt profilu</a>
+                            </div>
+                        </div>
+                    `;
         });
         $("#profila_info").html(template);
       },
@@ -109,50 +112,56 @@ $(document).ready(function () {
       method: "GET",
       success: function (response) {
         const ieraksti = JSON.parse(response);
-        let template = `<a class="addBtn" id="new-btn">Pievienot jaunu sludinājumu</a>
-        <table>
-          <tr>
-            <th>ID</th>
-            <th>Mājokļa tips</th>
-            <th>Veids</th>
-            <th>Adrese</th>
-            <th>Cena (€)</th>
-            <th>Platība (m<sup>2</sup>)</th>
-            <th>Statuss</th>
-            <th>Datums</th>
-            <th></th>
-          </tr>
-          <tbody>`;
+        let template = `<a class="addBtn" id="new-btn">Pievienot jaunu sludinājumu</a>`;
 
-        ieraksti.forEach((ieraksts) => {
-          const cenaFormateta =
-            ieraksts.veids === "Iret"
-              ? `${ieraksts.cena} €/mēnesī`
-              : `${ieraksts.cena}`;
+        if (ieraksti.length > 0) {
+          template += `<table>
+                        <tr>
+                          <th>Mājokļa tips</th>
+                          <th>Veids</th>
+                          <th>Adrese</th>
+                          <th>Cena (€)</th>
+                          <th>Platība (m<sup>2</sup>)</th>
+                          <th>Statuss</th>
+                          <th>Datums</th>
+                          <th></th>
+                        </tr>
+                        <tbody>`;
+        }
 
-          const klaseSarkans =
-            ieraksts.statuss === "Atteikums" ? "sarkans" : "";
-          const klaseZals =
-            ieraksts.statuss === "Apsiprināts | Publicēts" ? "zals" : "";
+        if (ieraksti.length > 0) {
+          ieraksti.forEach((ieraksts) => {
+            const cenaFormateta =
+              ieraksts.veids === "Iret"
+                ? `${ieraksts.cena} €/mēnesī`
+                : `${ieraksts.cena}`;
 
-          template += `
-              <tr sludinajuma_ID="${ieraksts.id}" data-veids="${ieraksts.veids}">
-                <td>${ieraksts.id}</td>
-                <td>${ieraksts.majokla_tips}</td>
-                <td>${ieraksts.veids}</td>
-                <td>${ieraksts.pilseta}, ${ieraksts.iela} ${ieraksts.majas_numurs}</td>
-                <td>${cenaFormateta}</td>
-                <td>${ieraksts.platiba}</td>
-                <td class='${klaseSarkans} ${klaseZals}'>${ieraksts.statuss}</td>
-                <td>${ieraksts.izveidosanas_datums}</td>
-                <td>
-                  <a class="sludinajums-item editBtn"> <i class="fa fa-edit"></i> </a>    
-                  <a class="sludinajums-delete deleteBtn"> <i class="fa fa-trash"></i> </a>
-                </td>
-              </tr>`;
-        });
+            const klaseSarkans =
+              ieraksts.statuss === "Atteikums" ? "sarkans" : "";
+            const klaseZals =
+              ieraksts.statuss === "Apsiprināts | Publicēts" ? "zals" : "";
 
-        template += `</tbody></table>`;
+            template += `
+                <tr sludinajuma_ID="${ieraksts.id}" data-veids="${ieraksts.veids}">
+                  <td>${ieraksts.majokla_tips}</td>
+                  <td>${ieraksts.veids}</td>
+                  <td>${ieraksts.pilseta}, ${ieraksts.iela} ${ieraksts.majas_numurs}</td>
+                  <td>${cenaFormateta}</td>
+                  <td>${ieraksts.platiba}</td>
+                  <td class='${klaseSarkans} ${klaseZals}'>${ieraksts.statuss}</td>
+                  <td>${ieraksts.izveidosanas_datums}</td>
+                  <td>
+                    <a class="sludinajums-item editBtn"> <i class="fa fa-edit"></i> </a>    
+                    <a class="sludinajums-delete deleteBtn"> <i class="fa fa-trash"></i> </a>
+                  </td>
+                </tr>`;
+          });
+
+          template += `</tbody></table>`;
+        } else {
+          template += `<p class='navRezultatus'>Jums vēl nav neviena sludinājuma</p>`;
+        }
+
         $("#tabula").html(template);
       },
       error: function () {
@@ -350,7 +359,7 @@ $(document).ready(function () {
   });
 
   $(document).on("click", ".sludinajums-delete", (e) => {
-    if (confirm("Vai tiesam velies dzest?")) {
+    if (confirm("Vai esat pārliecināts, ka vēlaties dzēst šo sludinājumu?")) {
       const element = $(e.currentTarget).closest("tr");
       const id = $(element).attr("sludinajuma_ID");
       const tabula = $(element).data("veids");
@@ -373,39 +382,44 @@ $(document).ready(function () {
       method: "GET",
       success: function (response) {
         const ieraksti = JSON.parse(response);
-        let template = `
-        <table>
-          <tr>
-            <th>ID</th>
-            <th>Mājokļa tips</th>
-            <th>Adrese</th>
-            <th>Cena (€)</th>
-            <th>Statuss</th>
-            <th>Datums</th>
-            <th></th>
-          </tr>
-          <tbody>`;
+        let template = "";
+        if (ieraksti.length > 0) {
+          template += `<table>
+                        <tr>
+                          <th>Mājokļa tips</th>
+                          <th>Adrese</th>
+                          <th>Cena (€)</th>
+                          <th>Statuss</th>
+                          <th>Datums</th>
+                          <th></th>
+                        </tr>
+                        <tbody>`;
+        }
 
-        ieraksti.forEach((ieraksts) => {
-          const klaseSarkans =
-            ieraksts.statuss === "Atteikums" ? "sarkans" : "";
-          const klaseZals =
-            ieraksts.statuss === "Mājoklis ir iegādāts" ? "zals" : "";
-          template += `
-              <tr ieraksta_ID="${ieraksts.id}">
-                <td>${ieraksts.id}</td>
-                <td>${ieraksts.majokla_tips}</td>
-                <td>${ieraksts.pilseta}, ${ieraksts.iela} ${ieraksts.majas_numurs}</td>
-                <td>${ieraksts.cena}</td>
-                <td class='${klaseSarkans} ${klaseZals}'>${ieraksts.statuss}</td>
-                <td>${ieraksts.izveidosanas_datums}</td>
-                <td>  
-                  <a class="ieraksts-delete deleteBtn"> <i class="fa fa-trash"></i> </a>
-                </td>
-              </tr>`;
-        });
+        if (ieraksti.length > 0) {
+          ieraksti.forEach((ieraksts) => {
+            const klaseSarkans =
+              ieraksts.statuss === "Atteikums" ? "sarkans" : "";
+            const klaseZals =
+              ieraksts.statuss === "Mājoklis ir iegādāts" ? "zals" : "";
+            template += `
+                <tr ieraksta_ID="${ieraksts.id}">
+                  <td>${ieraksts.majokla_tips}</td>
+                  <td>${ieraksts.pilseta}, ${ieraksts.iela} ${ieraksts.majas_numurs}</td>
+                  <td>${ieraksts.cena}</td>
+                  <td class='${klaseSarkans} ${klaseZals}'>${ieraksts.statuss}</td>
+                  <td>${ieraksts.izveidosanas_datums}</td>
+                  <td>  
+                    <a class="ieraksts-delete deleteBtn"> <i class="fa fa-trash"></i> </a>
+                  </td>
+                </tr>`;
+          });
 
-        template += `</tbody></table>`;
+          template += `</tbody></table>`;
+        } else {
+          template += `<p class='navRezultatus'>Jums vēl nav neviena pieteikuma</p>`;
+        }
+
         $("#tabula").html(template);
       },
       error: function () {
@@ -415,7 +429,7 @@ $(document).ready(function () {
   }
 
   $(document).on("click", ".ieraksts-delete", (e) => {
-    if (confirm("Vai tiesam velies dzest?")) {
+    if (confirm("Vai esat pārliecināts, ka vēlaties dzēst šo pieteikumu?")) {
       const element = $(e.currentTarget).closest("tr");
       const id = $(element).attr("ieraksta_ID");
       // console.log(id)
@@ -434,33 +448,38 @@ $(document).ready(function () {
       method: "GET",
       success: function (response) {
         const ieraksti = JSON.parse(response);
-        let template = `
-        <table>
-          <tr>
-            <th>ID</th>
-            <th>Mājokļa tips</th>
-            <th>Adrese</th>
-            <th>Iznomāts no</th>
-            <th>Iznomāts līdz</th>
-            <th>Cena (€)</th>
-            <th>Izveidošanas datums</th>
-          </tr>
-          <tbody>`;
+        let template = "";
+        if (ieraksti.length > 0) {
+          template += `<table>
+                        <tr>
+                          <th>Mājokļa tips</th>
+                          <th>Adrese</th>
+                          <th>Iznomāts no</th>
+                          <th>Iznomāts līdz</th>
+                          <th>Cena (€)</th>
+                          <th>Izveidošanas datums</th>
+                        </tr>
+                        <tbody>`;
+        }
 
-        ieraksti.forEach((ieraksts) => {
-          template += `
-              <tr>
-                <td>${ieraksts.id}</td>
-                <td>${ieraksts.majokla_tips}</td>
-                <td>${ieraksts.pilseta}, ${ieraksts.iela} ${ieraksts.majas_numurs}</td>
-                <td>${ieraksts.registresanas_datums}</td>
-                <td>${ieraksts.izrakstisanas_datums}</td>
-                <td>${ieraksts.cena}</td>
-                <td>${ieraksts.izveidosanas_datums}</td>
-              </tr>`;
-        });
+        if (ieraksti.length > 0) {
+          ieraksti.forEach((ieraksts) => {
+            template += `
+                <tr>
+                  <td>${ieraksts.majokla_tips}</td>
+                  <td>${ieraksts.pilseta}, ${ieraksts.iela} ${ieraksts.majas_numurs}</td>
+                  <td>${ieraksts.registresanas_datums}</td>
+                  <td>${ieraksts.izrakstisanas_datums}</td>
+                  <td>${ieraksts.cena}</td>
+                  <td>${ieraksts.izveidosanas_datums}</td>
+                </tr>`;
+          });
 
-        template += `</tbody></table>`;
+          template += `</tbody></table>`;
+        } else {
+          template += `<p class='navRezultatus'>Jums vēl nav īres ieraksta</p>`;
+        }
+
         $("#tabula").html(template);
       },
       error: function () {
@@ -477,41 +496,45 @@ $(document).ready(function () {
       method: "GET",
       success: function (response) {
         const ieraksti = JSON.parse(response);
-        let template = `
-        <table>
-          <tr>
-            <th>ID</th>
-            <th>Lietotājs</th>
-            <th>Mājokļa tips</th>
-            <th>Adrese</th>
-            <th>Cena (€)</th>
-            <th>Statuss</th>
-            <th>Datums</th>
-            <th></th>
-          </tr>
-          <tbody>`;
+        let template = "";
+        if (ieraksti.length > 0) {
+          template += `<table>
+                        <tr>
+                          <th>Lietotājs</th>
+                          <th>Mājokļa tips</th>
+                          <th>Adrese</th>
+                          <th>Cena (€)</th>
+                          <th>Statuss</th>
+                          <th>Datums</th>
+                          <th></th>
+                        </tr>
+                        <tbody>`;
+        }
 
-        ieraksti.forEach((ieraksts) => {
-          const klaseSarkans =
-            ieraksts.statuss === "Atteikums" ? "sarkans" : "";
-          const klaseZals =
-            ieraksts.statuss === "Mājoklis ir iegādāts" ? "zals" : "";
-          template += `
-              <tr ieraksta_ID="${ieraksts.id}">
-                <td>${ieraksts.id}</td>
-                <td>${ieraksts.epasts}</td>
-                <td>${ieraksts.majokla_tips}</td>
-                <td>${ieraksts.pilseta}, ${ieraksts.iela} ${ieraksts.majas_numurs}</td>
-                <td>${ieraksts.cena}</td>
-                <td class='${klaseSarkans} ${klaseZals}'>${ieraksts.statuss}</td>
-                <td>${ieraksts.izveidosanas_datums}</td>
-                <td>
-                  <a class="ieraksts-item editBtn"> <i class="fa fa-edit"></i> </a>
-                </td>
-              </tr>`;
-        });
+        if (ieraksti.length > 0) {
+          ieraksti.forEach((ieraksts) => {
+            const klaseSarkans =
+              ieraksts.statuss === "Atteikums" ? "sarkans" : "";
+            const klaseZals =
+              ieraksts.statuss === "Mājoklis ir iegādāts" ? "zals" : "";
+            template += `
+                <tr ieraksta_ID="${ieraksts.id}">
+                  <td>${ieraksts.epasts}</td>
+                  <td>${ieraksts.majokla_tips}</td>
+                  <td>${ieraksts.pilseta}, ${ieraksts.iela} ${ieraksts.majas_numurs}</td>
+                  <td>${ieraksts.cena}</td>
+                  <td class='${klaseSarkans} ${klaseZals}'>${ieraksts.statuss}</td>
+                  <td>${ieraksts.izveidosanas_datums}</td>
+                  <td>
+                    <a class="ieraksts-item editBtn"> <i class="fa fa-edit"></i> </a>
+                  </td>
+                </tr>`;
+          });
+          template += `</tbody></table>`;
+        } else {
+          template += `<p class='navRezultatus'>Nav iesniegts neviens pieteikums</p>`;
+        }
 
-        template += `</tbody></table>`;
         $("#tabula").html(template);
       },
       error: function () {
@@ -567,35 +590,39 @@ $(document).ready(function () {
       method: "GET",
       success: function (response) {
         const ieraksti = JSON.parse(response);
-        let template = `
-        <table>
-          <tr>
-            <th>ID</th>
-            <th>Lietotājs</th>
-            <th>Mājokļa tips</th>
-            <th>Adrese</th>
-            <th>Iznomāts no</th>
-            <th>Iznomāts līdz</th>
-            <th>Cena (€)</th>
-            <th>Datums</th>
-          </tr>
-          <tbody>`;
+        let template = "";
+        if (ieraksti.length > 0) {
+          template += `<table>
+                        <tr>
+                          <th>Lietotājs</th>
+                          <th>Mājokļa tips</th>
+                          <th>Adrese</th>
+                          <th>Iznomāts no</th>
+                          <th>Iznomāts līdz</th>
+                          <th>Cena (€)</th>
+                          <th>Datums</th>
+                        </tr>
+                        <tbody>`;
+        }
 
-        ieraksti.forEach((ieraksts) => {
-          template += `
-              <tr>
-                <td>${ieraksts.id}</td>
-                <td>${ieraksts.epasts}</td>
-                <td>${ieraksts.majokla_tips}</td>
-                <td>${ieraksts.pilseta}, ${ieraksts.iela} ${ieraksts.majas_numurs}</td>
-                <td>${ieraksts.registresanas_datums}</td>
-                <td>${ieraksts.izrakstisanas_datums}</td>
-                <td>${ieraksts.cena}</td>
-                <td>${ieraksts.izveidosanas_datums}</td>
-              </tr>`;
-        });
+        if (ieraksti.length > 0) {
+          ieraksti.forEach((ieraksts) => {
+            template += `
+                <tr>
+                  <td>${ieraksts.epasts}</td>
+                  <td>${ieraksts.majokla_tips}</td>
+                  <td>${ieraksts.pilseta}, ${ieraksts.iela} ${ieraksts.majas_numurs}</td>
+                  <td>${ieraksts.registresanas_datums}</td>
+                  <td>${ieraksts.izrakstisanas_datums}</td>
+                  <td>${ieraksts.cena}</td>
+                  <td>${ieraksts.izveidosanas_datums}</td>
+                </tr>`;
+          });
+          template += `</tbody></table>`;
+        } else {
+          template += `<p class='navRezultatus'>Nav neviena ieraksta</p>`;
+        }
 
-        template += `</tbody></table>`;
         $("#tabula").html(template);
       },
       error: function () {

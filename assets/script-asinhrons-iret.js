@@ -1,19 +1,24 @@
 $(document).ready(function () {
+  // Mainīgie pašreizējai meklēšanai un kārtošanai
   let tekosaMeklesana = "";
   let tekosaKartosana = "datums_desc";
   let ievaditiDatumi = false;
 
+  // Kopējās īres cenas aprēķināšana atkarībā no īres ilguma un cenām
   function galigaCena(no, lidz, cena_diena, cena_nedela, cena_menesis) {
     const dienasSkaits = dienasSkaitsFunkcija(no, lidz);
     let kopa = 0;
 
     if (dienasSkaits < 7) {
+      // Mazāk nekā nedēļu - rēķināties ar dienas cenu
       kopa = dienasSkaits * cena_diena;
     } else if (dienasSkaits < 32) {
+      // Mazāk par mēnesi - skaits pa nedēļām + atlikums pa dienām
       const nedelas = Math.floor(dienasSkaits / 7);
       const atlikusieDienas = dienasSkaits % 7;
       kopa = nedelas * cena_nedela + atlikusieDienas * cena_diena;
     } else {
+      // Vairāk nekā mēnesi - skaits pa mēnešiem + atlikums pa dienām
       const menesi = Math.floor(dienasSkaits / 30);
       const atlikusieDienas = dienasSkaits % 30;
       kopa = menesi * cena_menesis + atlikusieDienas * cena_diena;
@@ -22,12 +27,14 @@ $(document).ready(function () {
     return kopa.toFixed(2);
   }
 
+  // Aprēķina dienu skaitu starp diviem datumiem
   function dienasSkaitsFunkcija(no, lidz) {
     const datumsNo = new Date(no);
     const datumsLidz = new Date(lidz);
     return Math.ceil((datumsLidz - datumsNo) / (1000 * 60 * 60 * 24));
   }
 
+  // Atgrieziet pareizo galotni vārdam “diena”
   function getDienasPareizaForma(skaits) {
     if (skaits === 1 || (skaits % 10 === 1 && skaits % 100 !== 11)) {
       return "dienu";
@@ -35,6 +42,7 @@ $(document).ready(function () {
     return "dienām";
   }
 
+  // Pieejamo māju asinhronā ielāde un filtrēšana
   function fetchIresanasMajas(
     meklet = "",
     filtri = {},
@@ -50,16 +58,17 @@ $(document).ready(function () {
       }
     }
 
+    // Iegūt saglabāto sludinājumu sarakstu
     $.getJSON(
       "./assets/database/saglabatie_masivs.php?veids=Iret&tips=Maja",
       function (saglabatieSludinajumi) {
+        // Iegūt pieejamo māju sarakstu
         $.ajax({
           url: `./assets/database/pieejamie_majas_list.php?${queryParams.toString()}`,
           type: "GET",
           success: function (response) {
             const majas = JSON.parse(response);
             let template = "";
-
             const minCena = parseFloat(filtri.minCena) || 0;
             const maxCena = parseFloat(filtri.maxCena) || Infinity;
 
@@ -73,16 +82,19 @@ $(document).ready(function () {
                   parseFloat(maja.cena_menesis)
                 );
 
+                // Pārbaude, vai cena iekļaujas norādītajā diapazonā
                 if (galaCena < minCena || galaCena > maxCena) return;
 
                 const parDienas = dienasSkaitsFunkcija(no, lidz);
 
+                // Pārbaude, vai sludinājums ir saglabāts
                 const irSaglabats = saglabatieSludinajumi.includes(
                   parseInt(maja.id)
                 );
                 const sirdsKlase = irSaglabats ? "fa-solid" : "fa-regular";
                 const sirdsKlase2 = irSaglabats ? "sirdsSarkans" : "";
 
+                // HTML sludinājuma šablons
                 template += `
                   <div class='sludinajums sludinajumsIresanai' 
                     maja_id="${maja.id}"
@@ -120,7 +132,7 @@ $(document).ready(function () {
               $(".majasSaturs.iresanasBack").removeClass("iresanasBack");
             } else {
               template =
-                "<p class='navRezultatus'>Nav pieejamu mājokļu izvēlētajās dienās.</p>";
+                "<p class='navRezultatus'>Izvēlētajā periodā nav brīvu mājokļu.</p>";
             }
 
             $("#majasIret").html(template);
@@ -133,6 +145,7 @@ $(document).ready(function () {
     );
   }
 
+  // Veidlapas ar atlasītiem īres datumiem nosūtīšana
   $(document).on("submit", ".iresanasDatumi", function (e) {
     e.preventDefault();
 
@@ -147,13 +160,14 @@ $(document).ready(function () {
     const noDate = new Date(no);
     const lidzDate = new Date(lidz);
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const sodien = new Date();
+    sodien.setHours(0, 0, 0, 0);
 
-    const tomorrow = new Date(today);
-    tomorrow.setDate(today.getDate() + 1);
+    const rit = new Date(sodien);
+    rit.setDate(sodien.getDate() + 1);
 
-    if (noDate < tomorrow || lidzDate < tomorrow) {
+    // Pārbaude, vai datums nav pagātnē vai šodien.
+    if (noDate < rit || lidzDate < rit) {
       alert("Jūs nevarat izvēlēties pagājušās vai šodienas dienas!");
       return;
     }
@@ -171,6 +185,7 @@ $(document).ready(function () {
     fetchIresanasMajas(tekosaMeklesana, {}, tekosaKartosana, no, lidz);
   });
 
+  // Meklēt ar filtriem apstrāde
   $(document).on("click", ".mekleteFiltrusI", function (e) {
     e.preventDefault();
 
@@ -183,6 +198,7 @@ $(document).ready(function () {
     const lidz = $("input[name='lidz']").val();
     tekosaMeklesana = $("#meklet-lauks").val();
 
+    // Filtra vākšana
     let filtri = {
       minCena: $("input[name='minimalaCena']").val(),
       maxCena: $("input[name='maksimalaCena']").val(),
@@ -197,6 +213,7 @@ $(document).ready(function () {
     fetchIresanasMajas(tekosaMeklesana, filtri, tekosaKartosana, no, lidz);
   });
 
+  // Kārtošanas opcija maiņa
   $(document).on("change", "#kartosanasOpcijasI", function () {
     if (!ievaditiDatumi) {
       alert("Vispirms ievadiet datumus!");
@@ -221,6 +238,7 @@ $(document).ready(function () {
     fetchIresanasMajas(tekosaMeklesana, filtri, tekosaKartosana, no, lidz);
   });
 
+  // Filtra tīrīšana
   $(document).on("click", "#izdest-filtrus-majas-iret", function (e) {
     e.preventDefault();
 
@@ -248,6 +266,7 @@ $(document).ready(function () {
     fetchIresanasMajas("", {}, tekosaKartosana, no, lidz);
   });
 
+  // Izveidot un nosūtīt veidlapu ar izvēlēto māju
   function izveidotUnNosutitFormu(majaId, no, lidz, galaCena) {
     const forma = document.createElement("form");
     forma.method = "POST";
@@ -267,6 +286,7 @@ $(document).ready(function () {
     forma.submit();
   }
 
+  // Noklikšķiniet uz sludinājumu - modalai logs ir atvērts
   $(document).on("click", ".sludinajumsIresanai", function () {
     let majaId = $(this).attr("maja_id");
     const no = $("input[name='no']").val();
@@ -286,6 +306,7 @@ $(document).ready(function () {
     izveidotUnNosutitFormu(majaId, no, lidz, galaCena);
   });
 
+  // Pogas saglabāt/dzēst no saglabātiem apstrāde
   $(document).on("click", ".saglabatSludinajumu", function (e) {
     e.stopPropagation();
     e.preventDefault();

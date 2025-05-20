@@ -155,7 +155,11 @@ if (isset($_SESSION['lietotajaIdDt'])) {
             <img src="images/pardot.png">
             <h3>Pievienot savu sludinājumu</h3>
             <p id="tresaisTeksts">Jūs varat ātri un ērti piedāvāt savu mājokli pārdošanai vai īrei. Aizpildiet vienkāršu veidlapu, pievienojiet fotogrāfijas un svarīgu informāciju, un Jūsu sludinājums būs pieejams tūkstošiem lietotāju.</p>
-            <a href="login.php" class="btn">Pievienot sludinājumu</a>
+            <?php if (isset($_SESSION['lietotajaIdDt'])): ?>
+                <a href="profils.php" class="btn">Pievienot sludinājumu</a>
+            <?php else: ?>
+                <a href="login.php" class="btn">Pievienot sludinājumu</a>
+            <?php endif; ?>
         </div>
     </div>
 </section>

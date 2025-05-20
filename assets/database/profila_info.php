@@ -5,7 +5,7 @@ session_start();
 if (isset($_SESSION['lietotajaIdDt'])) {
     $lietotajaId = $_SESSION['lietotajaIdDt'];
 
-    $stmt = $savienojums->prepare('SELECT * FROM majuvieta_lietotaji WHERE izdzests = 0 AND lietotaja_id = ?');
+    $stmt = $savienojums->prepare("SELECT * FROM majuvieta_lietotaji WHERE statuss != 'Dzēsts' AND lietotaja_id = ?");
     $stmt->bind_param('i', $lietotajaId);
 
     if ($stmt->execute()) {

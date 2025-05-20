@@ -32,7 +32,7 @@ $lietotajaLoma = $_SESSION['lietotajaLomaMV'] ?? null;
             <a href="dzivokli.php" class="<?php echo ($page == 'dzivokli' ? 'current' : '') ?>">Dzīvokļi</a>
 
             <?php if ($lietotajaLoma): ?>
-                <a href="saglabati.php" class="<?php echo ($page == 'saglabati' ? 'current' : '') ?>">Saglabāti</a>
+                <a href="saglabati.php" class="<?php echo ($page == 'saglabati' ? 'current' : '') ?>">Saglabātie</a>
             <?php endif; ?>
         </nav>
 

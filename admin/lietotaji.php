@@ -5,12 +5,11 @@ require "database/con_db.php";
 ?>
 <div class="lietotaji">
     <div class="pievienotKaste">
-        <form method='POST' action='pievienot_lietotaju.php'>
-            <button type='submit' class="pievienotBtn"><i class="fas fa-add"></i> Pievienot lietotāju</button>
-        </form>
+        <a class="pievienotBtn" id="new-btn-lietotajs"><i class="fas fa-add"></i> Pievienot lietotāju</a>
     </div>
     <table>
         <tr class="heading">
+            <th>ID</th>
             <th>Vārds Uzvārds</th>
             <th>E-pasts</th>
             <th>Tālrunis</th>
@@ -18,51 +17,86 @@ require "database/con_db.php";
             <th>Izveidošanas datums</th>
             <th></th>
         </tr>
-        <?php
-        $lietotaji_SQL = "SELECT * FROM majuvieta_lietotaji  WHERE izdzests != 1 ORDER BY izveidosanas_datums DESC";
-        $atlasa_lietotaji_SQL = mysqli_query($savienojums, $lietotaji_SQL);
-
-        while ($ieraksts = mysqli_fetch_array($atlasa_lietotaji_SQL)) {
-            $formatted_datums = date('d.m.Y H:i', strtotime($ieraksts['izveidosanas_datums']));
-
-            echo "
-                    <tr>
-                        <td>{$ieraksts['vards']} {$ieraksts['uzvards']}</td>
-                        <td>{$ieraksts['epasts']}</td>
-                        <td>{$ieraksts['talrunis']}</td>
-                        <td>{$ieraksts['loma']}</td>
-                        <td>$formatted_datums</td>
-                        <td class='ierakstaDarbibas'>
-                            <form method='POST' action='edit_lietotaju.php'>
-                                <button type='submit' name='apskatitIeraksts' class='editBtn' value='{$ieraksts['lietotaja_id']}'><i class='fas fa-edit'></i></button>
-                            </form>
-
-                            <form method='POST' onsubmit='return confirm(\"Vai tiešām vēlēs dzēst?\");'>
-                                <input type='hidden' name='delete_id' value='{$ieraksts['lietotaja_id']}'>
-                                <button type='submit' name='nodzestIeraksts' class='deleteBtn' value='{$ieraksts['lietotaja_id']}'><i class='fas fa-trash'></i></button>
-                            </form>
-                        </td>
-                    </tr>
-                ";
-        }
-        ?>
+        <tbody id="lietotaji"></tbody>
     </table>
-    <?php
-    if (isset($_POST['nodzestIeraksts'])) {
-        $id = $_POST['delete_id'];
-        $sql = "UPDATE itspeks_aktualitates SET Izdzests = 1 WHERE lietotaja_id = '$id'";
-        mysqli_query($savienojums, $sql);
-        echo "<script>
-                window.location.href = window.location.href;
-                if(window.performance){
-                    if(window.performance.navigation.type == 1){
-                        location.reload(true);
-                    }
-                }
-            </script>";
-    }
-    ?>
 </div>
+
+<div class="modal modalLietotajsTabulaAdmin" id="modal-lietotajs-tabula-admin">
+    <div class="modal-box">
+        <div class="virsraksts">
+            <h2>Lietotāja informācija</h2>
+            <div class="close-modal"><i class="fas fa-times"></i></div>
+        </div>
+        <form id="lietotajaFormaTabulaAdmin">
+            <div class="formElements">
+                <div class="rinda">
+                    <label>Vārds:</label>
+                    <input type="text" id="lietVardsTabulaAdmin" name="lietVardsTabulaAdmin" required>
+                </div>
+                <div class="rinda">
+                    <label>Uzvārds:</label>
+                    <input type="text" id="lietUzvardsTabulaAdmin" name="lietUzvardsTabulaAdmin" required>
+                </div>
+                <div class="rinda">
+                    <label>Epasts:</label>
+                    <input type="text" id="lietEpastsTabulaAdmin" name="lietEpastsTabulaAdmin" required>
+                </div>
+                <div class="rinda">
+                    <label>Tālrunis:</label>
+                    <input type="text" id="lietTalrunisTabulaAdmin" name="lietTalrunisTabulaAdmin" required>
+                </div>
+                <?php
+                if ($_SESSION['lietotajaLomaMV'] === 'Administrators'):
+                ?>
+                    <div class="rinda">
+                        <label>Loma:</label>
+                        <select id="lomaSelect" name="lomaSelect">
+                            <option value="Moderators">Moderators</option>
+                            <option value="Lietotājs">Lietotājs</option>
+                        </select>
+                    </div>
+                <?php endif; ?>
+                <div class="rinda nomainitParoleTabulaAdminRinda">
+                    <label>Nomainīt parole?</label>
+                    <select id="nomainitParoleSelectTabulaAdmin" name="nomainitParoleSelectTabulaAdmin">
+                        <option value="ne">Nē</option>
+                        <option value="ja">Jā</option>
+                    </select>
+                </div>
+                <div class="rinda nomainitParoleTabulaAdmin">
+                    <label>Parole:</label>
+                    <input type="password" id="lietParoleTabulaAdmin" name="lietParoleTabulaAdmin">
+                </div>
+                <div class="rinda nomainitParoleTabulaAdmin">
+                    <label>Parole (atkārtoti):</label>
+                    <input type="password" id="lietParoleOtraisTabulaAdmin" name="lietParoleOtraisTabulaAdmin">
+                </div>
+                <div class="rinda nomainitAtteluTabulaAdminRinda">
+                    <label>Nomainīt attēlu?</label>
+                    <select id="nomainitAtteluSelectTabulaAdmin" name="nomainitAtteluSelectTabulaAdmin">
+                        <option value="ne">Nē</option>
+                        <option value="ja">Jā</option>
+                    </select>
+                </div>
+                <div class="rinda" id="nomainitAtteluTabulaAdmin">
+                    <label>Attēls:</label>
+                    <input type="file" id="attelsTabulaAdmin" name="attelsTabulaAdmin" accept="image/png, image/jpeg">
+                </div>
+                <div class="rinda papildInfoLiet">
+                    <label>Atjaunināšanas datums:</label>
+                    <p id="atjauninasanasDatums"></p>
+                </div>
+                <div class="rinda papildInfoLiet">
+                    <label>IP adrese:</label>
+                    <p name="ipAdrese" id="ipAdrese"></p>
+                </div>
+                <input type="hidden" id="lietotajs_admin_ID" name="lietotajs_admin_ID">
+            </div>
+            <button type="submit" name="lietotajs_tabula_admin_saglabat" id="lietotajs_tabula_admin_saglabat" class="btn">Saglabāt</button>
+        </form>
+    </div>
+</div>
+
 </div>
 </body>
 

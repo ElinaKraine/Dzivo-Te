@@ -19,7 +19,7 @@ Dzīvo Te ir ērta platforma mājokļu meklēšanai Latvijā. Mēs piedāvājam 
 ## Neautorizēti lietotāji var:
 
 - Pārlūkot mājokļu sludinājumus
-- Apskatīt informāciju par mājokļa īpašībām un atrašanās vietu kartē
+- Apskatīt informāciju par mājokļa īpašībām
 - Izmantot meklēšanu un filtrus, lai atrastu mājokļus
 
 ## To do list:
@@ -28,8 +28,6 @@ Dzīvo Te ir ērta platforma mājokļu meklēšanai Latvijā. Mēs piedāvājam 
 - [x] Izveidot datu bāzi
 - [ ] Realizēt mājaslapas dizainu (Front-end)
 - [ ] Izveidot mājaslapas funkcionālu daļu (Back-end)
-- [ ] Atrast un izmantot citu serveri
-- [ ] Mājaslapas testēšana
 - [ ] Uzrakstīt dokumentāciju
 
 ### Front-end:
@@ -43,12 +41,11 @@ Dzīvo Te ir ērta platforma mājokļu meklēšanai Latvijā. Mēs piedāvājam 
 - [x] Ielogošanas lapa
 - [x] Reģistrēšanas lapa
 - [ ] Responsivitātie mājaslapā
-- [ ] Admin daļa: Sākumlapa
-- [ ] Admin daļa: Lietotāji
-- [ ] Admin daļa: Pārdošanas sludinājumi
-- [ ] Admin daļa: Izīrēšanas sludinājumi
-- [ ] Admin daļa: Pieteikumi iegādei
-- [ ] Admin daļa: Īres ieraksti
+- [x] Admin daļa: Sākumlapa
+- [x] Admin daļa: Lietotāji
+- [x] Admin daļa: Sludinājumi
+- [x] Admin daļa: Pieteikumi iegādei
+- [x] Admin daļa: Īres ieraksti
 
 ### Back-end:
 
@@ -72,16 +69,15 @@ Dzīvo Te ir ērta platforma mājokļu meklēšanai Latvijā. Mēs piedāvājam 
 - [x] Dzēst pieteikumu (lietotājs)
 - [x] Nomainīt lietotāja pieteikuma statusu (lietotājs)
 - [x] Rediģēt lietotāju informacīju
-- [ ] Administratoru un moderatoru kontu aplūkošana
-- [ ] Lietotāja un moderatora pievienošana
-- [ ] Lietotāja un moderatora rediģēšana
-- [ ] Lietotāja un moderatora dzēšana
+- [x] Administratoru un moderatoru kontu aplūkošana
+- [x] Lietotāja un moderatora pievienošana
+- [x] Lietotāja un moderatora rediģēšana
+- [x] Lietotāja un moderatora dzēšana
 - [ ] Sludinājuma pievienošana
 - [ ] Sludinājuma rediģēšana
 - [ ] Sludinājuma dzēšana
 - [ ] Pieteikuma rediģēšana
 - [ ] Pieteikuma dzēšana
-- [ ] Īres ieraksts pievienošana
 - [ ] Īres ieraksts rediģēšana
 - [ ] Īres ieraksts dzēšana
 

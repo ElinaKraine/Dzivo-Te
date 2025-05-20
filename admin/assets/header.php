@@ -16,6 +16,9 @@ if (!isset($_SESSION['lietotajaLomaMV']) || ($_SESSION['lietotajaLomaMV'] !== 'A
     <link rel="shortcut icon" href="../images/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="assets/style-admin.css">
     <link rel="stylesheet" href="../assets/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" defer></script>
+    <script src="assets/script-asinhrons-admin.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
@@ -27,8 +30,7 @@ if (!isset($_SESSION['lietotajaLomaMV']) || ($_SESSION['lietotajaLomaMV'] !== 'A
     <div class="sidebar">
         <a href="./" class="<?php echo ($page == 'sakums' ? 'current' : '') ?>">Sākumlapa</a>
         <a href="./lietotaji.php" class="<?php echo ($page == 'lietotaji' ? 'current' : '') ?>">Lietotāji</a>
-        <a href="./sludinajumi_pirkt.php" class="<?php echo ($page == 'pardosanas' ? 'current' : '') ?>">Pārdošanas sludinājumi</a>
-        <a href="./sludinajumi_iret.php" class="<?php echo ($page == 'iziresanas' ? 'current' : '') ?>">Izīrēšanas sludinājumi</a>
+        <a href="./sludinajumi.php" class="<?php echo ($page == 'sludinajumi' ? 'current' : '') ?>">Sludinājumi</a>
         <a href="./pieteikumi.php" class="<?php echo ($page == 'pieteikumi' ? 'current' : '') ?>">Pieteikumi iegadei</a>
         <a href="./iziresanas.php" class="<?php echo ($page == 'ires' ? 'current' : '') ?>">Īres ieraksti</a>
     </div>

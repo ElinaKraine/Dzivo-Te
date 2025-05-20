@@ -8,7 +8,7 @@ if (isset($_POST['ielogoties'])) {
     $parole = $_POST['parole'];
 
     if (!empty($epasts) && !empty($parole)) {
-        $vaicajums = $savienojums->prepare("SELECT * FROM majuvieta_lietotaji WHERE epasts = ? AND izdzests != 1");
+        $vaicajums = $savienojums->prepare("SELECT * FROM majuvieta_lietotaji WHERE epasts = ? AND statuss != 'Dzēsts'");
         $vaicajums->bind_param("s", $epasts);
         $vaicajums->execute();
         $rezultats = $vaicajums->get_result();

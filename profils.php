@@ -216,9 +216,7 @@ if (!isset($_SESSION['lietotajaLomaMV'])) {
                             <label>Attēls:</label>
                             <input type="file" id="attels" name="attels" accept="image/png, image/jpeg">
                         </div>
-                        <div class="rinda">
-                            <input type="hidden" id="liet_ID" name="liet_ID">
-                        </div>
+                        <input type="hidden" id="liet_ID" name="liet_ID">
                     </div>
                     <button type="submit" name="lietotajs_saglabat" id="lietotajs_saglabat" class="btn">Saglabāt</button>
                 </form>
