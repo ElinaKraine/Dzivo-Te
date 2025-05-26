@@ -798,6 +798,61 @@ $(document).ready(function () {
     });
   }
 
+  $(document).on("click", ".piet-item", (e) => {
+    $(".modalPieteikumi").css("display", "flex");
+
+    const element = $(e.currentTarget).closest("tr");
+    const id = $(element).attr("piet_ID");
+
+    $.post(
+      "../assets/database/liet_pieteikumi_single.php",
+      { id },
+      (response) => {
+        const pieteikums = JSON.parse(response);
+        $("#pietlietotajsAdmin").val(pieteikums.epasts);
+        $("#pietMajoklaTipsAdmin").val(pieteikums.majokla_tips);
+        $("#pietAdreseAdmin").val(pieteikums.adrese);
+        $("#pietCenaAdmin").val(pieteikums.cena);
+        $("#pietStatussAdmin").val(pieteikums.statuss);
+        $("#piet_ID").val(pieteikums.id);
+        $("#pietDatumsAdmin").val(pieteikums.izveidosanas_datums);
+        $("#ipAdresePiet").text(pieteikums.ip_adrese);
+        $("#atjauninasanasDatumsPiet").text(pieteikums.atjauninasanas_datums);
+      }
+    );
+  });
+
+  $(document).on("click", ".piet-delete", (e) => {
+    if (confirm("Vai esat pārliecināts, ka vēlaties dzēst šo pieteikumu?")) {
+      const element = $(e.currentTarget).closest("tr");
+      const id = $(element).attr("piet_ID");
+      $.post("../assets/database/pieteikumi_delete.php", { id }, (response) => {
+        fetchPieteikumi();
+      });
+    }
+  });
+
+  $("#pieteikumaFormaAdmin").submit((e) => {
+    e.preventDefault();
+    const postData = {
+      statuss: $("#pietStatussAdmin").val(),
+      id: $("#piet_ID").val(),
+    };
+
+    url = "../assets/database/liet_pieteikumi_edit.php";
+    $.post(url, postData, (response) => {
+      if (response.includes("veiksmīgi")) {
+        paradit_pazinojumu(response);
+        fetchPieteikumi();
+        return;
+      }
+
+      $(".modalPieteikumi").hide();
+      $("#pieteikumaFormaAdmin").trigger("reset");
+      fetchPieteikumi();
+    });
+  });
+
   // #endregion
 
   //#region Īres ieraksti

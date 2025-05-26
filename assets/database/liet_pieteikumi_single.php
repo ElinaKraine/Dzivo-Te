@@ -12,7 +12,9 @@ if (isset($_POST['id'])) {
                 mv.cena,
                 mv.majokla_tips,
                 CONCAT(ad.pilseta, ' ', ad.iela, ' ', ad.majas_numurs) AS adrese,
-                ml.epasts
+                ml.epasts,
+                mp.pedejais_izmainas_datums,
+                mp.ip_adrese
             FROM majuvieta_pieteikumi mp
             JOIN majuvieta_pirkt mv ON mp.id_majuvieta_pirkt = mv.pirkt_id
             INNER JOIN majuvieta_adrese ad ON mv.pirkt_id = ad.id_sludinajums
@@ -54,6 +56,8 @@ if (isset($_POST['id'])) {
             'cena' => htmlspecialchars($ieraksts['cena']),
             'majokla_tips' => htmlspecialchars($ieraksts['majokla_tips']),
             'adrese' => htmlspecialchars($ieraksts['adrese']),
+            'ip_adrese' => htmlspecialchars($ieraksts['ip_adrese']),
+            'atjauninasanas_datums' => date("d.m.Y H:i", strtotime($ieraksts['pedejais_izmainas_datums'])),
         );
     }
 

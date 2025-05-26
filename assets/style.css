@@ -1428,7 +1428,7 @@ footer{
 
 .profilsKaste .btn:hover{ background: red; }
 
-#modal-admin-sludinajums, #modal-admin-pieteikums, #modal-admin-lietotajs, #modal-lietotajs-admin, #modal-lietotajs-tabula-admin, #modal-ires-ieraksts, #modal-admin-admin-sludinajums{
+#modal-admin-sludinajums, #modal-admin-pieteikums, #modal-admin-lietotajs, #modal-lietotajs-admin, #modal-lietotajs-tabula-admin, #modal-ires-ieraksts, #modal-admin-admin-sludinajums, #modal-admin-admin-pieteikums{
     .modal-box{ padding: 0; max-width: 90rem; }
 
     .virsraksts{

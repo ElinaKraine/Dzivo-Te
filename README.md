@@ -73,11 +73,11 @@ Dzīvo Te ir ērta platforma mājokļu meklēšanai Latvijā. Mēs piedāvājam 
 - [x] Lietotāja un moderatora pievienošana
 - [x] Lietotāja un moderatora rediģēšana
 - [x] Lietotāja un moderatora dzēšana
-- [ ] Sludinājuma pievienošana
-- [ ] Sludinājuma rediģēšana
-- [ ] Sludinājuma dzēšana
-- [ ] Pieteikuma rediģēšana
-- [ ] Pieteikuma dzēšana
+- [x] Sludinājuma pievienošana
+- [x] Sludinājuma rediģēšana
+- [x] Sludinājuma dzēšana
+- [x] Pieteikuma rediģēšana
+- [x] Pieteikuma dzēšana
 - [ ] Īres ieraksts rediģēšana
 - [ ] Īres ieraksts dzēšana
 
