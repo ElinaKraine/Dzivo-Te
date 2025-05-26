@@ -922,6 +922,7 @@ $(document).ready(function () {
 
   $(document).on("click", ".ires-item", (e) => {
     $(".modalIresIeraksts").css("display", "flex");
+    $("#iresFormPazinojums").text("");
 
     const element = $(e.currentTarget).closest("tr");
     const id = $(element).attr("ires_ID");
@@ -939,6 +940,49 @@ $(document).ready(function () {
       );
       $("#ipAdreseIres").text(iresIerakstsTabula.ip_adrese);
       $("#ires_ID").val(iresIerakstsTabula.id);
+    });
+  });
+
+  $(document).on("click", ".ires-delete", (e) => {
+    if (confirm("Vai esat pārliecināts, ka vēlaties dzēst šo īres ierakstu?")) {
+      const element = $(e.currentTarget).closest("tr");
+      const id = $(element).attr("ires_ID");
+      $.post("./database/ires_ieraksts_delete.php", { id }, (response) => {
+        fetchIresIeraksti();
+      });
+    }
+  });
+
+  $("#iresIerakstaForma").submit((e) => {
+    e.preventDefault();
+    const postData = {
+      cena: $("#cenaIret").val(),
+      registresanas_datums: $("#iznomatsNo").val(),
+      izrakstisanas_datums: $("#iznomatsLidz").val(),
+      id: $("#ires_ID").val(),
+    };
+
+    url = "./database/ires_ieraksts_edit.php";
+    $.post(url, postData, (response) => {
+      if (response.includes("veiksmīgi")) {
+        paradit_pazinojumu(response);
+        fetchIresIeraksti();
+        return;
+      }
+
+      if (
+        response.includes("Visi ievadas lauki") ||
+        response.includes("Izvēlētais") ||
+        response.includes("Datumu")
+      ) {
+        $("#iresFormPazinojums").text(response);
+        return;
+      }
+
+      $(".modalIresIeraksts").hide();
+      $("#iresIerakstaForma").trigger("reset");
+      $("#iresFormPazinojums").text("");
+      fetchIresIeraksti();
     });
   });
 

@@ -26,9 +26,9 @@ Dzīvo Te ir ērta platforma mājokļu meklēšanai Latvijā. Mēs piedāvājam 
 
 - [x] Izstrādāt mājaslapas dizainu (Figma)
 - [x] Izveidot datu bāzi
-- [ ] Realizēt mājaslapas dizainu (Front-end)
-- [ ] Izveidot mājaslapas funkcionālu daļu (Back-end)
-- [ ] Uzrakstīt dokumentāciju
+- [x] Realizēt mājaslapas dizainu (Front-end)
+- [x] Izveidot mājaslapas funkcionālu daļu (Back-end)
+- [x] Uzrakstīt dokumentāciju
 
 ### Front-end:
 
@@ -78,8 +78,8 @@ Dzīvo Te ir ērta platforma mājokļu meklēšanai Latvijā. Mēs piedāvājam 
 - [x] Sludinājuma dzēšana
 - [x] Pieteikuma rediģēšana
 - [x] Pieteikuma dzēšana
-- [ ] Īres ieraksts rediģēšana
-- [ ] Īres ieraksts dzēšana
+- [x] Īres ieraksts rediģēšana
+- [x] Īres ieraksts dzēšana
 
 ### Dizaina iedvesma:
 

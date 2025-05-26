@@ -26,7 +26,7 @@ if (isset($_POST['id'])) {
     $vaicajums->execute();
     $rezultats = $vaicajums->get_result();
     if (!$rezultats) {
-        die('Kļūda: ' . $savienojums->error);
+        // die('Kļūda: ' . $savienojums->error);
     }
 
     while ($ieraksts = $rezultats->fetch_assoc()) {
@@ -35,8 +35,6 @@ if (isset($_POST['id'])) {
             'epasts' => htmlspecialchars($ieraksts['epasts']),
             'izveidosanas_datums' => date("d.m.Y", strtotime($ieraksts['izveidosanas_datums'])),
             'atjauninasanas_datums' => date("d.m.Y", strtotime($ieraksts['atjauninasanas_datums'])),
-            // 'iznomatsNo' => date("d.m.Y", strtotime($ieraksts['registresanas_datums'])),
-            // 'iznomatsLidz' => date("d.m.Y", strtotime($ieraksts['izrakstisanas_datums'])),
             'iznomatsNo' => date("Y-m-d", strtotime($ieraksts['registresanas_datums'])),
             'iznomatsLidz' => date("Y-m-d", strtotime($ieraksts['izrakstisanas_datums'])),
             'cena' => htmlspecialchars($ieraksts['cena']),

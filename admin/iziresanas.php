@@ -42,16 +42,16 @@ require "database/con_db.php";
                     <input type="text" id="lietotajsIres" name="lietotajsIres" disabled>
                 </div>
                 <div class="rinda">
-                    <label>Iznomāts no:</label>
+                    <label>Iznomāts no: &nbsp;<span class="sarkans">*</span></label>
                     <input type="date" id="iznomatsNo" name="iznomatsNo" required>
                 </div>
                 <div class="rinda">
-                    <label>Iznomāts līdz:</label>
+                    <label>Iznomāts līdz: &nbsp;<span class="sarkans">*</span></label>
                     <input type="date" id="iznomatsLidz" name="iznomatsLidz" required>
                 </div>
                 <div class="rinda">
-                    <label>Cena (€):</label>
-                    <input type="number" id="cenaIret" name="cenaIret" required>
+                    <label>Cena (€): &nbsp;<span class="sarkans">*</span></label>
+                    <input type="number" id="cenaIret" name="cenaIret" min="1" required>
                 </div>
                 <div class="rinda papildInfoLiet">
                     <label>Atjaunināšanas datums:</label>
@@ -61,7 +61,8 @@ require "database/con_db.php";
                     <label>IP adrese:</label>
                     <p name="ipAdreseIres" id="ipAdreseIres"></p>
                 </div>
-                <input type="hidden" id="ires_ieraksts_ID" name="ires_ieraksts_ID">
+                <div id="iresFormPazinojums" class="formPazinojums"></div>
+                <input type="hidden" id="ires_ID" name="ires_ID">
             </div>
             <button type="submit" name="iret_ieraksts_saglabat" id="iret_ieraksts_saglabat" class="btn">Saglabāt</button>
         </form>

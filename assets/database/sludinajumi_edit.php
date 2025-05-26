@@ -248,10 +248,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!empty($veids) && !empty($pilseta) && !empty($iela) && !empty($majasNumurs) && !empty($platiba) && !empty($stavs_vai_stavi)) {
         if ($nomainitAtteli === "ja" && !isset($atteli)) {
-            echo "Visi ievadas lauki nav aizpildīti! sestais";
+            echo "Visi ievadas lauki nav aizpildīti!";
             exit;
         } elseif ($nomainitAtteli === "ja" && !ir_vismaz_viens_attels($atteli)) {
-            echo "Visi ievadas lauki nav aizpildīti! piektais";
+            echo "Visi ievadas lauki nav aizpildīti!";
             exit;
         }
         if ($tips === 'maja' && !empty($zemesPlatiba)) {
@@ -366,7 +366,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
                 //endregion
             } else {
-                echo "Visi ievadas lauki nav aizpildīti! ceturtais";
+                echo "Visi ievadas lauki nav aizpildīti!";
             }
         } elseif ($tips === 'dzivoklis' && !empty($dzivoklaNumurs)) {
             if ($veids === 'pirkt' && !empty($cenaPirkt) && $cenaPirkt >= 1) {
@@ -480,13 +480,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
                 //endregion
             } else {
-                echo "Visi ievadas lauki nav aizpildīti! tresais";
+                echo "Visi ievadas lauki nav aizpildīti!";
             }
         } else {
-            echo "Visi ievadas lauki nav aizpildīti! otrais";
+            echo "Visi ievadas lauki nav aizpildīti!";
         }
     } else {
-        echo "Visi ievadas lauki nav aizpildīti! pirmais";
+        echo "Visi ievadas lauki nav aizpildīti!";
     }
     $savienojums->close();
 } else {

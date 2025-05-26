@@ -30,26 +30,26 @@ require "database/con_db.php";
         <form id="lietotajaFormaTabulaAdmin">
             <div class="formElements">
                 <div class="rinda">
-                    <label>Vārds:</label>
+                    <label>Vārds: &nbsp;<span class="sarkans">*</span></label>
                     <input type="text" id="lietVardsTabulaAdmin" name="lietVardsTabulaAdmin" required>
                 </div>
                 <div class="rinda">
-                    <label>Uzvārds:</label>
+                    <label>Uzvārds: &nbsp;<span class="sarkans">*</span></label>
                     <input type="text" id="lietUzvardsTabulaAdmin" name="lietUzvardsTabulaAdmin" required>
                 </div>
                 <div class="rinda">
-                    <label>Epasts:</label>
+                    <label>Epasts: &nbsp;<span class="sarkans">*</span></label>
                     <input type="text" id="lietEpastsTabulaAdmin" name="lietEpastsTabulaAdmin" required>
                 </div>
                 <div class="rinda">
-                    <label>Tālrunis:</label>
+                    <label>Tālrunis: &nbsp;<span class="sarkans">*</span></label>
                     <input type="text" id="lietTalrunisTabulaAdmin" name="lietTalrunisTabulaAdmin" required>
                 </div>
                 <?php
                 if ($_SESSION['lietotajaLomaMV'] === 'Administrators'):
                 ?>
                     <div class="rinda">
-                        <label>Loma:</label>
+                        <label>Loma: &nbsp;<span class="sarkans">*</span></label>
                         <select id="lomaSelect" name="lomaSelect">
                             <option value="Moderators">Moderators</option>
                             <option value="Lietotājs">Lietotājs</option>
@@ -64,11 +64,11 @@ require "database/con_db.php";
                     </select>
                 </div>
                 <div class="rinda nomainitParoleTabulaAdmin">
-                    <label>Parole:</label>
+                    <label>Parole: &nbsp;<span class="sarkans">*</span></label>
                     <input type="password" id="lietParoleTabulaAdmin" name="lietParoleTabulaAdmin">
                 </div>
                 <div class="rinda nomainitParoleTabulaAdmin">
-                    <label>Parole (atkārtoti):</label>
+                    <label>Parole (atkārtoti): &nbsp;<span class="sarkans">*</span></label>
                     <input type="password" id="lietParoleOtraisTabulaAdmin" name="lietParoleOtraisTabulaAdmin">
                 </div>
                 <div class="rinda nomainitAtteluTabulaAdminRinda">
@@ -79,7 +79,7 @@ require "database/con_db.php";
                     </select>
                 </div>
                 <div class="rinda" id="nomainitAtteluTabulaAdmin">
-                    <label>Attēls:</label>
+                    <label>Attēls: &nbsp;<span class="sarkans">*</span></label>
                     <input type="file" id="attelsTabulaAdmin" name="attelsTabulaAdmin" accept="image/png, image/jpeg">
                 </div>
                 <div class="rinda papildInfoLiet">
