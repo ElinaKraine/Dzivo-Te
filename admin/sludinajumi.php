@@ -104,9 +104,9 @@ require "database/con_db.php";
                     <label>Apraksts:</label>
                     <textarea id="apraksts" name="apraksts" rows="5"></textarea>
                 </div>
-                <div class="rinda" id="atteluGalerijaContainer" style="display: none;">
+                <div class="rinda" id="atteluGalerijaContainerAdmin" style="display: none;">
                     <label>Attēli:</label>
-                    <div id="atteluGalerija"></div>
+                    <div id="atteluGalerijaAdmin"></div>
                 </div>
                 <div class="rinda nomainitAttelusRinda">
                     <label>Nomainīt attēlus?</label>
@@ -134,6 +134,21 @@ require "database/con_db.php";
         </form>
     </div>
 </div>
+
+<?php if (isset($_SESSION['pazinojumsMVL'])): ?>
+    <div class="modal modal-active" id="modal-message">
+        <div class="modal-box">
+            <div class="close-modal" data-target="#modal-message"><i class="fas fa-times"></i></div>
+            <h2>
+                <?php
+                echo $_SESSION['pazinojumsMVL'];
+                unset($_SESSION['pazinojumsMVL']);
+                ?>
+            </h2>
+        </div>
+    </div>
+<?php endif; ?>
+
 </div>
 </body>
 

@@ -41,6 +41,28 @@ function parslegtParolesRedzamibu(ikona, parole) {
   });
 }
 
+// Attēlu skaita ierobežojums
+function validateAtteluInput(input) {
+  const maxFiles = 10;
+  const maxSize = 100 * 1024;
+
+  if (input.files.length === 0 || input.files.length > maxFiles) {
+    alert("Jāizvēlas vismaz 1 un ne vairāk kā 10 attēli.");
+    input.value = "";
+    return false;
+  }
+
+  for (const file of input.files) {
+    if (file.size > maxSize) {
+      alert(`Attēls "${file.name}" pārsniedz 100KB limitu.`);
+      input.value = "";
+      return false;
+    }
+  }
+
+  return true;
+}
+
 // Animācija
 function animacija(pirmaisElements, masivsArElementiem, sekcija) {
   if (!sekcija || !(sekcija instanceof Element)) {

@@ -12,15 +12,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["apstiprinat"])) {
     $izrakstisanasDatums = $_POST['izrakstisanasDatums'];
     $cena = $_POST['cena'];
 
-    $parbaudijums = $savienojums->prepare("SELECT COUNT(*) FROM majuvieta_iziresana WHERE (id_lietotajs = ? AND id_majuvieta_iret = ? AND registresanas_datums = ? AND izrakstisanas_datums = ?) OR (id_majuvieta_iret = ? AND registresanas_datums = ? AND izrakstisanas_datums = ?)");
-    $parbaudijums->bind_param("iississ", $lietotaja_id, $id_majuvieta_iret, $registresanasDatums, $izrakstisanasDatums, $id_majuvieta_iret, $registresanasDatums, $izrakstisanasDatums);
-    $parbaudijums->execute();
-    $parbaudijums->bind_result($count);
-    $parbaudijums->fetch();
-    $parbaudijums->close();
+    $parbaude = $savienojums->prepare("SELECT COUNT(*) FROM majuvieta_iziresana WHERE (id_lietotajs = ? AND id_majuvieta_iret = ? AND registresanas_datums = ? AND izrakstisanas_datums = ?) OR (id_majuvieta_iret = ? AND registresanas_datums = ? AND izrakstisanas_datums = ?)");
+    $parbaude->bind_param("iississ", $lietotaja_id, $id_majuvieta_iret, $registresanasDatums, $izrakstisanasDatums, $id_majuvieta_iret, $registresanasDatums, $izrakstisanasDatums);
+    $parbaude->execute();
+    $parbaude->bind_result($count);
+    $parbaude->fetch();
+    $parbaude->close();
+
+    $vaicajums = $savienojums->prepare("SELECT id_ipasnieks FROM majuvieta_iret WHERE iret_id = ?");
+    $vaicajums->bind_param("i", $id_majuvieta_iret);
+    $vaicajums->execute();
+    $vaicajums->bind_result($id_ipasnieks);
+    $vaicajums->fetch();
+    $vaicajums->close();
 
     if ($count > 0) {
         $_SESSION['pazinojumsMV'] = "Kļūda, veidojot nomas ierakstu!";
+    } elseif ($id_ipasnieks == $lietotaja_id) {
+        $_SESSION['pazinojumsMV'] = "Jūs nevarat izīrēt savu mājokli!";
     } else {
         $vaicajums = $savienojums->prepare("INSERT INTO majuvieta_iziresana (id_lietotajs, id_majuvieta_iret, registresanas_datums, izrakstisanas_datums, cena, ip_adrese) VALUES (?, ?, ?, ?, ?, ?)");
         $vaicajums->bind_param("iissds", $lietotaja_id, $id_majuvieta_iret, $registresanasDatums, $izrakstisanasDatums, $cena, $ip_adrese);

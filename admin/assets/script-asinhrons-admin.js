@@ -513,7 +513,7 @@ $(document).ready(function () {
     $("#sludinajumaForma").trigger("reset");
     $(".nomainitAttelusRinda").hide();
     $(".nomainit-slud-atteli").show();
-    $("#atteluGalerijaContainer").hide();
+    $("#atteluGalerijaContainerAdmin").hide();
     $("#majoklaTips").show();
     $("#majoklaTips-text").hide();
     $("#slud_ID").val("");
@@ -577,7 +577,7 @@ $(document).ready(function () {
 
         toggleFormFields3();
         renderGallery(data.atteli);
-        $("#atteluGalerijaContainer").show();
+        $("#atteluGalerijaContainerAdmin").show();
         $(".nomainitAttelusRinda").show();
         toggleSludAtteluSelect();
       }
@@ -624,7 +624,7 @@ $(document).ready(function () {
     galleryImages = images;
     currentImageIndex = 0;
 
-    const gallery = $("#atteluGalerija");
+    const gallery = $("#atteluGalerijaAdmin");
     gallery.empty();
     images.forEach((src, index) => {
       const imgEl = $(`
@@ -643,30 +643,35 @@ $(document).ready(function () {
   function showModalImage() {
     const src = galleryImages[currentImageIndex];
     if (src) {
-      $("#modalImage").attr("src", "data:image/jpeg;base64," + src);
-      $("#imageModal").css("display", "flex");
+      $("#modalImageAdmin").attr("src", "data:image/jpeg;base64," + src);
+      $("#imageModalAdmin").css("display", "flex");
     }
   }
 
-  $("#prevImage").on("click", () => {
+  $("#atteluGalerijaAdmin").on("click", "img", function () {
+    currentImageIndex = index;
+    showModalImage();
+  });
+
+  $("#prevImageAdmin").on("click", () => {
     currentImageIndex =
       (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
     showModalImage();
   });
 
-  $("#nextImage").on("click", () => {
+  $("#nextImageAdmin").on("click", () => {
     currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
     showModalImage();
   });
 
   $(document).on("keydown", function (e) {
-    if ($("#imageModal").is(":visible")) {
+    if ($("#imageModalAdmin").is(":visible")) {
       if (e.key === "ArrowLeft") {
-        $("#prevImage").click();
+        $("#prevImageAdmin").click();
       } else if (e.key === "ArrowRight") {
-        $("#nextImage").click();
+        $("#nextImageAdmin").click();
       } else if (e.key === "Escape") {
-        $("#imageModal").hide();
+        $("#imageModalAdmin").hide();
       }
     }
   });

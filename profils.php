@@ -41,7 +41,7 @@ if (!isset($_SESSION['lietotajaLomaMV'])) {
                 <form id="sludinajumaForma">
                     <div class="formElements">
                         <div class="rinda">
-                            <label>Mājokļa tips:</label>
+                            <label>Mājokļa tips: &nbsp;<span class="sarkans">*</span></label>
                             <select id="majoklaTips" name="majoklaTips" required>
                                 <option value="maja">Māja</option>
                                 <option value="dzivoklis">Dzīvoklis</option>
@@ -49,62 +49,62 @@ if (!isset($_SESSION['lietotajaLomaMV'])) {
                             <p id="majoklaTips-text"></p>
                         </div>
                         <div class="rinda">
-                            <label>Darījuma veids:</label>
+                            <label>Darījuma veids: &nbsp;<span class="sarkans">*</span></label>
                             <select id="majoklaVeids" name="majoklaVeids" required>
                                 <option value="pirkt">Pirkt</option>
                                 <option value="iret">Īrēt</option>
                             </select>
                         </div>
                         <div class="rinda">
-                            <label>Pilsēta:</label>
+                            <label>Pilsēta: &nbsp;<span class="sarkans">*</span></label>
                             <input type="text" id="pilseta" name="pilseta" required>
                         </div>
                         <div class="rinda">
-                            <label>Iela:</label>
+                            <label>Iela: &nbsp;<span class="sarkans">*</span></label>
                             <input type="text" id="iela" name="iela" required>
                         </div>
                         <div class="rinda">
-                            <label>Mājas numurs:</label>
+                            <label>Mājas numurs: &nbsp;<span class="sarkans">*</span></label>
                             <input type="text" id="majasNumurs" name="majasNumurs" required>
                         </div>
                         <div class="rinda" id="dzivokla-numurs">
-                            <label>Dzīvokļa numurs:</label>
+                            <label>Dzīvokļa numurs: &nbsp;<span class="sarkans">*</span></label>
                             <input type="text" id="dzivoklaNumurs" name="dzivoklaNumurs">
                         </div>
                         <div class="rinda" id="pirkt-cena">
-                            <label>Cena (€):</label>
+                            <label>Cena (€): &nbsp;<span class="sarkans">*</span></label>
                             <input type="number" id="cenaPirkt" name="cenaPirkt" min="1">
                         </div>
                         <div class="rinda iret-cena">
-                            <label>€/dienā:</label>
+                            <label>€/dienā: &nbsp;<span class="sarkans">*</span></label>
                             <input type="number" id="cenaDiena" name="cenaDiena" min="1">
                         </div>
                         <div class="rinda iret-cena">
-                            <label>€/nedēļā:</label>
+                            <label>€/nedēļā: &nbsp;<span class="sarkans">*</span></label>
                             <input type="number" id="cenaNedela" name="cenaNedela" min="1">
                         </div>
                         <div class="rinda iret-cena">
-                            <label>€/mēnesī:</label>
+                            <label>€/mēnesī: &nbsp;<span class="sarkans">*</span></label>
                             <input type="number" id="cenaMenesi" name="cenaMenesi" min="1">
                         </div>
                         <div class="rinda">
-                            <label>Platība (m<sup>2</sup>):</label>
+                            <label>Platība (m<sup>2</sup>): &nbsp;<span class="sarkans">*</span></label>
                             <input type="number" id="platiba" name="platiba" min="1" required>
                         </div>
                         <div class="rinda" id="zemes-platiba">
-                            <label>Zemes platība (m<sup>2</sup>):</label>
+                            <label>Zemes platība (m<sup>2</sup>): &nbsp;<span class="sarkans">*</span></label>
                             <input type="number" id="zemesPlatiba" name="zemesPlatiba" min="1">
                         </div>
                         <div class="rinda">
-                            <label>Istabas:</label>
-                            <input type="number" id="istabas" name="istabas" min="1">
+                            <label>Istabas: &nbsp;<span class="sarkans">*</span></label>
+                            <input type="number" id="istabas" name="istabas" min="1" required>
                         </div>
                         <div class="rinda" id="maja-stavi">
-                            <label>Stāvi:</label>
+                            <label>Stāvi: &nbsp;<span class="sarkans">*</span></label>
                             <input type="number" id="stavi" name="stavi" min="1">
                         </div>
                         <div class="rinda" id="dziv-stavs">
-                            <label>Stāvs:</label>
+                            <label>Stāvs: &nbsp;<span class="sarkans">*</span></label>
                             <input type="text" id="stavs" name="stavs">
                         </div>
                         <div class="rinda">
@@ -123,11 +123,12 @@ if (!isset($_SESSION['lietotajaLomaMV'])) {
                             </select>
                         </div>
                         <div class="rinda nomainit-slud-atteli">
-                            <label>Attēli:</label>
-                            <input type="file" id="atteli" name="atteli[]" accept="image/png, image/jpeg" multiple>
+                            <label>Attēli: &nbsp;<span class="sarkans">*</span></label>
+                            <input type="file" id="atteli" name="atteli[]" accept="image/png, image/jpeg" multiple onchange="validateAtteluInput(this)">
                         </div>
                         <input type="hidden" id="id_sludinajums" name="id_sludinajums">
                     </div>
+                    <div id="sludFormPazinojums" class="formPazinojums"></div>
                     <button type="submit" name="sludinajums_saglabat" id="sludinajums_saglabat" class="btn">Saglabāt</button>
                 </form>
             </div>
@@ -151,7 +152,7 @@ if (!isset($_SESSION['lietotajaLomaMV'])) {
                         <input type="text" id="pietCena" name="pietCena" disabled>
                         <label>Datums:</label>
                         <input type="text" id="pietDatums" name="pietDatums" disabled>
-                        <label>Statuss:</label>
+                        <label>Statuss: &nbsp;<span class="sarkans">*</span></label>
                         <select id="pietStatuss" name="pietStatuss" required>
                             <option value="iesniegtsPieteikums">Iesniegts pieteikums</option>
                             <option value="pieteikumaParskatisana">Pieteikuma pārskatīšana</option>
@@ -175,19 +176,19 @@ if (!isset($_SESSION['lietotajaLomaMV'])) {
                 <form id="lietotajaForma">
                     <div class="formElements">
                         <div class="rinda">
-                            <label>Vārds:</label>
+                            <label>Vārds: &nbsp;<span class="sarkans">*</span></label>
                             <input type="text" id="lietVards" name="lietVards" required>
                         </div>
                         <div class="rinda">
-                            <label>Uzvārds:</label>
+                            <label>Uzvārds: &nbsp;<span class="sarkans">*</span></label>
                             <input type="text" id="lietUzvards" name="lietUzvards" required>
                         </div>
                         <div class="rinda">
-                            <label>Epasts:</label>
+                            <label>Epasts: &nbsp;<span class="sarkans">*</span></label>
                             <input type="text" id="lietEpasts" name="lietEpasts" required>
                         </div>
                         <div class="rinda">
-                            <label>Tālrunis:</label>
+                            <label>Tālrunis: &nbsp;<span class="sarkans">*</span></label>
                             <input type="text" id="lietTalrunis" name="lietTalrunis" required>
                         </div>
                         <div class="rinda">
@@ -198,11 +199,11 @@ if (!isset($_SESSION['lietotajaLomaMV'])) {
                             </select>
                         </div>
                         <div class="rinda nomainitParole">
-                            <label>Parole:</label>
+                            <label>Parole: &nbsp;<span class="sarkans">*</span></label>
                             <input type="password" id="lietParole" name="lietParole">
                         </div>
                         <div class="rinda nomainitParole">
-                            <label>Parole (atkārtoti):</label>
+                            <label>Parole (atkārtoti): &nbsp;<span class="sarkans">*</span></label>
                             <input type="password" id="lietParoleOtrais" name="lietParoleOtrais">
                         </div>
                         <div class="rinda">
@@ -213,11 +214,12 @@ if (!isset($_SESSION['lietotajaLomaMV'])) {
                             </select>
                         </div>
                         <div class="rinda" id="nomainitAttelu">
-                            <label>Attēls:</label>
+                            <label>Attēls: &nbsp;<span class="sarkans">*</span></label>
                             <input type="file" id="attels" name="attels" accept="image/png, image/jpeg">
                         </div>
                         <input type="hidden" id="liet_ID" name="liet_ID">
                     </div>
+                    <div id="lietFormPazinojums" class="formPazinojums"></div>
                     <button type="submit" name="lietotajs_saglabat" id="lietotajs_saglabat" class="btn">Saglabāt</button>
                 </form>
             </div>

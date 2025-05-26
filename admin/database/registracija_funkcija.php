@@ -45,7 +45,7 @@ if (isset($_POST['registracija'])) {
             if ($vaicajums->execute()) {
                 $_SESSION['pazinojumsMVL'] = "Reģistrācija veiksmīgi pabeigta!";
             } else {
-                $_SESSION['pazinojums'] = "Kļūda sistemā!";
+                $_SESSION['pazinojumsMVL'] = "Kļūda sistemā!";
             }
             $vaicajums->close();
             $savienojums->close();

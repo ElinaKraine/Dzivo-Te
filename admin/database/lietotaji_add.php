@@ -7,21 +7,23 @@ $attels = $_FILES['attelsTabulaAdmin'];
 $ip_adrese = $_SERVER['REMOTE_ADDR'];
 
 $epasts = htmlspecialchars($_POST['lietEpastsTabulaAdmin']);
-$vaicajums = "SELECT epasts FROM majuvieta_lietotaji WHERE epasts = '$epasts'";
+$vaicajums = "SELECT epasts FROM majuvieta_lietotaji WHERE epasts = '$epasts' AND statuss = 'Aktīvs'";
 $rezultatsEpasts = mysqli_query($savienojums, $vaicajums);
 
 $vards = htmlspecialchars($_POST['lietVardsTabulaAdmin']);
 $uzvards = htmlspecialchars($_POST['lietUzvardsTabulaAdmin']);
-$vaicajums = "SELECT vards, uzvards FROM majuvieta_lietotaji WHERE vards = '$vards' AND uzvards = '$uzvards'";
+$vaicajums = "SELECT vards, uzvards FROM majuvieta_lietotaji WHERE vards = '$vards' AND uzvards = '$uzvards' AND statuss = 'Aktīvs'";
 $rezultatsVardsUzvards = mysqli_query($savienojums, $vaicajums);
 
 $talrunis = htmlspecialchars($_POST['lietTalrunisTabulaAdmin']);
-$vaicajums = "SELECT talrunis FROM majuvieta_lietotaji WHERE talrunis = '$talrunis'";
+$vaicajums = "SELECT talrunis FROM majuvieta_lietotaji WHERE talrunis = '$talrunis' AND statuss = 'Aktīvs'";
 $rezultatsTalrunis = mysqli_query($savienojums, $vaicajums);
 
 $parole = htmlspecialchars($_POST['lietParoleTabulaAdmin']);
 $paroleAtkartoti = htmlspecialchars($_POST['lietParoleOtraisTabulaAdmin']);
 $password_pattern = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/";
+
+$attels_data = "";
 
 if (!empty($vards) && !empty($uzvards) && !empty($epasts) && !empty($talrunis) && !empty($parole) && !empty($paroleAtkartoti) && !empty($loma)) {
     if (mysqli_num_rows($rezultatsEpasts) > 0) {
@@ -35,11 +37,9 @@ if (!empty($vards) && !empty($uzvards) && !empty($epasts) && !empty($talrunis) &
     } else if (!preg_match($password_pattern, $parole)) {
         $_SESSION['pazinojumsMV'] = "Parole jābūt vismaz 8 rakstzīmēm, ar vismaz vienu mazo burtu, vienu lielo burtu un skaitli!";
     } else {
-        if ($_FILES['attelsTabulaAdmin']['error'] === UPLOAD_ERR_OK) {
+        if (isset($_FILES['attelsTabulaAdmin']) && $_FILES['attelsTabulaAdmin']['error'] === UPLOAD_ERR_OK) {
             $attels_tmp = $_FILES['attelsTabulaAdmin']['tmp_name'];
             $attels_data = file_get_contents($attels_tmp);
-        } else {
-            $_SESSION['pazinojumsMV'] = "Kaut kas nepareizi ar attēlai!";
         }
 
         $paroleHash = password_hash($parole, PASSWORD_DEFAULT);

@@ -8,51 +8,44 @@ if (isset($_POST['id'])) {
     if ($_POST['tabula'] == 'Pirkt') {
         $vaicajums = $savienojums->prepare("UPDATE majuvieta_pirkt SET statuss = ? WHERE pirkt_id = ?");
         $vaicajums->bind_param("si", $statuss, $id);
-
         if ($vaicajums->execute()) {
             // echo "Veiksmīgi dzēst!";
         } else {
             // echo "Kļūda: ".$savienojums->error;
         }
-
         $vaicajums->close();
 
-        $sql = $savienojums->prepare("UPDATE majuvieta_pieteikumi SET statuss = ? WHERE id_majuvieta_pirkt = ?");
-        $sql->bind_param("si", $statussPiet, $id);
-
-        if ($sql->execute()) {
+        $vaicajums = $savienojums->prepare("UPDATE majuvieta_pieteikumi SET statuss = ? WHERE id_majuvieta_pirkt = ?");
+        $vaicajums->bind_param("si", $statussPiet, $id);
+        if ($vaicajums->execute()) {
             // echo "Veiksmīgi dzēst!";
         } else {
             // echo "Kļūda: ".$savienojums->error;
         }
-
-        $sql->close();
+        $vaicajums->close();
     } elseif ($_POST['tabula'] == 'Iret') {
         $tagad = date("Y-m-d");
 
-        $check = $savienojums->prepare("SELECT COUNT(*) FROM majuvieta_iziresana WHERE id_majuvieta_iret = ? AND izrakstisanas_datums >= ?");
-        $check->bind_param("is", $id, $tagad);
-        $check->execute();
-        $check->bind_result($count);
-        $check->fetch();
-        $check->close();
+        $vaicajums = $savienojums->prepare("SELECT COUNT(*) FROM majuvieta_iziresana WHERE id_majuvieta_iret = ? AND izrakstisanas_datums >= ?");
+        $vaicajums->bind_param("is", $id, $tagad);
+        $vaicajums->execute();
+        $vaicajums->bind_result($count);
+        $vaicajums->fetch();
+        $vaicajums->close();
 
         if ($count > 0) {
-            $_SESSION['pazinojumsMV'] = "Nevar dzēst! Šim sludinājumam ir aktīvas vai nākotnes īres saistības.";
+            echo "Nevar dzēst! Šim sludinājumam ir aktīvas vai nākotnes īres saistības.";
         } else {
             $vaicajums = $savienojums->prepare("UPDATE majuvieta_iret SET statuss = ? WHERE iret_id = ?");
             $vaicajums->bind_param("si", $statuss, $id);
-
             if ($vaicajums->execute()) {
                 // echo "Veiksmīgi dzēsts!";
             } else {
                 // echo "Kļūda: " . $savienojums->error;
             }
-
             $vaicajums->close();
         }
     }
-
 
     $savienojums->close();
 }

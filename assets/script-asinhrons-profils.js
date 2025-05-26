@@ -10,6 +10,18 @@ $(document).ready(function () {
   let galleryImages = [];
   let currentImageIndex = 0;
 
+  function paradit_pazinojumu(pazinojums) {
+    const modalHTML = `
+      <div class="modal modal-active" id="modal-message">
+        <div class="modal-box">
+          <div class="close-modal" data-target="#modal-message"><i class="fas fa-times"></i></div>
+          <h2>${pazinojums}</h2>
+        </div>
+      </div>
+    `;
+    $("body").append(modalHTML);
+  }
+
   //#region Profila informācija
   function fetchProfilaInfo() {
     $.ajax({
@@ -64,8 +76,9 @@ $(document).ready(function () {
   }
 
   $(document).on("click", ".profila-item", (e) => {
-    $(".modalLietotajs").css("display", "flex");
     toggleFormFields2();
+    $(".modalLietotajs").css("display", "flex");
+    $("#lietFormPazinojums").text("");
 
     const element = $(e.currentTarget).closest("div[liet_ID]");
     const id = $(element).attr("liet_ID");
@@ -92,8 +105,26 @@ $(document).ready(function () {
       processData: false,
       contentType: false,
       success: function (response) {
+        if (
+          response.includes("Visi ievadas lauki") ||
+          response.includes("Kļūda") ||
+          response.includes("Parole") ||
+          response.includes("jau")
+        ) {
+          $("#lietFormPazinojums").text(response);
+          return;
+        }
+
+        if (response.includes("Profila")) {
+          paradit_pazinojumu(response);
+          fetchProfilaInfo();
+          ieladetSludinajumus();
+          return;
+        }
+
         $(".modalLietotajs").hide();
         $("#lietotajaForma").trigger("reset");
+        $("#lietFormPazinojums").text("");
         fetchProfilaInfo();
         ieladetSludinajumus();
       },
@@ -197,6 +228,7 @@ $(document).ready(function () {
 
   $(document).on("click", "#new-btn", (e) => {
     $(".modalSludinajums").css("display", "flex");
+    $("#sludFormPazinojums").text("");
     $("#sludinajumaForma").trigger("reset");
     $(".nomainitAttelusRinda").hide();
     $(".nomainit-slud-atteli").show();
@@ -224,6 +256,7 @@ $(document).ready(function () {
 
   $(document).on("click", ".sludinajums-item", (e) => {
     $(".modalSludinajums").css("display", "flex");
+    $("#sludFormPazinojums").text("");
 
     const element = $(e.currentTarget).closest("tr");
     const id = $(element).attr("sludinajuma_ID");
@@ -276,7 +309,8 @@ $(document).ready(function () {
 
     const formData = new FormData($("#sludinajumaForma")[0]);
 
-    const isEdit = $("#id_sludinajums").val() !== "";
+    const isEdit = $("[name='id_sludinajums']").val() !== "";
+
     const url = isEdit
       ? "./assets/database/sludinajumi_edit.php"
       : "./assets/database/sludinajumi_add.php";
@@ -288,8 +322,25 @@ $(document).ready(function () {
       processData: false,
       contentType: false,
       success: function (response) {
+        if (
+          response.includes("Visi ievadas lauki") ||
+          response.includes("Kļūda") ||
+          response.includes("Šāda adrese") ||
+          response.includes("Šo sludinājumu")
+        ) {
+          $("#sludFormPazinojums").text(response);
+          return;
+        }
+
+        if (response.includes("veiksmīgs")) {
+          paradit_pazinojumu(response);
+          ieladetSludinajumus();
+          return;
+        }
+
         $(".modal").hide();
         $("#sludinajumaForma").trigger("reset");
+        $("#sludFormPazinojums").text("");
         ieladetSludinajumus();
       },
       error: function () {
@@ -368,6 +419,11 @@ $(document).ready(function () {
         "./assets/database/sludinajumi_delete.php",
         { id, tabula },
         (response) => {
+          if (response.includes("dzēst")) {
+            paradit_pazinojumu(response);
+            ieladetSludinajumus();
+            return;
+          }
           ieladetSludinajumus();
         }
       );
@@ -574,7 +630,13 @@ $(document).ready(function () {
 
     url = "./assets/database/liet_pieteikumi_edit.php";
     // console.log(postData, url);
-    $.post(url, postData, () => {
+    $.post(url, postData, (response) => {
+      if (response.includes("veiksmīgi")) {
+        paradit_pazinojumu(response);
+        ieladetLietPieteikumus();
+        return;
+      }
+
       $(".modalStatuss").hide();
       $("#pieteikumaForma").trigger("reset");
       ieladetLietPieteikumus();

@@ -1341,19 +1341,18 @@ footer{
                 }
             
                 .deleteBtn:hover{ color: red; }
-
                 .editBtn:hover{ color: var(--bright-violet); }
-
-                .sarkans, .zals{ 
-                    color: darkred;
-                    font-weight: bold;
-                }
-
-                .zals{ color: darkgreen; }
             }
         }
     }
 }
+
+.sarkans, .zals{ 
+    color: darkred;
+    font-weight: bold;
+}
+
+.zals{ color: darkgreen; }
 
 .tabulaPoga{
     font-size: 1.2rem;
@@ -1429,7 +1428,7 @@ footer{
 
 .profilsKaste .btn:hover{ background: red; }
 
-#modal-admin-sludinajums, #modal-admin-pieteikums, #modal-admin-lietotajs, #modal-lietotajs-admin, #modal-lietotajs-tabula-admin, #modal-ires-ieraksts{
+#modal-admin-sludinajums, #modal-admin-pieteikums, #modal-admin-lietotajs, #modal-lietotajs-admin, #modal-lietotajs-tabula-admin, #modal-ires-ieraksts, #modal-admin-admin-sludinajums{
     .modal-box{ padding: 0; max-width: 90rem; }
 
     .virsraksts{
@@ -1526,7 +1525,7 @@ footer{
     }
 }
 
-#atteluGalerija{
+#atteluGalerija, #atteluGalerijaAdmin{
     display: flex;
     gap: 1rem;
     img{
@@ -1537,7 +1536,7 @@ footer{
     }
 }
 
-#imageModal{
+#imageModal, #imageModalAdmin{
     display: none;
 
     /* .modal-atteli{
@@ -1545,7 +1544,7 @@ footer{
         width: 50%;
     } */
 
-    #prevImage{
+    #prevImage, #prevImageAdmin{
         position: absolute;
         left: 20px; 
         font-size: 40px; 
@@ -1553,18 +1552,26 @@ footer{
         cursor: pointer;
     }
 
-    #modalImage{
+    #modalImage, #modalImageAdmin{
         max-width:90%;
         max-height:90%;
     }
 
-    #nextImage{
+    #nextImage, #nextImageAdmin{
         position: absolute; 
         right: 20px; 
         font-size: 40px; 
         color: white; 
         cursor: pointer;
     }
+}
+
+.formPazinojums {
+    color: darkred;
+    font-weight: bold;
+    padding: 10px 48px;
+    text-align: center;
+    font-size: 1.3rem;
 }
 
 /* Media */

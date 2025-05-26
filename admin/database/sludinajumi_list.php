@@ -13,7 +13,8 @@ $sql_teikums = "SELECT
                 mv.platiba,
                 mv.statuss, 
                 mv.izveidosanas_datums,
-                CONCAT(ad.pilseta, ' ', ad.iela, ' ', ad.majas_numurs) AS adrese,
+                ad.dzivokla_numurs,
+                CONCAT(ad.pilseta, ', ', ad.iela, ' ', ad.majas_numurs) AS adrese,
                 ml.epasts AS epasts
             FROM majuvieta_pirkt mv
             INNER JOIN majuvieta_adrese ad ON mv.pirkt_id = ad.id_sludinajums
@@ -34,7 +35,11 @@ while ($row = $rezultats->fetch_assoc()) {
         'platiba' => htmlspecialchars($row['platiba']),
         'statuss' => htmlspecialchars($row['statuss']),
         'izveidosanas_datums' => date("d.m.Y", strtotime($row['izveidosanas_datums'])),
-        'adrese' => htmlspecialchars($row['adrese']),
+        'adrese' => htmlspecialchars(
+            $row['majokla_tips'] === 'Dzīvoklis' && !empty($row['dzivokla_numurs'])
+                ? $row['adrese'] . '-' . $row['dzivokla_numurs']
+                : $row['adrese']
+        ),
         'epasts' => htmlspecialchars($row['epasts']),
     ];
 }
@@ -50,7 +55,8 @@ $sql_teikums = "SELECT
                 mv.platiba,
                 mv.statuss, 
                 mv.izveidosanas_datums,
-                CONCAT(ad.pilseta, ' ', ad.iela, ' ', ad.majas_numurs) AS adrese,
+                ad.dzivokla_numurs,
+                CONCAT(ad.pilseta, ', ', ad.iela, ' ', ad.majas_numurs) AS adrese,
                 ml.epasts AS epasts
             FROM majuvieta_iret mv
             INNER JOIN majuvieta_adrese ad ON mv.iret_id = ad.id_sludinajums
@@ -71,7 +77,11 @@ while ($row = $rezultats->fetch_assoc()) {
         'platiba' => htmlspecialchars($row['platiba']),
         'statuss' => htmlspecialchars($row['statuss']),
         'izveidosanas_datums' => date("d.m.Y", strtotime($row['izveidosanas_datums'])),
-        'adrese' => htmlspecialchars($row['adrese']),
+        'adrese' => htmlspecialchars(
+            $row['majokla_tips'] === 'Dzīvoklis' && !empty($row['dzivokla_numurs'])
+                ? $row['adrese'] . '-' . $row['dzivokla_numurs']
+                : $row['adrese']
+        ),
         'epasts' => htmlspecialchars($row['epasts']),
     ];
 }

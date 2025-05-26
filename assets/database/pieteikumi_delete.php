@@ -6,7 +6,7 @@ if (isset($_POST['id'])) {
     $vaicajums->bind_param("i", $id);
 
     if ($vaicajums->execute()) {
-        // echo "Veiksmīgi dzēst!";
+        // echo "Pieteikums ir veiksmīgi izdzēsts!";
     } else {
         // echo "Kļūda: ".$savienojums->error;
     }
