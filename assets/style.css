@@ -1457,7 +1457,7 @@ footer{
 
     .close-modal:hover{ color: red; }
 
-    #sludinajumaForma, #lietotajaFormaTabulaAdmin{
+    #sludinajumaForma, #lietotajaFormaTabulaAdmin, #sludinajumaFormaAdmin{
         max-height: 42rem;
         overflow-y: auto;
     }

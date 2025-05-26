@@ -126,30 +126,62 @@ function vai_adrese_jau_eksiste($savienojums, $pilseta, $iela, $majas_numurs, $d
     return $eksiste;
 }
 
+$loma = "";
+switch ($_SESSION['lietotajaLomaMV']) {
+    case 'Administrators':
+        $loma = "Admin";
+        break;
+    case 'Moderators':
+        $loma = "Admin";
+        break;
+    case 'Lietotājs':
+        $loma = "liet";
+        break;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //region Iegūst datus
-    $id = intval($_POST['id_sludinajums']);
-    $veids = $_POST['majoklaVeids'];
-    $tips = $_POST['majoklaTips'];
-    $stavs_vai_stavi = $tips === "dzivoklis" ? ($_POST['stavs'] ?? null) : ($_POST['stavi'] ?? null);
-
-    $pilseta = $_POST['pilseta'];
-    $iela = $_POST['iela'];
-    $majasNumurs = $_POST['majasNumurs'];
-    $dzivoklaNumurs = $_POST['dzivoklaNumurs'] ?? null;
-    $platiba = $_POST['platiba'];
-    $zemesPlatiba = $_POST['zemesPlatiba'] ?? null;
-    $istabas = $_POST['istabas'];
-    $apraksts = $_POST['apraksts'];
-    $datums = date("Y-m-d H:i:s");
-
-    $cenaPirkt = $_POST['cenaPirkt'] ?? null;
-    $cenaDiena = $_POST['cenaDiena'] ?? null;
-    $cenaNedela = $_POST['cenaNedela'] ?? null;
-    $cenaMenesi = $_POST['cenaMenesi'] ?? null;
-
+    if ($loma === "Admin") {
+        $id = intval($_POST['slud_ID']);
+        $veids = $_POST['majoklaVeidsAdmin'];
+        $tips = $_POST['majoklaTipsAdmin'];
+        $stavs_vai_stavi = $tips === "dzivoklis" ? ($_POST['stavsAdmin'] ?? null) : ($_POST['staviAdmin'] ?? null);
+        $pilseta = $_POST['pilsetaAdmin'];
+        $iela = $_POST['ielaAdmin'];
+        $majasNumurs = $_POST['majasNumursAdmin'];
+        $dzivoklaNumurs = $_POST['dzivoklaNumursAdmin'] ?? null;
+        $platiba = $_POST['platibaAdmin'];
+        $zemesPlatiba = $_POST['zemesPlatibaAdmin'] ?? null;
+        $istabas = $_POST['istabasAdmin'];
+        $apraksts = $_POST['aprakstsAdmin'];
+        $cenaPirkt = $_POST['cenaPirktAdmin'] ?? null;
+        $cenaDiena = $_POST['cenaDienaAdmin'] ?? null;
+        $cenaNedela = $_POST['cenaNedelaAdmin'] ?? null;
+        $cenaMenesi = $_POST['cenaMenesiAdmin'] ?? null;
+        $statuss = $_POST['sludNomainitStatusuAdmin'];
+        $atteli = $_FILES['atteliAdmin'];
+    } elseif ($loma === "liet") {
+        $id = intval($_POST['id_sludinajums']);
+        $veids = $_POST['majoklaVeids'];
+        $tips = $_POST['majoklaTips'];
+        $stavs_vai_stavi = $tips === "dzivoklis" ? ($_POST['stavs'] ?? null) : ($_POST['stavi'] ?? null);
+        $pilseta = $_POST['pilseta'];
+        $iela = $_POST['iela'];
+        $majasNumurs = $_POST['majasNumurs'];
+        $dzivoklaNumurs = $_POST['dzivoklaNumurs'] ?? null;
+        $platiba = $_POST['platiba'];
+        $zemesPlatiba = $_POST['zemesPlatiba'] ?? null;
+        $istabas = $_POST['istabas'];
+        $apraksts = $_POST['apraksts'];
+        $cenaPirkt = $_POST['cenaPirkt'] ?? null;
+        $cenaDiena = $_POST['cenaDiena'] ?? null;
+        $cenaNedela = $_POST['cenaNedela'] ?? null;
+        $cenaMenesi = $_POST['cenaMenesi'] ?? null;
+        $statuss = "Iesniegts sludinājums";
+        $atteli = $_FILES['atteli'];
+    }
     $nomainitAtteli = $_POST['nomainitAtteli'] ?? 'ne';
-    $statuss = "Iesniegts sludinājums";
+    $datums = date("Y-m-d H:i:s");
     $lietotajaId = $_SESSION['lietotajaIdDt'];
     $ip_adrese = $_SERVER['REMOTE_ADDR'];
     //endregion
@@ -215,11 +247,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $vai_veids_ir_nomainits = $vecaisVeids !== $veids;
 
     if (!empty($veids) && !empty($pilseta) && !empty($iela) && !empty($majasNumurs) && !empty($platiba) && !empty($stavs_vai_stavi)) {
-        if ($nomainitAtteli === "ja" && !isset($_FILES['atteli'])) {
-            echo "Visi ievadas lauki nav aizpildīti!";
+        if ($nomainitAtteli === "ja" && !isset($atteli)) {
+            echo "Visi ievadas lauki nav aizpildīti! sestais";
             exit;
-        } elseif (!ir_vismaz_viens_attels($_FILES['atteli'])) {
-            echo "Visi ievadas lauki nav aizpildīti!";
+        } elseif ($nomainitAtteli === "ja" && !ir_vismaz_viens_attels($atteli)) {
+            echo "Visi ievadas lauki nav aizpildīti! piektais";
             exit;
         }
         if ($tips === 'maja' && !empty($zemesPlatiba)) {
@@ -246,10 +278,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     atjauninat_adresi($savienojums, $veids, $id, $pilseta, $iela, $majasNumurs);
                     if ($nomainitAtteli === "ja") {
-                        atjauninat_attelus($savienojums, $_FILES['atteli'], $veids, $id);
+                        atjauninat_attelus($savienojums, $atteli, $veids, $id);
                     }
 
-                    echo "Māja pārdošānai veiksmīgs atjaunināts! Lūdzu, gaidiet, kad administrācija atkal apstiprinās šo sludinājumu.";
+                    if ($loma === "Admin") {
+                        echo "Māja pārdošānai veiksmīgs atjaunināts!";
+                    } else {
+                        echo "Māja pārdošānai veiksmīgs atjaunināts! Lūdzu, gaidiet, kad administrācija atkal apstiprinās šo sludinājumu.";
+                    }
                 } else {
                     // Ja tips nav mainījies - vienkārši atjauniniet datus
                     $vaicajums = $savienojums->prepare("UPDATE majuvieta_pirkt SET cena = ?, platiba = ?, zemes_platiba = ?, istabas = ?, stavs_vai_stavi = ?, apraksts = ?, atjauninasanas_datums = ?, statuss = ?, ip_adrese = ? WHERE pirkt_id = ?");
@@ -263,10 +299,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     atjauninat_adresi($savienojums, $veids, $id, $pilseta, $iela, $majasNumurs);
                     if ($nomainitAtteli === "ja") {
-                        atjauninat_attelus($savienojums, $_FILES['atteli'], $veids, $id);
+                        atjauninat_attelus($savienojums, $atteli, $veids, $id);
                     }
 
-                    echo "Māja pārdošānai veiksmīgs atjaunināts! Lūdzu, gaidiet, kad administrācija atkal apstiprinās šo sludinājumu.";
+                    if ($loma === "Admin") {
+                        echo "Māja pārdošānai veiksmīgs atjaunināts!";
+                    } else {
+                        echo "Māja pārdošānai veiksmīgs atjaunināts! Lūdzu, gaidiet, kad administrācija atkal apstiprinās šo sludinājumu.";
+                    }
                 }
                 //endregion
             } elseif ($veids === 'iret' && !empty($cenaDiena) && !empty($cenaNedela) && !empty($cenaMenesi) && $cenaDiena >= 1 && $cenaNedela >= 1 && $cenaMenesi >= 1) {
@@ -294,10 +334,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     atjauninat_adresi($savienojums, $veids, $id, $pilseta, $iela, $majasNumurs);
                     if ($nomainitAtteli === "ja") {
-                        atjauninat_attelus($savienojums, $_FILES['atteli'], $veids, $id);
+                        atjauninat_attelus($savienojums, $atteli, $veids, $id);
                     }
 
-                    echo "Māja īrēšanai veiksmīgs atjaunināts! Lūdzu, gaidiet, kad administrācija atkal apstiprinās šo sludinājumu.";
+                    if ($loma === "Admin") {
+                        echo "Māja īrēšanai veiksmīgs atjaunināts!";
+                    } else {
+                        echo "Māja īrēšanai veiksmīgs atjaunināts! Lūdzu, gaidiet, kad administrācija atkal apstiprinās šo sludinājumu.";
+                    }
                 } else {
                     // Ja tips nav mainījies - vienkārši atjauniniet datus
                     $vaicajums = $savienojums->prepare("UPDATE majuvieta_iret SET cena_diena = ?, cena_nedela = ?, cena_menesis = ?, platiba = ?, zemes_platiba = ?, istabas = ?, stavs_vai_stavi = ?, apraksts = ?, atjauninasanas_datums = ?, statuss = ? WHERE iret_id = ?");
@@ -311,14 +355,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     atjauninat_adresi($savienojums, $veids, $id, $pilseta, $iela, $majasNumurs);
                     if ($nomainitAtteli === "ja") {
-                        atjauninat_attelus($savienojums, $_FILES['atteli'], $veids, $id);
+                        atjauninat_attelus($savienojums, $atteli, $veids, $id);
                     }
 
-                    echo "Māja īrēšanai veiksmīgs atjaunināts! Lūdzu, gaidiet, kad administrācija atkal apstiprinās šo sludinājumu.";
+                    if ($loma === "Admin") {
+                        echo "Māja īrēšanai veiksmīgs atjaunināts!";
+                    } else {
+                        echo "Māja īrēšanai veiksmīgs atjaunināts! Lūdzu, gaidiet, kad administrācija atkal apstiprinās šo sludinājumu.";
+                    }
                 }
                 //endregion
             } else {
-                echo "Visi ievadas lauki nav aizpildīti!";
+                echo "Visi ievadas lauki nav aizpildīti! ceturtais";
             }
         } elseif ($tips === 'dzivoklis' && !empty($dzivoklaNumurs)) {
             if ($veids === 'pirkt' && !empty($cenaPirkt) && $cenaPirkt >= 1) {
@@ -344,10 +392,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     atjauninat_adresi($savienojums, $veids, $id, $pilseta, $iela, $majasNumurs, $dzivoklaNumurs);
                     if ($nomainitAtteli === "ja") {
-                        atjauninat_attelus($savienojums, $_FILES['atteli'], $veids, $id);
+                        atjauninat_attelus($savienojums, $atteli, $veids, $id);
                     }
 
-                    echo "Dzīvoklis pārdošānai veiksmīgs atjaunināts! Lūdzu, gaidiet, kad administrācija atkal apstiprinās šo sludinājumu.";
+                    if ($loma === "Admin") {
+                        echo "Dzīvoklis pārdošānai veiksmīgs atjaunināts!";
+                    } else {
+                        echo "Dzīvoklis pārdošānai veiksmīgs atjaunināts! Lūdzu, gaidiet, kad administrācija atkal apstiprinās šo sludinājumu.";
+                    }
                 } else {
                     // Ja tips nav mainījies - vienkārši atjauniniet datus
                     $vaicajums = $savienojums->prepare("UPDATE majuvieta_pirkt SET cena = ?, platiba = ?, istabas = ?, stavs_vai_stavi = ?, apraksts = ?, atjauninasanas_datums = ?, statuss = ? WHERE pirkt_id = ?");
@@ -361,10 +413,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     atjauninat_adresi($savienojums, $veids, $id, $pilseta, $iela, $majasNumurs, $dzivoklaNumurs);
                     if ($nomainitAtteli === "ja") {
-                        atjauninat_attelus($savienojums, $_FILES['atteli'], $veids, $id);
+                        atjauninat_attelus($savienojums, $atteli, $veids, $id);
                     }
 
-                    echo "Dzīvoklis pārdošānai veiksmīgs atjaunināts! Lūdzu, gaidiet, kad administrācija atkal apstiprinās šo sludinājumu.";
+                    if ($loma === "Admin") {
+                        echo "Dzīvoklis pārdošānai veiksmīgs atjaunināts!";
+                    } else {
+                        echo "Dzīvoklis pārdošānai veiksmīgs atjaunināts! Lūdzu, gaidiet, kad administrācija atkal apstiprinās šo sludinājumu.";
+                    }
                 }
                 //endregion
             } elseif ($veids === 'iret' && !empty($cenaDiena) && !empty($cenaNedela) && !empty($cenaMenesi) && $cenaDiena >= 1 && $cenaNedela >= 1 && $cenaMenesi >= 1) {
@@ -392,10 +448,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     atjauninat_adresi($savienojums, $veids, $id, $pilseta, $iela, $majasNumurs, $dzivoklaNumurs);
                     if ($nomainitAtteli === "ja") {
-                        atjauninat_attelus($savienojums, $_FILES['atteli'], $veids, $id);
+                        atjauninat_attelus($savienojums, $atteli, $veids, $id);
                     }
 
-                    echo "Dzīvoklis īrēšanai veiksmīgs atjaunināts! Lūdzu, gaidiet, kad administrācija atkal apstiprinās šo sludinājumu.";
+                    if ($loma === "Admin") {
+                        echo "Dzīvoklis īrēšanai veiksmīgs atjaunināts!";
+                    } else {
+                        echo "Dzīvoklis īrēšanai veiksmīgs atjaunināts! Lūdzu, gaidiet, kad administrācija atkal apstiprinās šo sludinājumu.";
+                    }
                 } else {
                     // Ja tips nav mainījies - vienkārši atjauniniet datus
                     $vaicajums = $savienojums->prepare("UPDATE majuvieta_iret SET cena_diena = ?, cena_nedela = ?, cena_menesis = ?, platiba = ?, istabas = ?, stavs_vai_stavi = ?, apraksts = ?, atjauninasanas_datums = ?, statuss = ? WHERE iret_id = ?");
@@ -409,20 +469,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     atjauninat_adresi($savienojums, $veids, $id, $pilseta, $iela, $majasNumurs, $dzivoklaNumurs);
                     if ($nomainitAtteli === "ja") {
-                        atjauninat_attelus($savienojums, $_FILES['atteli'], $veids, $id);
+                        atjauninat_attelus($savienojums, $atteli, $veids, $id);
                     }
 
-                    echo "Dzīvoklis īrēšanai veiksmīgs atjaunināts! Lūdzu, gaidiet, kad administrācija atkal apstiprinās šo sludinājumu.";
+                    if ($loma === "Admin") {
+                        echo "Dzīvoklis īrēšanai veiksmīgs atjaunināts!";
+                    } else {
+                        echo "Dzīvoklis īrēšanai veiksmīgs atjaunināts! Lūdzu, gaidiet, kad administrācija atkal apstiprinās šo sludinājumu.";
+                    }
                 }
                 //endregion
             } else {
-                echo "Visi ievadas lauki nav aizpildīti!";
+                echo "Visi ievadas lauki nav aizpildīti! tresais";
             }
         } else {
-            echo "Visi ievadas lauki nav aizpildīti!";
+            echo "Visi ievadas lauki nav aizpildīti! otrais";
         }
     } else {
-        echo "Visi ievadas lauki nav aizpildīti!";
+        echo "Visi ievadas lauki nav aizpildīti! pirmais";
     }
     $savienojums->close();
 } else {

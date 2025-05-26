@@ -23,7 +23,7 @@ if (isset($_POST['id'])) {
     $vaicajums->execute();
     $rezultats = $vaicajums->get_result();
     if (!$rezultats) {
-        die('Kļūda: ' . $savienojums->error);
+        // die('Kļūda: ' . $savienojums->error);
     }
 
     while ($ieraksts = $rezultats->fetch_assoc()) {

@@ -25,84 +25,84 @@ require "database/con_db.php";
     <div id="pagination" class="pagination-container"></div>
 </div>
 
-<div class="modal modalSludinajums" id="modal-admin-sludinajums">
+<div class="modal modalSludinajums" id="modal-admin-admin-sludinajums">
     <div class="modal-box">
         <div class="virsraksts">
             <h2>Sludinājums</h2>
             <div class="close-modal"><i class="fas fa-times"></i></div>
         </div>
-        <form id="sludinajumaForma">
+        <form id="sludinajumaFormaAdmin">
             <div class="formElements">
                 <div class="rinda">
-                    <label>Mājokļa tips:</label>
-                    <select id="majoklaTips" name="majoklaTips" required>
+                    <label>Mājokļa tips: &nbsp;<span class="sarkans">*</span></label>
+                    <select id="majoklaTipsAdmin" name="majoklaTipsAdmin" required>
                         <option value="maja">Māja</option>
                         <option value="dzivoklis">Dzīvoklis</option>
                     </select>
-                    <p id="majoklaTips-text"></p>
+                    <p id="majoklaTips-text-admin"></p>
                 </div>
                 <div class="rinda">
-                    <label>Darījuma veids:</label>
-                    <select id="majoklaVeids" name="majoklaVeids" required>
+                    <label>Darījuma veids: &nbsp;<span class="sarkans">*</span></label>
+                    <select id="majoklaVeidsAdmin" name="majoklaVeidsAdmin" required>
                         <option value="pirkt">Pirkt</option>
                         <option value="iret">Īrēt</option>
                     </select>
                 </div>
                 <div class="rinda">
-                    <label>Pilsēta:</label>
-                    <input type="text" id="pilseta" name="pilseta" required>
+                    <label>Pilsēta: &nbsp;<span class="sarkans">*</span></label>
+                    <input type="text" id="pilsetaAdmin" name="pilsetaAdmin" required>
                 </div>
                 <div class="rinda">
-                    <label>Iela:</label>
-                    <input type="text" id="iela" name="iela" required>
+                    <label>Iela: &nbsp;<span class="sarkans">*</span></label>
+                    <input type="text" id="ielaAdmin" name="ielaAdmin" required>
                 </div>
                 <div class="rinda">
-                    <label>Mājas numurs:</label>
-                    <input type="text" id="majasNumurs" name="majasNumurs" required>
+                    <label>Mājas numurs: &nbsp;<span class="sarkans">*</span></label>
+                    <input type="text" id="majasNumursAdmin" name="majasNumursAdmin" required>
                 </div>
-                <div class="rinda" id="dzivokla-numurs">
-                    <label>Dzīvokļa numurs:</label>
-                    <input type="text" id="dzivoklaNumurs" name="dzivoklaNumurs">
+                <div class="rinda" id="dzivokla-numurs-admin">
+                    <label>Dzīvokļa numurs: &nbsp;<span class="sarkans">*</span></label>
+                    <input type="text" id="dzivoklaNumursAdmin" name="dzivoklaNumursAdmin">
                 </div>
-                <div class="rinda" id="pirkt-cena">
-                    <label>Cena (€):</label>
-                    <input type="number" id="cenaPirkt" name="cenaPirkt" min="1">
+                <div class="rinda" id="pirkt-cena-admin">
+                    <label>Cena (€): &nbsp;<span class="sarkans">*</span></label>
+                    <input type="number" id="cenaPirktAdmin" name="cenaPirktAdmin" min="1">
                 </div>
                 <div class="rinda iret-cena">
-                    <label>€/dienā:</label>
-                    <input type="number" id="cenaDiena" name="cenaDiena" min="1">
+                    <label>€/dienā: &nbsp;<span class="sarkans">*</span></label>
+                    <input type="number" id="cenaDienaAdmin" name="cenaDienaAdmin" min="1">
                 </div>
                 <div class="rinda iret-cena">
-                    <label>€/nedēļā:</label>
-                    <input type="number" id="cenaNedela" name="cenaNedela" min="1">
+                    <label>€/nedēļā: &nbsp;<span class="sarkans">*</span></label>
+                    <input type="number" id="cenaNedelaAdmin" name="cenaNedelaAdmin" min="1">
                 </div>
                 <div class="rinda iret-cena">
-                    <label>€/mēnesī:</label>
-                    <input type="number" id="cenaMenesi" name="cenaMenesi" min="1">
+                    <label>€/mēnesī: &nbsp;<span class="sarkans">*</span></label>
+                    <input type="number" id="cenaMenesiAdmin" name="cenaMenesiAdmin" min="1">
                 </div>
                 <div class="rinda">
-                    <label>Platība (m<sup>2</sup>):</label>
-                    <input type="number" id="platiba" name="platiba" min="1" required>
+                    <label>Platība (m<sup>2</sup>): &nbsp;<span class="sarkans">*</span></label>
+                    <input type="number" id="platibaAdmin" name="platibaAdmin" min="1" required>
                 </div>
-                <div class="rinda" id="zemes-platiba">
-                    <label>Zemes platība (m<sup>2</sup>):</label>
-                    <input type="number" id="zemesPlatiba" name="zemesPlatiba" min="1">
+                <div class="rinda" id="zemes-platiba-admin">
+                    <label>Zemes platība (m<sup>2</sup>): &nbsp;<span class="sarkans">*</span></label>
+                    <input type="number" id="zemesPlatibaAdmin" name="zemesPlatibaAdmin" min="1">
                 </div>
                 <div class="rinda">
-                    <label>Istabas:</label>
-                    <input type="number" id="istabas" name="istabas" min="1">
+                    <label>Istabas: &nbsp;<span class="sarkans">*</span></label>
+                    <input type="number" id="istabasAdmin" name="istabasAdmin" min="1">
                 </div>
-                <div class="rinda" id="maja-stavi">
-                    <label>Stāvi:</label>
-                    <input type="number" id="stavi" name="stavi" min="1">
+                <div class="rinda" id="maja-stavi-admin">
+                    <label>Stāvi: &nbsp;<span class="sarkans">*</span></label>
+                    <input type="number" id="staviAdmin" name="staviAdmin" min="1">
                 </div>
-                <div class="rinda" id="dziv-stavs">
-                    <label>Stāvs:</label>
-                    <input type="text" id="stavs" name="stavs">
+                <div class="rinda" id="dziv-stavs-admin">
+                    <label>Stāvs: &nbsp;<span class="sarkans">*</span></label>
+                    <input type="text" id="stavsAdmin" name="stavsAdmin">
                 </div>
                 <div class="rinda">
                     <label>Apraksts:</label>
-                    <textarea id="apraksts" name="apraksts" rows="5"></textarea>
+                    <textarea id="aprakstsAdmin" name="aprakstsAdmin" rows="5"></textarea>
                 </div>
                 <div class="rinda" id="atteluGalerijaContainerAdmin" style="display: none;">
                     <label>Attēli:</label>
@@ -110,44 +110,39 @@ require "database/con_db.php";
                 </div>
                 <div class="rinda nomainitAttelusRinda">
                     <label>Nomainīt attēlus?</label>
-                    <select id="sludNomainitAtteliSelect" name="nomainitAtteli">
+                    <select id="sludNomainitAtteliSelectAdmin" name="nomainitAtteli">
                         <option value="ne">Nē</option>
                         <option value="ja">Jā</option>
                     </select>
                 </div>
                 <div class="rinda nomainit-slud-atteli">
-                    <label>Attēli:</label>
-                    <input type="file" id="atteli" name="atteli[]" accept="image/png, image/jpeg" multiple>
+                    <label>Attēli: &nbsp;<span class="sarkans">*</span></label>
+                    <input type="file" id="atteliAdmin" name="atteliAdmin[]" accept="image/png, image/jpeg" multiple>
                 </div>
                 <div class="rinda">
-                    <label>Statuss:</label>
-                    <select id="sludNomainitStatusu" name="sludNomainitStatusu">
+                    <label>Statuss: &nbsp;<span class="sarkans">*</span></label>
+                    <select id="sludNomainitStatusuAdmin" name="sludNomainitStatusuAdmin">
                         <option value="Iesniegts sludinājums">Iesniegts sludinājums</option>
                         <option value="Sludinājuma pārskatīšana">Sludinājuma pārskatīšana</option>
                         <option value="Apsiprināts | Publicēts">Apsiprināts | Publicēts</option>
                         <option value="Atteikums">Atteikums</option>
                     </select>
                 </div>
+                <div class="rinda papildInfoLiet">
+                    <label>Atjaunināšanas datums:</label>
+                    <p id="atjauninasanasDatumsSlud"></p>
+                </div>
+                <div class="rinda papildInfoLiet">
+                    <label>IP adrese:</label>
+                    <p name="ipAdreseSlud" id="ipAdreseSlud"></p>
+                </div>
                 <input type="hidden" id="slud_ID" name="slud_ID">
+                <div id="sludFormPazinojumsAdmin" class="formPazinojums"></div>
             </div>
-            <button type="submit" name="sludinajums_saglabat" id="sludinajums_saglabat" class="btn">Saglabāt</button>
+            <button type="submit" name="sludinajums_saglabat_admin" id="sludinajums_saglabat_admin" class="btn">Saglabāt</button>
         </form>
     </div>
 </div>
-
-<?php if (isset($_SESSION['pazinojumsMVL'])): ?>
-    <div class="modal modal-active" id="modal-message">
-        <div class="modal-box">
-            <div class="close-modal" data-target="#modal-message"><i class="fas fa-times"></i></div>
-            <h2>
-                <?php
-                echo $_SESSION['pazinojumsMVL'];
-                unset($_SESSION['pazinojumsMVL']);
-                ?>
-            </h2>
-        </div>
-    </div>
-<?php endif; ?>
 
 </div>
 </body>

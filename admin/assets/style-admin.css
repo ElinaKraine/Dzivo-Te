@@ -257,12 +257,12 @@ table{
 .zals{ color: darkgreen; }
 .jauns, .jauns:hover{ background: var(--light-violet); }
 
-.pagination-container, .pagination-ires {
+.pagination-container, .pagination-ires, .pagination-piet {
     margin-top: 1rem;
     text-align: center;
 }
 
-.pagination-container button, .pagination-ires button {
+.pagination-container button, .pagination-ires button, .pagination-piet button {
     margin: 0 0.3rem;
     padding: 0.4rem 0.8rem;
     border: 1px solid black;
@@ -272,13 +272,13 @@ table{
     border-radius: 0.3rem;
 }
 
-.pagination-container button.active, .pagination-ires button.active{
+.pagination-container button.active, .pagination-ires button.active, .pagination-piet button.active{
     background: var(--bright-violet);
     font-weight: bold;
     color: white;
     border: none;
 }
 
-.pagination-container button:hover, .pagination-ires button:hover{
+.pagination-container button:hover, .pagination-ires button:hover, .pagination-piet button:hover{
     background: var(--light-violet);
 }

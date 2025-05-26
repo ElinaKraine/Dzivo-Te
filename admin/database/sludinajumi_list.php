@@ -25,22 +25,22 @@ $vaicajums = $savienojums->prepare($sql_teikums);
 $vaicajums->execute();
 $rezultats = $vaicajums->get_result();
 
-while ($row = $rezultats->fetch_assoc()) {
+while ($ieraksts = $rezultats->fetch_assoc()) {
     $json[] = [
-        'id' => htmlspecialchars($row['id']),
-        'veids' => $row['veids'],
-        'tabula' => $row['tabula'],
-        'majokla_tips' => htmlspecialchars($row['majokla_tips']),
-        'cena' => htmlspecialchars($row['cena']),
-        'platiba' => htmlspecialchars($row['platiba']),
-        'statuss' => htmlspecialchars($row['statuss']),
-        'izveidosanas_datums' => date("d.m.Y", strtotime($row['izveidosanas_datums'])),
+        'id' => htmlspecialchars($ieraksts['id']),
+        'veids' => $ieraksts['veids'],
+        'tabula' => $ieraksts['tabula'],
+        'majokla_tips' => htmlspecialchars($ieraksts['majokla_tips']),
+        'cena' => htmlspecialchars($ieraksts['cena']),
+        'platiba' => htmlspecialchars($ieraksts['platiba']),
+        'statuss' => htmlspecialchars($ieraksts['statuss']),
+        'izveidosanas_datums' => date("d.m.Y", strtotime($ieraksts['izveidosanas_datums'])),
         'adrese' => htmlspecialchars(
-            $row['majokla_tips'] === 'Dzīvoklis' && !empty($row['dzivokla_numurs'])
-                ? $row['adrese'] . '-' . $row['dzivokla_numurs']
-                : $row['adrese']
+            $ieraksts['majokla_tips'] === 'Dzīvoklis' && !empty($ieraksts['dzivokla_numurs'])
+                ? $ieraksts['adrese'] . '-' . $ieraksts['dzivokla_numurs']
+                : $ieraksts['adrese']
         ),
-        'epasts' => htmlspecialchars($row['epasts']),
+        'epasts' => htmlspecialchars($ieraksts['epasts']),
     ];
 }
 $vaicajums->close();
@@ -67,22 +67,22 @@ $vaicajums = $savienojums->prepare($sql_teikums);
 $vaicajums->execute();
 $rezultats = $vaicajums->get_result();
 
-while ($row = $rezultats->fetch_assoc()) {
+while ($ieraksts = $rezultats->fetch_assoc()) {
     $json[] = [
-        'id' => htmlspecialchars($row['id']),
-        'veids' => $row['veids'],
-        'tabula' => $row['tabula'],
-        'majokla_tips' => htmlspecialchars($row['majokla_tips']),
-        'cena' => htmlspecialchars($row['cena']),
-        'platiba' => htmlspecialchars($row['platiba']),
-        'statuss' => htmlspecialchars($row['statuss']),
-        'izveidosanas_datums' => date("d.m.Y", strtotime($row['izveidosanas_datums'])),
+        'id' => htmlspecialchars($ieraksts['id']),
+        'veids' => $ieraksts['veids'],
+        'tabula' => $ieraksts['tabula'],
+        'majokla_tips' => htmlspecialchars($ieraksts['majokla_tips']),
+        'cena' => htmlspecialchars($ieraksts['cena']),
+        'platiba' => htmlspecialchars($ieraksts['platiba']),
+        'statuss' => htmlspecialchars($ieraksts['statuss']),
+        'izveidosanas_datums' => date("d.m.Y", strtotime($ieraksts['izveidosanas_datums'])),
         'adrese' => htmlspecialchars(
-            $row['majokla_tips'] === 'Dzīvoklis' && !empty($row['dzivokla_numurs'])
-                ? $row['adrese'] . '-' . $row['dzivokla_numurs']
-                : $row['adrese']
+            $ieraksts['majokla_tips'] === 'Dzīvoklis' && !empty($ieraksts['dzivokla_numurs'])
+                ? $ieraksts['adrese'] . '-' . $ieraksts['dzivokla_numurs']
+                : $ieraksts['adrese']
         ),
-        'epasts' => htmlspecialchars($row['epasts']),
+        'epasts' => htmlspecialchars($ieraksts['epasts']),
     ];
 }
 $vaicajums->close();

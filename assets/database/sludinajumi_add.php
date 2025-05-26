@@ -2,22 +2,59 @@
 session_start();
 require '../../admin/database/con_db.php';
 
-$majokla_tips = htmlspecialchars($_POST['majoklaTips']);
-$majokla_veids = htmlspecialchars($_POST['majoklaVeids']);
-$pilseta = htmlspecialchars($_POST['pilseta']);
-$iela = htmlspecialchars($_POST['iela']);
-$majas_numurs = htmlspecialchars($_POST['majasNumurs']);
-$dzivokla_numurs = htmlspecialchars($_POST['dzivoklaNumurs']);
-$cenaPirkt = htmlspecialchars($_POST['cenaPirkt']);
-$cenaDiena = htmlspecialchars($_POST['cenaDiena']);
-$cenaNedela = htmlspecialchars($_POST['cenaNedela']);
-$cenaMenesi = htmlspecialchars($_POST['cenaMenesi']);
-$platiba = htmlspecialchars($_POST['platiba']);
-$zemes_platiba = htmlspecialchars($_POST['zemesPlatiba']);
-$istabas = htmlspecialchars($_POST['istabas']);
-$stavi = htmlspecialchars($_POST['stavi']);
-$stavs = htmlspecialchars($_POST['stavs']);
-$apraksts = htmlspecialchars($_POST['apraksts']);
+$loma = "";
+switch ($_SESSION['lietotajaLomaMV']) {
+    case 'Administrators':
+        $loma = "Admin";
+        break;
+    case 'Moderators':
+        $loma = "Admin";
+        break;
+    case 'Lietotājs':
+        $loma = "liet";
+        break;
+}
+
+if ($loma === "Admin") {
+    $statuss = $_POST['sludNomainitStatusuAdmin'];
+    $majokla_tips = htmlspecialchars($_POST['majoklaTipsAdmin']);
+    $majokla_veids = htmlspecialchars($_POST['majoklaVeidsAdmin']);
+    $pilseta = htmlspecialchars($_POST['pilsetaAdmin']);
+    $iela = htmlspecialchars($_POST['ielaAdmin']);
+    $majas_numurs = htmlspecialchars($_POST['majasNumursAdmin']);
+    $dzivokla_numurs = htmlspecialchars($_POST['dzivoklaNumursAdmin']);
+    $cenaPirkt = htmlspecialchars($_POST['cenaPirktAdmin']);
+    $cenaDiena = htmlspecialchars($_POST['cenaDienaAdmin']);
+    $cenaNedela = htmlspecialchars($_POST['cenaNedelaAdmin']);
+    $cenaMenesi = htmlspecialchars($_POST['cenaMenesiAdmin']);
+    $platiba = htmlspecialchars($_POST['platibaAdmin']);
+    $zemes_platiba = htmlspecialchars($_POST['zemesPlatibaAdmin']);
+    $istabas = htmlspecialchars($_POST['istabasAdmin']);
+    $stavi = htmlspecialchars($_POST['staviAdmin']);
+    $stavs = htmlspecialchars($_POST['stavsAdmin']);
+    $apraksts = htmlspecialchars($_POST['aprakstsAdmin']);
+    $atteli = $_FILES['atteliAdmin'];
+} elseif ($loma === "liet") {
+    $statuss = "Iesniegts sludinājums";
+    $majokla_tips = htmlspecialchars($_POST['majoklaTips']);
+    $majokla_veids = htmlspecialchars($_POST['majoklaVeids']);
+    $pilseta = htmlspecialchars($_POST['pilseta']);
+    $iela = htmlspecialchars($_POST['iela']);
+    $majas_numurs = htmlspecialchars($_POST['majasNumurs']);
+    $dzivokla_numurs = htmlspecialchars($_POST['dzivoklaNumurs']);
+    $cenaPirkt = htmlspecialchars($_POST['cenaPirkt']);
+    $cenaDiena = htmlspecialchars($_POST['cenaDiena']);
+    $cenaNedela = htmlspecialchars($_POST['cenaNedela']);
+    $cenaMenesi = htmlspecialchars($_POST['cenaMenesi']);
+    $platiba = htmlspecialchars($_POST['platiba']);
+    $zemes_platiba = htmlspecialchars($_POST['zemesPlatiba']);
+    $istabas = htmlspecialchars($_POST['istabas']);
+    $stavi = htmlspecialchars($_POST['stavi']);
+    $stavs = htmlspecialchars($_POST['stavs']);
+    $apraksts = htmlspecialchars($_POST['apraksts']);
+    $atteli = $_FILES['atteli'];
+}
+
 $ip_adrese = $_SERVER['REMOTE_ADDR'];
 $lietotajaId = $_SESSION['lietotajaIdDt'];
 $tips = "";
@@ -115,7 +152,7 @@ function vai_adrese_jau_eksiste($savienojums, $pilseta, $iela, $majas_numurs, $d
     return $eksiste;
 }
 
-if (!empty($majokla_tips) && !empty($majokla_veids) && !empty($pilseta) && !empty($iela) && !empty($majas_numurs) && !empty($platiba) && isset($_FILES['atteli']) && ir_vismaz_viens_attels($_FILES['atteli'])) {
+if (!empty($majokla_tips) && !empty($majokla_veids) && !empty($pilseta) && !empty($iela) && !empty($majas_numurs) && !empty($platiba) && isset($atteli) && ir_vismaz_viens_attels($atteli)) {
     if (vai_adrese_jau_eksiste($savienojums, $pilseta, $iela, $majas_numurs, $dzivokla_numurs)) {
         echo "Šāda adrese jau eksistē citā sludinājumā!";
         exit;
@@ -125,8 +162,8 @@ if (!empty($majokla_tips) && !empty($majokla_veids) && !empty($pilseta) && !empt
         if (!empty($zemes_platiba) && !empty($stavi)) {
             if ($majokla_veids === 'pirkt' && !empty($cenaPirkt) && $cenaPirkt >= 1) {
                 //region Māja pārdošanai
-                $vaicajums = $savienojums->prepare("INSERT INTO majuvieta_pirkt (majokla_tips, id_ipasnieks, cena, platiba, zemes_platiba, istabas, stavs_vai_stavi, apraksts, ip_adrese) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                $vaicajums->bind_param("siiiiisss", $tips, $lietotajaId, $cenaPirkt, $platiba, $zemes_platiba, $istabas, $stavi, $apraksts, $ip_adrese);
+                $vaicajums = $savienojums->prepare("INSERT INTO majuvieta_pirkt (majokla_tips, id_ipasnieks, cena, platiba, zemes_platiba, istabas, stavs_vai_stavi, apraksts, ip_adrese, statuss) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $vaicajums->bind_param("siiiiissss", $tips, $lietotajaId, $cenaPirkt, $platiba, $zemes_platiba, $istabas, $stavi, $apraksts, $ip_adrese, $statuss);
                 if ($vaicajums->execute()) {
                     // echo "Māja pārdošānai veiksmīgs izveidots";
                 } else {
@@ -137,15 +174,19 @@ if (!empty($majokla_tips) && !empty($majokla_veids) && !empty($pilseta) && !empt
                 $sludinajuma_veids = "Pirkt";
 
                 saglabat_adresi($savienojums, $sludinajuma_veids, $sludinajuma_id, $pilseta, $iela, $majas_numurs, $dzivokla_numurs);
-                saglabat_attelus($savienojums, $_FILES['atteli'], $sludinajuma_veids, $sludinajuma_id);
+                saglabat_attelus($savienojums, $atteli, $sludinajuma_veids, $sludinajuma_id);
 
-                echo "Māja pārdošānai veiksmīgs izveidots! Lūdzu, gaidiet, kad administrācija apstiprinās šo sludinājumu.";
+                if ($loma === "Admin") {
+                    echo "Māja pārdošānai veiksmīgs izveidots!";
+                } else {
+                    echo "Māja pārdošānai veiksmīgs izveidots! Lūdzu, gaidiet, kad administrācija apstiprinās šo sludinājumu.";
+                }
                 //endregion
             } elseif ($majokla_veids === 'iret' && !empty($cenaDiena) && !empty($cenaNedela) && !empty($cenaMenesi) && $cenaDiena >= 1 && $cenaNedela >= 1 && $cenaMenesi >= 1) {
                 //region Māja īrēšanai
                 $tips = "Mājas";
-                $vaicajums = $savienojums->prepare("INSERT INTO majuvieta_iret (majokla_tips, id_ipasnieks, cena_diena, cena_nedela, cena_menesis, platiba, zemes_platiba, istabas, stavs_vai_stavi, apraksts, ip_adrese) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                $vaicajums->bind_param("siiiiiiisss", $tips, $lietotajaId, $cenaDiena, $cenaNedela, $cenaMenesi, $platiba, $zemes_platiba, $istabas, $stavi, $apraksts, $ip_adrese);
+                $vaicajums = $savienojums->prepare("INSERT INTO majuvieta_iret (majokla_tips, id_ipasnieks, cena_diena, cena_nedela, cena_menesis, platiba, zemes_platiba, istabas, stavs_vai_stavi, apraksts, ip_adrese, statuss) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $vaicajums->bind_param("siiiiiiissss", $tips, $lietotajaId, $cenaDiena, $cenaNedela, $cenaMenesi, $platiba, $zemes_platiba, $istabas, $stavi, $apraksts, $ip_adrese, $statuss);
                 if ($vaicajums->execute()) {
                     // echo "Māja īrēšanai veiksmīgs izveidots";
                 } else {
@@ -156,9 +197,13 @@ if (!empty($majokla_tips) && !empty($majokla_veids) && !empty($pilseta) && !empt
                 $sludinajuma_veids = "Iret";
 
                 saglabat_adresi($savienojums, $sludinajuma_veids, $sludinajuma_id, $pilseta, $iela, $majas_numurs, $dzivokla_numurs);
-                saglabat_attelus($savienojums, $_FILES['atteli'], $sludinajuma_veids, $sludinajuma_id);
+                saglabat_attelus($savienojums, $atteli, $sludinajuma_veids, $sludinajuma_id);
 
-                echo "Māja īrēšanai veiksmīgs izveidots! Lūdzu, gaidiet, kad administrācija apstiprinās šo sludinājumu.";
+                if ($loma === "Admin") {
+                    echo "Māja īrēšanai veiksmīgs izveidots!";
+                } else {
+                    echo "Māja īrēšanai veiksmīgs izveidots! Lūdzu, gaidiet, kad administrācija apstiprinās šo sludinājumu.";
+                }
                 //endregion
             } else {
                 echo "Visi ievadas lauki nav aizpildīti!";
@@ -171,8 +216,8 @@ if (!empty($majokla_tips) && !empty($majokla_veids) && !empty($pilseta) && !empt
         if (!empty($dzivokla_numurs) && !empty($stavs)) {
             if ($majokla_veids === 'pirkt' && !empty($cenaPirkt) && $cenaPirkt >= 1) {
                 //region Dzīvoklis pārdošanai
-                $vaicajums = $savienojums->prepare("INSERT INTO majuvieta_pirkt (majokla_tips, id_ipasnieks, cena, platiba, istabas, stavs_vai_stavi, apraksts, ip_adrese) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-                $vaicajums->bind_param("siiiisss", $tips, $lietotajaId, $cenaPirkt, $platiba, $istabas, $stavs, $apraksts, $ip_adrese);
+                $vaicajums = $savienojums->prepare("INSERT INTO majuvieta_pirkt (majokla_tips, id_ipasnieks, cena, platiba, istabas, stavs_vai_stavi, apraksts, ip_adrese, statuss) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $vaicajums->bind_param("siiiissss", $tips, $lietotajaId, $cenaPirkt, $platiba, $istabas, $stavs, $apraksts, $ip_adrese, $statuss);
                 if ($vaicajums->execute()) {
                     // echo "Dzīvoklis pārdošānai veiksmīgs izveidots";
                 } else {
@@ -183,14 +228,18 @@ if (!empty($majokla_tips) && !empty($majokla_veids) && !empty($pilseta) && !empt
                 $sludinajuma_veids = "Pirkt";
 
                 saglabat_adresi($savienojums, $sludinajuma_veids, $sludinajuma_id, $pilseta, $iela, $majas_numurs, $dzivokla_numurs);
-                saglabat_attelus($savienojums, $_FILES['atteli'], $sludinajuma_veids, $sludinajuma_id);
+                saglabat_attelus($savienojums, $atteli, $sludinajuma_veids, $sludinajuma_id);
 
-                echo "Dzīvoklis pārdošānai veiksmīgs izveidots! Lūdzu, gaidiet, kad administrācija apstiprinās šo sludinājumu.";
+                if ($loma === "Admin") {
+                    echo "Dzīvoklis pārdošānai veiksmīgs izveidots!";
+                } else {
+                    echo "Dzīvoklis pārdošānai veiksmīgs izveidots! Lūdzu, gaidiet, kad administrācija apstiprinās šo sludinājumu.";
+                }
                 //endregion
             } elseif ($majokla_veids === 'iret' && !empty($cenaDiena) && !empty($cenaNedela) && !empty($cenaMenesi) && $cenaDiena >= 1 && $cenaNedela >= 1 && $cenaMenesi >= 1) {
                 //region Dzīvoklis īrēšanai
-                $vaicajums = $savienojums->prepare("INSERT INTO majuvieta_iret (majokla_tips, id_ipasnieks, cena_diena, cena_nedela, cena_menesis, platiba, istabas, stavs_vai_stavi, apraksts, ip_adrese) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                $vaicajums->bind_param("siiiiiisss", $tips, $lietotajaId, $cenaDiena, $cenaNedela, $cenaMenesi, $platiba, $istabas, $stavs, $apraksts, $ip_adrese);
+                $vaicajums = $savienojums->prepare("INSERT INTO majuvieta_iret (majokla_tips, id_ipasnieks, cena_diena, cena_nedela, cena_menesis, platiba, istabas, stavs_vai_stavi, apraksts, ip_adrese, statuss) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $vaicajums->bind_param("siiiiiissss", $tips, $lietotajaId, $cenaDiena, $cenaNedela, $cenaMenesi, $platiba, $istabas, $stavs, $apraksts, $ip_adrese, $statuss);
                 if ($vaicajums->execute()) {
                     // echo "Dzīvoklis īrešanai veiksmīgs izveidots";
                 } else {
@@ -202,9 +251,13 @@ if (!empty($majokla_tips) && !empty($majokla_veids) && !empty($pilseta) && !empt
                 $sludinajuma_veids = "Iret";
 
                 saglabat_adresi($savienojums, $sludinajuma_veids, $sludinajuma_id, $pilseta, $iela, $majas_numurs, $dzivokla_numurs);
-                saglabat_attelus($savienojums, $_FILES['atteli'], $sludinajuma_veids, $sludinajuma_id);
+                saglabat_attelus($savienojums, $atteli, $sludinajuma_veids, $sludinajuma_id);
 
-                echo "Dzīvoklis īrešanai veiksmīgs izveidots! Lūdzu, gaidiet, kad administrācija apstiprinās šo sludinājumu.";
+                if ($loma === "Admin") {
+                    echo "Dzīvoklis īrešanai veiksmīgs izveidots!";
+                } else {
+                    echo "Dzīvoklis īrešanai veiksmīgs izveidots! Lūdzu, gaidiet, kad administrācija apstiprinās šo sludinājumu.";
+                }
                 //endregion
             } else {
                 echo "Visi ievadas lauki nav aizpildīti!";

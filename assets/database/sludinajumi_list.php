@@ -7,7 +7,7 @@ if (isset($_SESSION['lietotajaIdDt'])) {
     $json = [];
 
     // Pirkt sludinājumi
-    $query = "SELECT 
+    $sql_teikums = "SELECT 
                     'Pirkt' AS veids, 
                     'majuvieta_pirkt' AS tabula, 
                     mv.pirkt_id AS id, 
@@ -24,30 +24,30 @@ if (isset($_SESSION['lietotajaIdDt'])) {
                 WHERE mv.id_ipasnieks = ? AND ad.sludinajuma_veids = 'Pirkt' 
                 AND mv.statuss != 'Dzēsts'
                 ORDER BY mv.izveidosanas_datums DESC";
-    $stmt = $savienojums->prepare($query);
-    $stmt->bind_param('i', $lietotajaId);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    $vaicajums = $savienojums->prepare($sql_teikums);
+    $vaicajums->bind_param('i', $lietotajaId);
+    $vaicajums->execute();
+    $rezultats = $vaicajums->get_result();
 
-    while ($row = $result->fetch_assoc()) {
+    while ($ieraksts = $rezultats->fetch_assoc()) {
         $json[] = [
-            'id' => htmlspecialchars($row['id']),
-            'veids' => $row['veids'],
-            'tabula' => $row['tabula'],
-            'majokla_tips' => htmlspecialchars($row['majokla_tips']),
-            'cena' => htmlspecialchars($row['cena']),
-            'platiba' => htmlspecialchars($row['platiba']),
-            'statuss' => htmlspecialchars($row['statuss']),
-            'izveidosanas_datums' => date("d.m.Y", strtotime($row['izveidosanas_datums'])),
-            'pilseta' => htmlspecialchars($row['pilseta']),
-            'iela' => htmlspecialchars($row['iela']),
-            'majas_numurs' => htmlspecialchars($row['majas_numurs']),
+            'id' => htmlspecialchars($ieraksts['id']),
+            'veids' => $ieraksts['veids'],
+            'tabula' => $ieraksts['tabula'],
+            'majokla_tips' => htmlspecialchars($ieraksts['majokla_tips']),
+            'cena' => htmlspecialchars($ieraksts['cena']),
+            'platiba' => htmlspecialchars($ieraksts['platiba']),
+            'statuss' => htmlspecialchars($rierakstsow['statuss']),
+            'izveidosanas_datums' => date("d.m.Y", strtotime($ieraksts['izveidosanas_datums'])),
+            'pilseta' => htmlspecialchars($ieraksts['pilseta']),
+            'iela' => htmlspecialchars($ieraksts['iela']),
+            'majas_numurs' => htmlspecialchars($ieraksts['majas_numurs']),
         ];
     }
-    $stmt->close();
+    $vaicajums->close();
 
     // Iret sludinājumi
-    $query = "SELECT 
+    $sql_teikums = "SELECT 
                     'Iret' AS veids, 
                     'majuvieta_iret' AS tabula, 
                     mv.iret_id AS id, 
@@ -64,27 +64,27 @@ if (isset($_SESSION['lietotajaIdDt'])) {
                 WHERE mv.id_ipasnieks = ? AND ad.sludinajuma_veids = 'Iret'
                 AND mv.statuss != 'Dzēsts'
                 ORDER BY mv.izveidosanas_datums DESC";
-    $stmt = $savienojums->prepare($query);
-    $stmt->bind_param('i', $lietotajaId);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    $vaicajums = $savienojums->prepare($sql_teikums);
+    $vaicajums->bind_param('i', $lietotajaId);
+    $vaicajums->execute();
+    $rezultats = $vaicajums->get_result();
 
-    while ($row = $result->fetch_assoc()) {
+    while ($ieraksts = $rezultats->fetch_assoc()) {
         $json[] = [
-            'id' => htmlspecialchars($row['id']),
-            'veids' => $row['veids'],
-            'tabula' => $row['tabula'],
-            'majokla_tips' => htmlspecialchars($row['majokla_tips']),
-            'cena' => htmlspecialchars($row['cena']),
-            'platiba' => htmlspecialchars($row['platiba']),
-            'statuss' => htmlspecialchars($row['statuss']),
-            'izveidosanas_datums' => date("d.m.Y", strtotime($row['izveidosanas_datums'])),
-            'pilseta' => htmlspecialchars($row['pilseta']),
-            'iela' => htmlspecialchars($row['iela']),
-            'majas_numurs' => htmlspecialchars($row['majas_numurs']),
+            'id' => htmlspecialchars($ieraksts['id']),
+            'veids' => $ieraksts['veids'],
+            'tabula' => $ieraksts['tabula'],
+            'majokla_tips' => htmlspecialchars($ieraksts['majokla_tips']),
+            'cena' => htmlspecialchars($ieraksts['cena']),
+            'platiba' => htmlspecialchars($ieraksts['platiba']),
+            'statuss' => htmlspecialchars($ieraksts['statuss']),
+            'izveidosanas_datums' => date("d.m.Y", strtotime($ieraksts['izveidosanas_datums'])),
+            'pilseta' => htmlspecialchars($ieraksts['pilseta']),
+            'iela' => htmlspecialchars($ieraksts['iela']),
+            'majas_numurs' => htmlspecialchars($ieraksts['majas_numurs']),
         ];
     }
-    $stmt->close();
+    $vaicajums->close();
 }
 
 $savienojums->close();

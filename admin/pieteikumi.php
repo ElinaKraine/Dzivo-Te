@@ -17,6 +17,7 @@ require "database/con_db.php";
         </tr>
         <tbody id="pieteikumi"></tbody>
     </table>
+    <div id="pagination-piet" class="pagination-container"></div>
 </div>
 </div>
 </body>

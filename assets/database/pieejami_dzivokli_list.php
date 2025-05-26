@@ -117,4 +117,5 @@ while ($ieraksts = mysqli_fetch_assoc($rezultats)) {
     ];
 }
 
+$savienojums->close();
 echo json_encode($json);

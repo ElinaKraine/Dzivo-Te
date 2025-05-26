@@ -15,10 +15,22 @@ $(document).ready(function () {
     "change",
     toggleFormFields2
   );
-  $("#majoklaTips, #majoklaVeids").on("change", toggleFormFields3);
-  $("#sludNomainitAtteliSelect").on("change", toggleSludAtteluSelect);
+  $("#majoklaTipsAdmin, #majoklaVeidsAdmin").on("change", toggleFormFields3);
+  $("#sludNomainitAtteliSelectAdmin").on("change", toggleSludAtteluSelect);
   let galleryImages = [];
   let currentImageIndex = 0;
+
+  function paradit_pazinojumu(pazinojums) {
+    const modalHTML = `
+      <div class="modal modal-active" id="modal-message">
+        <div class="modal-box">
+          <div class="close-modal" data-target="#modal-message"><i class="fas fa-times"></i></div>
+          <h2>${pazinojums}</h2>
+        </div>
+      </div>
+    `;
+    $("body").append(modalHTML);
+  }
 
   //#region Profila informācija
   function fetchProfilaInfo() {
@@ -413,7 +425,7 @@ $(document).ready(function () {
       type: "GET",
       success: function (response) {
         const sludinajumi = JSON.parse(response);
-        const rowsPerPage = 15;
+        const rowsPerPage = 10;
         let currentPage = 1;
 
         function renderTable(page) {
@@ -484,40 +496,43 @@ $(document).ready(function () {
   }
 
   function toggleFormFields3() {
-    const majoklaTips = $("#majoklaTips").val();
-    const majoklaVeids = $("#majoklaVeids").val();
+    const majoklaTips = $("#majoklaTipsAdmin").val();
+    const majoklaVeids = $("#majoklaVeidsAdmin").val();
 
     if (majoklaTips === "maja") {
-      $("#zemes-platiba").show();
-      $("#maja-stavi").show();
-      $("#dzivokla-numurs").hide();
-      $("#dziv-stavs").hide();
+      $("#zemes-platiba-admin").show();
+      $("#zemesPlatibaAdmin").prop("disabled", false);
+      $("#maja-stavi-admin").show();
+      $("#dzivokla-numurs-admin").hide();
+      $("#dziv-stavs-admin").hide();
     } else if (majoklaTips === "dzivoklis") {
-      $("#zemes-platiba").hide();
-      $("#maja-stavi").hide();
-      $("#dzivokla-numurs").show();
-      $("#dziv-stavs").show();
+      $("#zemes-platiba-admin").hide();
+      $("#zemesPlatibaAdmin").prop("disabled", true);
+      $("#maja-stavi-admin").hide();
+      $("#dzivokla-numurs-admin").show();
+      $("#dziv-stavs-admin").show();
     }
 
     if (majoklaVeids === "pirkt") {
-      $("#pirkt-cena").show();
+      $("#pirkt-cena-admin").show();
       $(".iret-cena").hide();
     } else if (majoklaVeids === "iret") {
-      $("#pirkt-cena").hide();
+      $("#pirkt-cena-admin").hide();
       $(".iret-cena").show();
     }
   }
 
   $(document).on("click", "#new-btn-slud", (e) => {
     $(".modalSludinajums").css("display", "flex");
-    $("#sludinajumaForma").trigger("reset");
+    $("#sludinajumaFormaAdmin").trigger("reset");
+    $("#sludFormPazinojumsAdmin").text("");
     $(".nomainitAttelusRinda").hide();
     $(".nomainit-slud-atteli").show();
     $("#atteluGalerijaContainerAdmin").hide();
-    $("#majoklaTips").show();
-    $("#majoklaTips-text").hide();
+    $("#majoklaTipsAdmin").show();
+    $("#majoklaTips-text-admin").hide();
     $("#slud_ID").val("");
-    $("#sludinajums_saglabat").text("Izveidot");
+    $("#sludinajums_saglabat_admin").text("Izveidot");
     toggleFormFields3();
   });
 
@@ -530,13 +545,13 @@ $(document).ready(function () {
     }
 
     $(".modal").hide();
-    $("#sludinajumaForma").trigger("reset");
-    $("#pieteikumaForma").trigger("reset");
+    $("#sludinajumaFormaAdmin").trigger("reset");
     edit = false;
   });
 
   $(document).on("click", ".sludinajums-item", (e) => {
     $(".modalSludinajums").css("display", "flex");
+    $("#sludFormPazinojumsAdmin").text("");
 
     const element = $(e.currentTarget).closest("tr");
     const id = $(element).attr("slud_ID");
@@ -552,28 +567,31 @@ $(document).ready(function () {
           data.majokla_tips === "Mājas" ? "maja" : "dzivoklis";
         const majoklaTipsText = majoklaTips === "maja" ? "Māja" : "Dzīvoklis";
 
-        $("#majoklaTips").val(majoklaTips);
-        $("#majoklaTips").hide();
-        $("#majoklaTips-text").text(majoklaTipsText).show();
+        $("#majoklaTipsAdmin").val(majoklaTips);
+        $("#majoklaTipsAdmin").hide();
+        $("#majoklaTips-text-admin").text(majoklaTipsText).show();
 
-        $("#majoklaVeids").val(veids.toLowerCase());
-        $("#pilseta").val(data.pilseta);
-        $("#iela").val(data.iela);
-        $("#majasNumurs").val(data.majas_numurs);
-        $("#dzivoklaNumurs").val(data.dzivokla_numurs || "");
-        $("#cenaPirkt").val(data.cena || "");
-        $("#cenaDiena").val(data.cena_diena || "");
-        $("#cenaNedela").val(data.cena_nedela || "");
-        $("#cenaMenesi").val(data.cena_menesis || "");
-        $("#platiba").val(data.platiba);
-        $("#zemesPlatiba").val(data.zemes_platiba || "");
-        $("#istabas").val(data.istabas);
-        $("#stavi").val(data.stavi || "");
-        $("#stavs").val(data.stavs || "");
-        $("#apraksts").val(data.apraksts || "");
+        $("#majoklaVeidsAdmin").val(veids.toLowerCase());
+        $("#pilsetaAdmin").val(data.pilseta);
+        $("#ielaAdmin").val(data.iela);
+        $("#majasNumursAdmin").val(data.majas_numurs);
+        $("#dzivoklaNumursAdmin").val(data.dzivokla_numurs || "");
+        $("#cenaPirktAdmin").val(data.cena || "");
+        $("#cenaDienaAdmin").val(data.cena_diena || "");
+        $("#cenaNedelaAdmin").val(data.cena_nedela || "");
+        $("#cenaMenesiAdmin").val(data.cena_menesis || "");
+        $("#platibaAdmin").val(data.platiba);
+        $("#zemesPlatibaAdmin").val(data.zemes_platiba || "");
+        $("#istabasAdmin").val(data.istabas);
+        $("#staviAdmin").val(data.stavi || "");
+        $("#stavsAdmin").val(data.stavs || "");
+        $("#aprakstsAdmin").val(data.apraksts || "");
+        $("#sludNomainitStatusuAdmin").val(data.statuss);
+        $("#ipAdreseSlud").text(data.ip_adrese);
+        $("#atjauninasanasDatumsSlud").text(data.atjauninasanas_datums);
 
         $("#slud_ID").val(id);
-        $("#sludinajums_saglabat").text("Saglabāt");
+        $("#sludinajums_saglabat_admin").text("Saglabāt");
 
         toggleFormFields3();
         renderGallery(data.atteli);
@@ -584,14 +602,14 @@ $(document).ready(function () {
     );
   });
 
-  $("#sludinajumaForma").submit((e) => {
+  $("#sludinajumaFormaAdmin").submit((e) => {
     e.preventDefault();
 
-    const formData = new FormData($("#sludinajumaForma")[0]);
+    const formData = new FormData($("#sludinajumaFormaAdmin")[0]);
 
     const isEdit = $("#slud_ID").val() !== "";
     const url = isEdit
-      ? "./database/sludinajumi_edit.php"
+      ? "../assets/database/sludinajumi_edit.php"
       : "../assets/database/sludinajumi_add.php";
 
     $.ajax({
@@ -601,9 +619,26 @@ $(document).ready(function () {
       processData: false,
       contentType: false,
       success: function (response) {
+        if (
+          response.includes("Visi ievadas lauki") ||
+          response.includes("Kļūda") ||
+          response.includes("Šāda adrese") ||
+          response.includes("Šo sludinājumu")
+        ) {
+          $("#sludFormPazinojumsAdmin").text(response);
+          return;
+        }
+
+        if (response.includes("veiksmīgs")) {
+          paradit_pazinojumu(response);
+          fetchSludinajumi();
+          return;
+        }
+
         $(".modal").hide();
-        $("#sludinajumaForma").trigger("reset");
-        ieladetSludinajumus();
+        $("#sludinajumaFormaAdmin").trigger("reset");
+        $("#sludFormPazinojumsAdmin").text("");
+        fetchSludinajumi();
       },
       error: function () {
         alert("Neizdevās nosūtīt sludinājumu!");
@@ -612,7 +647,7 @@ $(document).ready(function () {
   });
 
   function toggleSludAtteluSelect() {
-    const val = $("#sludNomainitAtteliSelect").val();
+    const val = $("#sludNomainitAtteliSelectAdmin").val();
     if (val === "ja") {
       $(".nomainit-slud-atteli").show();
     } else {
@@ -701,29 +736,61 @@ $(document).ready(function () {
       type: "GET",
       success: function (response) {
         const pieteikumi = JSON.parse(response);
-        let template = "";
-        pieteikumi.forEach((pieteikums) => {
-          const klaseSarkans =
-            pieteikums.statuss === "Atteikums" ? "sarkans" : "";
-          const klaseZals =
-            pieteikums.statuss === "Mājoklis ir iegādāts" ? "zals" : "";
-          template += `
-                        <tr piet_ID="${pieteikums.id}">
-                            <td>${pieteikums.id}</td>
-                            <td>${pieteikums.majokla_tips}</td>
-                            <td>${pieteikums.adrese}</td>
-                            <td>${pieteikums.cena}</td>
-                            <td>${pieteikums.epasts}</td>
-                            <td class='${klaseSarkans} ${klaseZals}'>${pieteikums.statuss}</td>
-                            <td>${pieteikums.izveidosanas_datums}</td>
-                            <td class="items">
-                                <a class="piet-item editBtn"> <i class="fa fa-edit"></i> </a>    
-                                <a class="piet-delete deleteBtn"> <i class="fa fa-trash"></i> </a>
-                            </td>
-                        </tr>
-                    `;
+        const rowsPerPage = 15;
+        let currentPage = 1;
+
+        function renderTable(page) {
+          let template = "";
+          const start = (page - 1) * rowsPerPage;
+          const end = start + rowsPerPage;
+          const pageItems = pieteikumi.slice(start, end);
+
+          pageItems.forEach((pieteikums) => {
+            const klaseSarkans =
+              pieteikums.statuss === "Atteikums" ? "sarkans" : "";
+            const klaseZals =
+              pieteikums.statuss === "Mājoklis ir iegādāts" ? "zals" : "";
+            template += `
+                          <tr piet_ID="${pieteikums.id}">
+                              <td>${pieteikums.id}</td>
+                              <td>${pieteikums.majokla_tips}</td>
+                              <td>${pieteikums.adrese}</td>
+                              <td>${pieteikums.cena}</td>
+                              <td>${pieteikums.epasts}</td>
+                              <td class='${klaseSarkans} ${klaseZals}'>${pieteikums.statuss}</td>
+                              <td>${pieteikums.izveidosanas_datums}</td>
+                              <td class="items">
+                                  <a class="piet-item editBtn"> <i class="fa fa-edit"></i> </a>    
+                                  <a class="piet-delete deleteBtn"> <i class="fa fa-trash"></i> </a>
+                              </td>
+                          </tr>
+                      `;
+          });
+
+          $("#pieteikumi").html(template);
+        }
+
+        function renderPagination() {
+          const totalPages = Math.ceil(pieteikumi.length / rowsPerPage);
+          let buttons = "";
+
+          for (let i = 1; i <= totalPages; i++) {
+            buttons += `<button class="${
+              i === currentPage ? "active" : ""
+            }" data-page="${i}">${i}</button>`;
+          }
+
+          $("#pagination-piet").html(buttons);
+        }
+
+        $("#pagination-piet").on("click", "button", function () {
+          currentPage = parseInt($(this).attr("data-page"));
+          renderTable(currentPage);
+          renderPagination();
         });
-        $("#pieteikumi").html(template);
+
+        renderTable(currentPage);
+        renderPagination();
       },
       error: function () {
         alert("Neizdevas ieladet datus");
@@ -740,7 +807,7 @@ $(document).ready(function () {
       type: "GET",
       success: function (response) {
         const ieraksti = JSON.parse(response);
-        const rowsPerPage = 10;
+        const rowsPerPage = 15;
         let currentPage = 1;
 
         function renderTable(page) {

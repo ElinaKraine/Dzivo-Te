@@ -5,7 +5,7 @@ session_start();
 if (isset($_SESSION['lietotajaIdDt'])) {
     $lietotajaId = $_SESSION['lietotajaIdDt'];
 
-    $stmt = $savienojums->prepare(
+    $vaicajums = $savienojums->prepare(
         "SELECT 
             mp.pieteikums_id AS id,
             mp.statuss,
@@ -23,10 +23,10 @@ if (isset($_SESSION['lietotajaIdDt'])) {
         WHERE mv.id_ipasnieks = ? AND ad.sludinajuma_veids = 'Pirkt'
         ORDER BY mp.izveidosanas_datums DESC"
     );
-    $stmt->bind_param('i', $lietotajaId);
+    $vaicajums->bind_param('i', $lietotajaId);
 
-    if ($stmt->execute()) {
-        $rezultats = $stmt->get_result();
+    if ($vaicajums->execute()) {
+        $rezultats = $vaicajums->get_result();
         $json = array();
 
         while ($ieraksts = $rezultats->fetch_assoc()) {
@@ -46,10 +46,10 @@ if (isset($_SESSION['lietotajaIdDt'])) {
         $jsonstring = json_encode($json);
         echo $jsonstring;
     } else {
-        echo json_encode(array('error' => 'Query failed: ' . $stmt->error));
+        // echo json_encode(array('error' => 'Query failed: ' . $vaicajums->error));
     }
 
-    $stmt->close();
+    $vaicajums->close();
 }
 
 $savienojums->close();

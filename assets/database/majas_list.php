@@ -104,3 +104,4 @@ while ($ieraksts = $rezultats->fetch_assoc()) {
 }
 
 echo json_encode($json);
+$savienojums->close();
