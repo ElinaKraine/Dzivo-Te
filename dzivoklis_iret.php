@@ -17,38 +17,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
     $veids = "Iret";
     $statuss = "Apsiprināts | Publicēts";
 
-    $stmt = $savienojums->prepare("SELECT * FROM majuvieta_iret 
-                                    INNER JOIN majuvieta_adrese md ON majuvieta_iret.iret_id = md.id_sludinajums
-                                    INNER JOIN majuvieta_atteli ma ON majuvieta_iret.iret_id = ma.id_sludinajums
-                                    INNER JOIN majuvieta_lietotaji ml ON majuvieta_iret.id_ipasnieks = ml.lietotaja_id 
-                                    WHERE iret_id = ?
-                                    AND majokla_tips = ?
-                                    AND md.sludinajuma_veids = ?
-                                    AND ma.sludinajuma_veids = ?
-                                    AND majuvieta_iret.statuss = ?");
+    $vaicajums = $savienojums->prepare(
+        "SELECT * FROM majuvieta_iret 
+        INNER JOIN majuvieta_adrese md ON majuvieta_iret.iret_id = md.id_sludinajums
+        INNER JOIN majuvieta_atteli ma ON majuvieta_iret.iret_id = ma.id_sludinajums
+        INNER JOIN majuvieta_lietotaji ml ON majuvieta_iret.id_ipasnieks = ml.lietotaja_id 
+        WHERE iret_id = ?
+        AND majokla_tips = ?
+        AND md.sludinajuma_veids = ?
+        AND ma.sludinajuma_veids = ?
+        AND majuvieta_iret.statuss = ?"
+    );
+    $vaicajums->bind_param("issss", $dzivoklis_id, $tips, $veids, $veids, $statuss);
+    $vaicajums->execute();
+    $rezultats = $vaicajums->get_result();
+    $vaicajums->close();
 
-    if (!$stmt) {
-        die("Database query failed: " . mysqli_error($savienojums));
-    }
-
-    $stmt->bind_param("issss", $dzivoklis_id, $tips, $veids, $veids, $statuss);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($sludinajums = $result->fetch_assoc()) {
+    if ($sludinajums = $rezultats->fetch_assoc()) {
         $isSaved = false;
 
         if (isset($_SESSION['lietotajaIdDt'])) {
             $lietotajsId = $_SESSION['lietotajaIdDt'];
-            $stmtSaglabats = $savienojums->prepare("
-                SELECT 1 FROM dzivote_saglabatie 
-                WHERE id_lietotajs = ? AND id_sludinajums = ? AND sludinajuma_veids = 'Iret'
-            ");
-            $stmtSaglabats->bind_param("ii", $lietotajsId, $maja_id);
-            $stmtSaglabats->execute();
-            $stmtSaglabats->store_result();
-            $isSaved = $stmtSaglabats->num_rows > 0;
-            $stmtSaglabats->close();
+            $vaicajums = $savienojums->prepare("SELECT 1 FROM dzivote_saglabatie 
+                                                WHERE id_lietotajs = ? AND id_sludinajums = ?
+                                                AND sludinajuma_veids = 'Iret'");
+            $vaicajums->bind_param("ii", $lietotajsId, $maja_id);
+            $vaicajums->execute();
+            $vaicajums->store_result();
+            $isSaved = $vaicajums->num_rows > 0;
+            $vaicajums->close();
         }
 
         function pareizaDienasForma($skaits)
@@ -59,7 +56,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
             return "dienām";
         }
 ?>
-
         <section class="galvena majaLapa">
             <div class="visasBildes attela-sirds">
                 <div class="viensAttela">
@@ -76,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
                 <?php if (!isset($_SESSION['lietotajaLomaMV'])) { ?>
                     <a href="login.php" class='sirds'><i class='fa-regular fa-heart'></i></a>
                 <?php } else { ?>
-                    <a class='sirds <?php echo $isSaved ? "sirdsSarkans" : ""; ?>' data-id="<?php echo $sludinajums['iret_id']; ?>" data-veids="Iret">
+                    <a class='sirds <?php echo $isSaved ? "sirdsSarkans" : ""; ?>' data-id="<?php echo $sludinajums['iret_id']; ?>" data-veids="Iret" data-tips="Dzivoklis">
                         <i class='<?php echo $isSaved ? "fa-solid" : "fa-regular"; ?> fa-heart'></i>
                     </a>
                 <?php } ?>
@@ -147,71 +143,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
                 </form>
             </div>
         </div>
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                let saglabasanaNotiek = false;
-                const sirdsPoga = document.querySelector(".sirds");
-
-                if (sirdsPoga) {
-                    sirdsPoga.addEventListener("click", function(e) {
-                        e.preventDefault();
-                        if (saglabasanaNotiek) return;
-                        saglabasanaNotiek = true;
-
-                        const sludinajumaId = this.dataset.id;
-                        const veids = this.dataset.veids;
-                        const irSaglabats = this.querySelector("i").classList.contains("fa-solid");
-
-                        const url = irSaglabats ?
-                            "./assets/database/dzest_saglabatu.php" :
-                            "./assets/database/pievienot_saglabatiem.php";
-
-                        const ikona = this.querySelector("i");
-                        const pats = this;
-
-                        fetch(url, {
-                                method: "POST",
-                                headers: {
-                                    "Content-Type": "application/x-www-form-urlencoded",
-                                },
-                                body: `id_sludinajums=${sludinajumaId}&veids=${veids}`,
-                            })
-                            .then(res => res.json())
-                            .then(data => {
-                                if (data.success) {
-                                    if (irSaglabats) {
-                                        ikona.classList.remove("fa-solid");
-                                        ikona.classList.add("fa-regular");
-                                        pats.classList.remove("sirdsSarkans");
-                                    } else {
-                                        ikona.classList.remove("fa-regular");
-                                        ikona.classList.add("fa-solid");
-                                        pats.classList.add("sirdsSarkans");
-                                    }
-                                } else {
-                                    if (data.message === "unauthorized") {
-                                        window.location.href = "./login.php";
-                                    } else {
-                                        alert(data.message || "Darbība neizdevās.");
-                                    }
-                                }
-                            })
-                            .catch(() => {
-                                alert("Neizdevās veikt darbību.");
-                            })
-                            .finally(() => {
-                                saglabasanaNotiek = false;
-                            });
-                    });
-                }
-            });
-        </script>
-
 <?php
     } else {
         echo "<p class='neveiksmigsPazinojums'>Māja nav atrasta</p>";
     }
-    $stmt->close();
 } else {
     echo "<p class='neveiksmigsPazinojums'>Kļūda: ID nav norādīts</p>";
 }

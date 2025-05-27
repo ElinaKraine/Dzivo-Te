@@ -63,6 +63,64 @@ function validateAtteluInput(input) {
   return true;
 }
 
+// Funkcija sludinājumu pievienošanai vai dzēšanai no saglabātajiem
+function pievienot_dzest_saglabatu() {
+  document
+    .querySelectorAll(".sirds[data-id][data-veids][data-tips]")
+    .forEach((poga) => {
+      poga.addEventListener("click", function (e) {
+        e.preventDefault();
+        if (poga.classList.contains("processing")) return;
+
+        poga.classList.add("processing");
+
+        const sludinajumaId = poga.dataset.id;
+        const veids = poga.dataset.veids;
+        const tips = poga.dataset.tips;
+        const ikona = poga.querySelector("i");
+        const irSaglabats = ikona.classList.contains("fa-solid");
+
+        const url = irSaglabats
+          ? "./assets/database/dzest_saglabatu.php"
+          : "./assets/database/pievienot_saglabatiem.php";
+
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: `id_sludinajums=${sludinajumaId}&veids=${veids}&tips=${tips}`,
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.success) {
+              if (irSaglabats) {
+                ikona.classList.remove("fa-solid");
+                ikona.classList.add("fa-regular");
+                poga.classList.remove("sirdsSarkans");
+              } else {
+                ikona.classList.remove("fa-regular");
+                ikona.classList.add("fa-solid");
+                poga.classList.add("sirdsSarkans");
+              }
+            } else {
+              if (data.message === "unauthorized") {
+                window.location.href = "./login.php";
+              } else {
+                alert(data.message || "Darbība neizdevās.");
+              }
+            }
+          })
+          .catch(() => {
+            alert("Neizdevās veikt darbību.");
+          })
+          .finally(() => {
+            poga.classList.remove("processing");
+          });
+      });
+    });
+}
+
 // Animācija
 function animacija(pirmaisElements, masivsArElementiem, sekcija) {
   if (!sekcija || !(sekcija instanceof Element)) {
@@ -186,6 +244,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   initializeFilterToggle();
+  pievienot_dzest_saglabatu();
 });
 
 // Filtras pogas

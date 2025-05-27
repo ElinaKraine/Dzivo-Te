@@ -1,52 +1,49 @@
 <?php
 session_start();
 header('Content-Type: application/json');
-
 require '../../admin/database/con_db.php';
 
-if (isset($_POST["id_sludinajums"], $_POST["veids"])) {
-    if (!isset($_SESSION['lietotajaIdDt'])) {
-        echo json_encode(["success" => false, "message" => "Jūs esat neautorizēti!"]);
-        exit;
-    }
+$response = [];
 
-    $lietotaja_id = $_SESSION['lietotajaIdDt'];
-    $id_sludinajums = intval($_POST['id_sludinajums']);
-    $sludinajuma_veids = $_POST['veids'];
-    $majokla_tips = $_POST['tips'];
+if (isset($_SESSION['lietotajaIdDt'])) {
+    if (isset($_POST["id_sludinajums"], $_POST["veids"])) {
+        $lietotaja_id = $_SESSION['lietotajaIdDt'];
+        $id_sludinajums = intval($_POST['id_sludinajums']);
+        $sludinajuma_veids = $_POST['veids'];
+        $majokla_tips = $_POST['tips'];
 
-    $parbaudijums = $savienojums->prepare("
-        SELECT COUNT(*) 
-        FROM dzivote_saglabatie 
-        WHERE id_lietotajs = ? AND id_sludinajums = ? AND sludinajuma_veids = ? AND majokla_tips = ?
-    ");
-    $parbaudijums->bind_param("iiss", $lietotaja_id, $id_sludinajums, $sludinajuma_veids, $majokla_tips);
-    $parbaudijums->execute();
-    $parbaudijums->bind_result($count);
-    $parbaudijums->fetch();
-    $parbaudijums->close();
+        $parbaude = $savienojums->prepare("SELECT COUNT(*) 
+                                                FROM dzivote_saglabatie 
+                                                WHERE id_lietotajs = ? AND id_sludinajums = ?
+                                                AND sludinajuma_veids = ? AND majokla_tips = ?
+                                            ");
+        $parbaude->bind_param("iiss", $lietotaja_id, $id_sludinajums, $sludinajuma_veids, $majokla_tips);
+        $parbaude->execute();
+        $parbaude->bind_result($count);
+        $parbaude->fetch();
+        $parbaude->close();
 
-    if ($count > 0) {
-        echo json_encode(["success" => false, "message" => "Jau saglabāts"]);
-        exit;
-    }
+        if ($count > 0) {
+            echo json_encode(["success" => false, "message" => "Jau saglabāts"]);
+            exit;
+        }
 
-    $vaicajums = $savienojums->prepare("
-        INSERT INTO dzivote_saglabatie (id_lietotajs, id_sludinajums, sludinajuma_veids, majokla_tips) 
-        VALUES (?, ?, ?, ?)
-    ");
-    $vaicajums->bind_param("iiss", $lietotaja_id, $id_sludinajums, $sludinajuma_veids, $majokla_tips);
+        $vaicajums = $savienojums->prepare("INSERT INTO dzivote_saglabatie (id_lietotajs, id_sludinajums, sludinajuma_veids, majokla_tips) VALUES (?, ?, ?, ?)");
+        $vaicajums->bind_param("iiss", $lietotaja_id, $id_sludinajums, $sludinajuma_veids, $majokla_tips);
 
-    if ($vaicajums->execute()) {
-        echo json_encode(["success" => true, "message" => "Saglabāts"]);
+        if ($vaicajums->execute()) {
+            $response = ["success" => true];
+        } else {
+            $response = ["success" => false, "message" => "Kļūda: " . $savienojums->error];
+        }
+
+        $vaicajums->close();
     } else {
-        echo json_encode(["success" => false, "message" => "Kļūda saglabājot"]);
+        $response = ["success" => false, "message" => "Kaut kas trūkst!"];
     }
-
-    $vaicajums->close();
-    $savienojums->close();
-    exit;
+} else {
+    $response = ["success" => false, "message" => "unauthorized"];
 }
 
-echo json_encode(["success" => false, "message" => "Nederīgs pieprasījums"]);
-exit;
+$savienojums->close();
+echo json_encode($response);
