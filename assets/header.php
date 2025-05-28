@@ -25,20 +25,25 @@ $lietotajaLoma = $_SESSION['lietotajaLomaMV'] ?? null;
 <body>
     <header>
         <a href="./" class="logo"><img src="images/logo.png"> Dzīvo Te</a>
-        <nav class="navbar">
-            <a href="./" class="<?php echo ($page == 'sakums' ? 'current' : '') ?>">Sākumlapa</a>
-            <a href="parmums.php" class="<?php echo ($page == 'parmums' ? 'current' : '') ?>">Par mums</a>
-            <a href="majas.php" class="<?php echo ($page == 'majas' ? 'current' : '') ?>">Mājas</a>
-            <a href="dzivokli.php" class="<?php echo ($page == 'dzivokli' ? 'current' : '') ?>">Dzīvokļi</a>
+        <button class="menu">
+            <i class="fa fa-bars"></i>
+        </button>
+        <div class="menu-wrapper">
+            <nav class="navbar">
+                <a href="./" class="<?php echo ($page == 'sakums' ? 'current' : '') ?>">Sākumlapa</a>
+                <a href="parmums.php" class="<?php echo ($page == 'parmums' ? 'current' : '') ?>">Par mums</a>
+                <a href="majas.php" class="<?php echo ($page == 'majas' ? 'current' : '') ?>">Mājas</a>
+                <a href="dzivokli.php" class="<?php echo ($page == 'dzivokli' ? 'current' : '') ?>">Dzīvokļi</a>
+
+                <?php if ($lietotajaLoma): ?>
+                    <a href="saglabati.php" class="<?php echo ($page == 'saglabati' ? 'current' : '') ?>">Saglabātie</a>
+                <?php endif; ?>
+            </nav>
 
             <?php if ($lietotajaLoma): ?>
-                <a href="saglabati.php" class="<?php echo ($page == 'saglabati' ? 'current' : '') ?>">Saglabātie</a>
+                <a href="profils.php" class="iconProfils"><i class="fa-solid fa-circle-user"></i> Mans profils</a>
+            <?php else: ?>
+                <a class="btn" href="login.php">Ielogoties</a>
             <?php endif; ?>
-        </nav>
-
-        <?php if ($lietotajaLoma): ?>
-            <a href="profils.php" class="iconProfils"><i class="fa-solid fa-circle-user"></i> Mans profils</a>
-        <?php else: ?>
-            <a class="btn" href="login.php">Ielogoties</a>
-        <?php endif; ?>
+        </div>
     </header>

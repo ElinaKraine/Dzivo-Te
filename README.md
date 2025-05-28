@@ -40,7 +40,7 @@ Dzīvo Te ir ērta platforma mājokļu meklēšanai Latvijā. Mēs piedāvājam 
 - [x] Lietotāja konts
 - [x] Ielogošanas lapa
 - [x] Reģistrēšanas lapa
-- [ ] Responsivitātie mājaslapā
+- [x] Responsivitātie mājaslapā
 - [x] Admin daļa: Sākumlapa
 - [x] Admin daļa: Lietotāji
 - [x] Admin daļa: Sludinājumi

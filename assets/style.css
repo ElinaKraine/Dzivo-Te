@@ -43,6 +43,8 @@ section{ padding: 4rem 5%; }
 
 /* Header: */
 header{
+    background: white;
+    width: 100%;
     position: fixed;
     top: 0;
     left: 0;
@@ -54,9 +56,27 @@ header{
     padding: 1rem 5%;
     color: black;
     transition: background-color 0.3s, color 0.3s;
+    max-width: 1920px;
+    margin-right: auto;
+    margin-left: auto;
     box-shadow: var(--box-shadow);
-    background: white;
 }
+
+.menu-wrapper{
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+}
+
+.menu {
+    display: none;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--dark-violet);
+}
+.menu:hover{ color: var(--light-violet); }
 
 .iconProfils{
     font-size: 1.2rem;
@@ -110,9 +130,7 @@ header{
 }
 
 .btn:hover{ background: var(--dark-violet-2); }
-
 .current{ font-weight: 600; }
-
 .navbar .current{ color: var(--dark-violet); }
 
 /* index.php: */
@@ -122,11 +140,15 @@ header{
     position: relative;
     width: 100%;
     overflow: hidden;
+    max-width: 1920px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .galvenaAttela{
     display: flex;
     justify-content: center;
+    overflow: hidden;
 }
 
 .galvenaAttela img {
@@ -163,12 +185,19 @@ header{
 }
 
 .galvenaStatistika{
+    max-width: 1920px;
+    margin-left: auto;
+    margin-right: auto;
+    img{ width: 5rem; }
+}
+
+.statistikaDiv{
     display: flex;
     justify-content: space-evenly;
     align-items: center;
 }
 
-.galvenaStatistika img{ width: 5rem; }
+.kasteInfoMobile{ display: none; }
 
 .kasteInfo{
     display: flex;
@@ -187,6 +216,12 @@ header{
     font-size: 1.2rem;
     color: var(--dark-violet-2);
     font-weight: 500;
+}
+
+.parMajaslapu{
+    max-width: 1920px;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .parInfo{
@@ -247,6 +282,12 @@ header{
     border-radius: 4rem;
 }
 
+.piedavajumi{
+    max-width: 1920px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 /* Animacijas */
 .parInfo, .pirmaAttela, .otraAttela, .tresaAttela, .piedavajumi h1, .piedavajumi .mazaKaste, .lietotajaDarbibas h1, .lietotajaDarbibas .darbiba{
     opacity: 0;
@@ -305,10 +346,11 @@ header{
     color: var(--dark-violet-2);
     font-weight: 500;
     font-size: 1.5rem;
+    text-align: center;
 }
 
 .mazaKaste p{
-    width: 60%;
+    width: 80%;
     text-align: center;
     font-size: 1.1rem;
     line-height: 2;
@@ -316,14 +358,18 @@ header{
 
 #tresaisTeksts{ width: 80%; }
 
-#pedejiSludinajumi{ padding: 0 5% 5rem; }
-
-#pedejiSludinajumi .lielaKaste{ align-items: flex-start; }
+#pedejiSludinajumi{
+    padding: 0 5% 5rem;
+    max-width: 1920px;
+    margin-left: auto;
+    margin-right: auto;
+    .lielaKaste{ align-items: flex-start; }
+}
 
 .sludinajums{ position: relative; }
 
 .sludinajums:hover{
-    transform: translate(0, -2rem);
+    transform: translate(0, -.5rem);
     cursor: pointer;
 }
 
@@ -371,15 +417,22 @@ header{
 
 /* Footer: */
 footer{
-    padding: 4rem 7% 3rem;
     background: black;
-    color: white;
+    width: 100%;
+    .wrapper{
+        padding: 4rem 7% 3rem;
+        color: white;
+        max-width: 1920px;
+    margin-left: auto;
+    margin-right: auto;
+    }
 }
 
 .lielaKasteFooter{
     display: flex;
     justify-content: space-evenly;
     gap: 2rem;
+    flex-wrap: wrap;
 }
 
 .visparigaInfo{
@@ -447,6 +500,9 @@ footer{
     height: 100vh;
     margin: 0;
     background-image: linear-gradient(white, var(--light-violet));
+    max-width: 1920px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .loginKaste {
@@ -546,6 +602,9 @@ footer{
     display: flex;
     justify-content: center;
     align-items: center;
+    max-width: 1920px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .registracijasKaste{
@@ -656,6 +715,9 @@ footer{
     opacity: 0;
     transform: translateY(3rem);
     animation: slideIn 1s forwards;
+    max-width: 1920px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .parMums h1{
@@ -686,7 +748,11 @@ footer{
 .komentariji{
     background: var(--light-violet);
     display: flex;
-    padding: 0 14%;
+    padding: 0 10%;
+    flex-wrap: wrap;
+    max-width: 1920px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .komentarijs{
@@ -697,6 +763,7 @@ footer{
 
 .komentarijs img{
     width: 10rem;
+    height: 10rem;
     transform: translateX(2rem);
 }
 
@@ -742,6 +809,7 @@ footer{
     justify-content: center;
     gap: 3rem;
     margin: 4rem 0 2rem;
+    flex-wrap: wrap;
 }
 
 .darbiba h2{
@@ -775,6 +843,9 @@ footer{
     justify-content: center;
     align-items: center;
     gap: 2rem;
+    max-width: 1920px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .karte{
@@ -867,12 +938,20 @@ footer{
     padding: 2rem 5%;
     gap: 1rem;
     align-items: center;
+    max-width: 1920px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .filtriKaste{
     display: flex;
     gap: 1rem;
     position: absolute;
+    transform: translateY(-4.9rem) translateX(13.4rem);
+    padding-top: 0;
+}
+
+.iresanasfiltriKaste{
     transform: translateY(-3.45rem) translateX(13.4rem);
 }
 
@@ -880,6 +959,7 @@ footer{
     display: flex;
     gap: 1rem;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .darijumuVeids{
@@ -978,6 +1058,7 @@ footer{
     margin-top: .5rem;
     padding: .5rem;
     background: white;
+    min-width: 15rem;
 }
 
 .staviDiapozons p, .cenuDiapozons p, .istabasDiapozons p, .platibasDiapozons p{
@@ -1002,10 +1083,7 @@ footer{
     border: 1px solid var(--dark-violet);
 }
 
-.majasSaturs, .dzivokliSaturs{
-    display: flex;
-    width: 100%;
-}
+.majasSaturs, .dzivokliSaturs{ width: 100%; }
 
 .lielaKreisaPuse{
     flex: 65%;
@@ -1089,11 +1167,14 @@ footer{
 .visasBildes img{
     width: 100%;
     border-radius: .5rem;
+    object-fit: cover;
 }
 
 .visasBildes .viensAttela{ width: 70%; }
 
-.visasBildes .viensAttela img{ height: 40.5rem; }
+.visasBildes .viensAttela img{ 
+    height: 40.5rem; 
+}
 
 .visasBildes .diviAttela img, .visasBildes .trisAttela img, .visasBildes .diviAttela{
     height: 20rem;
@@ -1108,7 +1189,7 @@ footer{
 }
 
 .visasBildes:hover{
-    transform: scale(0.98);
+    transform: scale(0.99);
     cursor: pointer;
 }
 
@@ -1117,6 +1198,7 @@ footer{
     justify-content: space-between;
     margin-top: 1rem;
     padding: 0 1rem;
+    flex-wrap: wrap;
 }
 
 .pamatInfo h2{ font-size: 2.5rem; }
@@ -1142,6 +1224,7 @@ footer{
     gap: 1rem;
     align-items: center;
     margin-top: 1rem;
+    flex-wrap: wrap;
 }
 
 .majaLapa .apraksts{
@@ -1203,6 +1286,7 @@ footer{
     display: flex;
     padding-left: 15%;
     gap: 1rem;
+    flex-wrap: wrap;
 }
 
 .datumi{
@@ -1240,12 +1324,16 @@ footer{
     background-size: cover;
     margin-top: 1rem;
     height: 100vh;
+    background-position: center;
 }
 
 /* saglabatie.php */
 .kontainerSaglabatie{
     margin: 7rem 0 3rem;
     padding: 0 4%;
+    max-width: 1920px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .sirdsSarkans i{ color: red; }
@@ -1258,7 +1346,12 @@ footer{
 }
 
 /* profils.php */
-.profilsKaste{ margin-top: 5.9rem; }
+.profilsKaste{ 
+    margin-top: 5.9rem;
+    max-width: 1920px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 .profilsKaste .fons{
     background-image: url("../images/profilsBackground.jpg");
@@ -1538,31 +1631,57 @@ footer{
 
 #imageModal, #imageModalAdmin{
     display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 999;
 
-    /* .modal-atteli{
+    .modal-atteli{
+        position: relative;
         display: flex;
-        width: 50%;
-    } */
+        align-items: center;
+        justify-content: center;
+    }
 
-    #prevImage, #prevImageAdmin{
+    #prevImage,#nextImage{
         position: absolute;
-        left: 20px; 
-        font-size: 40px; 
-        color: white; 
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 3rem;
+        color: white;
         cursor: pointer;
+        z-index: 2;
+        padding: 0.5rem;
+        user-select: none;
     }
 
     #modalImage, #modalImageAdmin{
-        max-width:90%;
-        max-height:90%;
+        max-width: 90vw;
+        max-height: 90vh;
+        border-radius: .5rem;
     }
 
-    #nextImage, #nextImageAdmin{
-        position: absolute; 
-        right: 20px; 
-        font-size: 40px; 
-        color: white; 
+    #prevImage{ left: -3rem; }
+    #nextImage{ right: -3rem; }
+
+    .close-modal{
+        position: absolute;
+        top: -4rem;
+        right: -4rem;
+        font-size: 2rem;
+        color: white;
         cursor: pointer;
+        z-index: 2;
+        background: darkred;
+        padding: 0.5rem 1rem;
+        border-radius: 1px solid darkred;
+        user-select: none;
+    }
+    .close-modal:hover{
+        color: darkred;
+        background: none;
     }
 }
 
@@ -1575,10 +1694,239 @@ footer{
 }
 
 /* Media */
-@media(min-width: 1920px){
-    header{
-        max-width: 1920px;
-        margin-right: auto;
-        margin-left: auto;
+@media (max-width: 1751px){
+    .komentariji{ padding: 0 1%; }
+    .majaLapa{ padding: 4rem 0; }
+}
+
+@media (max-width: 1580px) {
+    .kreisaKaste h1 { font-size: 3rem; }
+    .kreisaKaste .btn { width: 45%; }
+    .mazaKaste p { width: 100%; }
+    .registracijasKaste{ width: 80%; }
+}
+
+@media (max-width: 1415px){
+    .filtriKaste{
+        position: relative;
+        transform: none;
+        padding-top: 1.5rem;
+        gap: none;
     }
+    .majaLapa{ padding: 4rem 1rem; }
+}
+
+@media (max-width: 1400px) {
+    section{ padding: 2rem 4%; }
+    .galvenieFiltri { padding: 2rem 4%; }
+    .kasteInfo{ gap: 1rem; }
+    #pedejiSludinajumi h1 { margin-bottom: 2rem; }
+    #pedejiSludinajumi {
+        .lielaKaste{
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+    }
+    .sludinajums{ max-width: 30rem; }
+    .lielaKaste{ flex-wrap: wrap; }
+    .parMums p{ width: 90%; }
+}
+
+@media (max-width: 1335px) {
+    .loginKaste .attela{ display: none; }
+    .loginDala { 
+        border-radius: 5rem; 
+        padding: 1rem 0;
+    }
+}
+
+@media (max-width: 1300px) {
+    .galvenaisTeksts{ font-size: 2rem; }
+    .parInfo{ gap: 2rem; }
+    .kreisaKaste .btn{ width: 55%; }
+    .mazaKaste{ min-width: 22rem; }
+    .parMums h1{ font-size: 2rem; }
+    .komentarijs{ 
+        min-width: 35rem; 
+        margin: 2rem 1rem; 
+    }
+    #sazinaties{ flex-direction: column; }
+    .zina { width: 100%; }
+    .karte{ 
+        flex: auto; 
+        width: 100%;
+    }
+}
+
+@media (max-width: 1200px) {
+    .menu-wrapper{
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+        background: white;
+        width: 100%;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        padding: 5rem 5%;
+        z-index: 10;
+        gap: 2rem;
+        height: 100vh;
+    }
+    .menu-wrapper.active{ display: flex; }
+    .menu{ display: block; }
+    .navbar{
+        flex-direction: column;
+        width: 100%;
+        gap: 2rem;
+    }
+    .parInfo{ margin-bottom: 1rem; padding: 0; }
+    .staviDiapozons{
+        position: static;
+        width: 100%;
+        box-shadow: none;
+        padding: 1rem 0;
+        margin-top: 0;
+        border: none;
+    }
+}
+
+@media (max-width: 1000px) {
+    .kasteInfo h1{ font-size: 3rem; }
+    .platibasDiapozons{
+        position: static;
+        width: 100%;
+        box-shadow: none;
+        padding: 1rem 0;
+        margin-top: 0;
+        border: none;
+    }
+    #imageModal .modal-atteli {
+        flex-direction: column;
+        align-items: center;
+    }
+    #imageModal #prevImage, #imageModal #nextImage {
+        position: static;
+        transform: none;
+        margin: 1rem;
+    }
+    #imageModal .modal-atteli-controls {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-top: 1rem;
+    }
+    #prevImage{ left: 1rem; }
+    #nextImage{ right: 1rem; }
+    #imageModal, #imageModalAdmin{
+        .close-modal{ right: 0; }
+    }
+}
+
+@media (max-width: 950px) {
+    .galvenaisTeksts{ font-size: 1.5rem; bottom: 8%; }
+    .iresanasLapa{ 
+        flex-direction: column; 
+        align-items: start; 
+    }
+    .labaPuse .iresanasDatumi, .iresanasDatumiDziv{ padding: 1rem 0; }
+}
+
+@media (max-width: 925px) {
+    .parInfo{ 
+        flex-direction: column;
+        gap: 1rem; 
+    }
+    .kreisaKaste .btn { width: 30%; }
+    .attelas{ gap: .5rem; }
+    .attelas img{ border-radius: 1rem; }
+    .galvenaisTeksts{ font-size: 1.2rem; }
+}
+
+@media (max-width: 850px) {
+    .istabasDiapozons{
+        position: static;
+        width: 100%;
+        box-shadow: none;
+        padding: 1rem 0;
+        margin-top: 0;
+        border: none;
+    }
+    .visasBildes .diviAtteliKopa{ display: none; }
+    .visasBildes .viensAttela{ width: 100%; }
+    .visasBildes .viensAttela img { height: auto; }
+    .loginDala form{ width: 90%; }
+    .registracijasKaste form { width: 90%; }
+}
+
+@media (max-width: 800px) {
+    .attelas { flex-direction: column; }
+}
+
+@media (max-width: 750px) {
+    .kasteInfoMobile{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 1rem;
+        .kolonna{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 1rem;
+            img{ object-fit: cover; }
+            p { text-align: center; }
+        }
+    }
+    .statistikaDiv{ display: none; }
+    .komentarijs { min-width: auto;}
+}
+
+@media (max-width: 700px) {
+    .galvena { padding: 4rem 3% 1rem; }
+    .galvenaisTeksts{ 
+        position: relative;
+        text-align: center;
+        padding: 1rem;
+        bottom: 0;
+        left: 0;
+        max-width: 100%;
+        width: 100%;
+    }
+    .galvenaAttela img{
+        border-radius: 1rem;
+        width: 100%;
+    }
+    .majasSaturs .sludinajums, .kontainerSaglabatie .sludinajums, .dzivokliSaturs .sludinajums{
+        max-width: 30rem;
+        width: 100%;
+    }
+    .cenuDiapozons{
+        position: static;
+        width: 100%;
+        box-shadow: none;
+        padding: 1rem 0;
+        margin-top: 0;
+        border: none;
+    }
+}
+
+@media (max-width: 640px) { .loginKaste{ width: 90%; } }
+
+@media (max-width: 510px) {
+    .kreisaKaste .btn { width: 50%; }
+    .galvenaisTeksts{ font-size: 1rem; }
+    #pedejiSludinajumi h1{ font-size: 1.5rem; }
+    .pdiapozons input, .cdiapozons input, .idiapozons input, .pdiapozons input{
+        width: 40%;
+    }
+    .registracijasKaste { width: 95%; }
+    .registracijasKaste form { width: 95%; }
+}
+
+@media (max-width: 410px) {
+    .komentarijs{ flex-direction: column; }
+    .mazaKaste{ min-width: auto; }
+    .kartosana select, .kartosanaPD select { width: 100%; }
 }

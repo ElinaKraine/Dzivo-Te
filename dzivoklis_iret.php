@@ -110,6 +110,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
             <?php } ?>
         </section>
 
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                initAtteluGalerija(".visasBildes");
+            });
+        </script>
+
+        <div id="imageModal" class="modal">
+            <div class="modal-atteli">
+                <span class="close-modal">&times;</span>
+                <img id="modalImage" />
+                <div class="modal-atteli-controls">
+                    <span id="prevImage">&#10094;</span>
+                    <span id="nextImage">&#10095;</span>
+                </div>
+            </div>
+        </div>
+
         <?php if (isset($_SESSION['pazinojumsMV'])): ?>
             <div class="modal modal-active" id="modal-message">
                 <div class="modal-box">

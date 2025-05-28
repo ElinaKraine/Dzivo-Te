@@ -15,21 +15,16 @@ require "assets/header.php";
         require_once "admin/database/con_db.php";
 
         $lietotaja_id = $_SESSION['lietotajaIdDt'];
-        $stmt = $savienojums->prepare("SELECT id_sludinajums FROM dzivote_saglabatie WHERE id_lietotajs = ?");
-        $stmt->bind_param("i", $lietotaja_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        while ($row = $result->fetch_assoc()) {
-            $saglabatieId[] = $row['id_sludinajums'];
+        $vaicajums = $savienojums->prepare("SELECT id_sludinajums FROM dzivote_saglabatie WHERE id_lietotajs = ?");
+        $vaicajums->bind_param("i", $lietotaja_id);
+        $vaicajums->execute();
+        $rezultats = $vaicajums->get_result();
+        while ($ieraksts = $rezultats->fetch_assoc()) {
+            $saglabatieId[] = $ieraksts['id_sludinajums'];
         }
-        $stmt->close();
+        $vaicajums->close();
     }
     ?>
-
-    <script>
-        const saglabatieSludinajumi = <?php echo json_encode($saglabatieId); ?>;
-    </script>
-
 
     <div id="contentContainer">
     </div>

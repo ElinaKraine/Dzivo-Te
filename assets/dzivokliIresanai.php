@@ -1,4 +1,4 @@
-<div class="filtriKaste">
+<div class="filtriKaste iresanasfiltriKaste">
     <form class="filtri">
         <div class="meklesana">
             <input type="text" placeholder="Meklēt pilsētu, ielu" id="meklet-lauks" name="meklet-lauks">

@@ -1,5 +1,4 @@
 <?php
-// session_start();
 $page = "sakums";
 require "assets/header.php";
 require "admin/database/con_db.php";
@@ -8,19 +7,20 @@ require "admin/database/con_db.php";
 $saglabatie = [];
 if (isset($_SESSION['lietotajaIdDt'])) {
     $lietotajsId = $_SESSION['lietotajaIdDt'];
-    $stmt = $savienojums->prepare("
-        SELECT id_sludinajums 
-        FROM dzivote_saglabatie 
-        WHERE id_lietotajs = ? AND sludinajuma_veids = 'Pirkt'
-    ");
-    $stmt->bind_param("i", $lietotajsId);
-    $stmt->execute();
-    $stmt->bind_result($savedId);
-    while ($stmt->fetch()) {
+    $vaicajums = $savienojums->prepare("SELECT id_sludinajums 
+                                        FROM dzivote_saglabatie 
+                                        WHERE id_lietotajs = ? AND sludinajuma_veids = 'Pirkt'");
+    $vaicajums->bind_param("i", $lietotajsId);
+    $vaicajums->execute();
+    $vaicajums->bind_result($savedId);
+    while ($vaicajums->fetch()) {
         $saglabatie[] = $savedId;
     }
-    $stmt->close();
+    $vaicajums->close();
 }
+
+$vaicajums = "SELECT (SELECT COUNT(*) FROM majuvieta_pirkt) + (SELECT COUNT(*) FROM majuvieta_iret) AS sludinajumu_skaits";
+$sludinajumuSkaits = $savienojums->query($vaicajums)->fetch_row()[0];
 ?>
 
 <section class="galvena">
@@ -33,24 +33,52 @@ if (isset($_SESSION['lietotajaIdDt'])) {
 </section>
 
 <section class="galvenaStatistika">
-    <div class="kasteInfo">
-        <h1>798</h1>
-        <p>Mājokļi</p>
+    <div class="statistikaDiv">
+        <div class="kasteInfo">
+            <h1><?php echo $sludinajumuSkaits; ?></h1>
+            <p>Mājokļi</p>
+        </div>
+        <img src="images/zieds.png">
+        <div class="kasteInfo">
+            <h1>25</h1>
+            <p>Gadu pieredze</p>
+        </div>
+        <img src="images/zieds.png">
+        <div class="kasteInfo">
+            <h1>1500</h1>
+            <p>Laimīgi klienti</p>
+        </div>
+        <img src="images/zieds.png">
+        <div class="kasteInfo">
+            <h1>120</h1>
+            <p>Apbalvojumi</p>
+        </div>
     </div>
-    <img src="images/zieds.png">
-    <div class="kasteInfo">
-        <h1>25</h1>
-        <p>Gadu pieredze</p>
-    </div>
-    <img src="images/zieds.png">
-    <div class="kasteInfo">
-        <h1>1500</h1>
-        <p>Laimīgi klienti</p>
-    </div>
-    <img src="images/zieds.png">
-    <div class="kasteInfo">
-        <h1>120</h1>
-        <p>Apbalvojumi</p>
+    <div class="kasteInfoMobile">
+        <div class="kolonna">
+            <div class="kasteInfo">
+                <h1><?php echo $sludinajumuSkaits; ?></h1>
+                <p>Mājokļi</p>
+            </div>
+            <div class="kasteInfo">
+                <h1>1500</h1>
+                <p>Laimīgi klienti</p>
+            </div>
+        </div>
+        <div class="kolonna">
+            <img src="images/zieds.png">
+            <img src="images/zieds.png">
+        </div>
+        <div class="kolonna">
+            <div class="kasteInfo">
+                <h1>25</h1>
+                <p>Gadu pieredze</p>
+            </div>
+            <div class="kasteInfo">
+                <h1>120</h1>
+                <p>Apbalvojumi</p>
+            </div>
+        </div>
     </div>
 </section>
 
@@ -81,27 +109,17 @@ if (isset($_SESSION['lietotajaIdDt'])) {
     <h1>Jaunpieejamās mājokļi pārdošanai</h1>
     <div class="lielaKaste">
         <?php
-        $pedejiSludinajumiSQL = "
-            SELECT 
-                majuvieta_pirkt.*, 
-                majuvieta_atteli.pirma_attela AS attela, 
-                majuvieta_adrese.* 
-            FROM 
-                majuvieta_pirkt 
-            INNER JOIN 
-                majuvieta_atteli 
-                ON majuvieta_pirkt.pirkt_id = majuvieta_atteli.id_sludinajums 
-            INNER JOIN 
-                majuvieta_adrese 
-                ON majuvieta_pirkt.pirkt_id = majuvieta_adrese.id_sludinajums 
-            WHERE 
-                majuvieta_atteli.sludinajuma_veids = 'Pirkt'
-                AND majuvieta_adrese.sludinajuma_veids = 'Pirkt' AND majuvieta_pirkt.statuss = 'Apsiprināts | Publicēts'
-            ORDER BY 
-                izveidosanas_datums DESC 
-            LIMIT 4;
-        ";
-
+        $pedejiSludinajumiSQL =
+            "SELECT majuvieta_pirkt.*, majuvieta_adrese.*,
+                    majuvieta_atteli.pirma_attela AS attela
+            FROM majuvieta_pirkt 
+            INNER JOIN majuvieta_atteli ON majuvieta_pirkt.pirkt_id = majuvieta_atteli.id_sludinajums 
+            INNER JOIN majuvieta_adrese ON majuvieta_pirkt.pirkt_id = majuvieta_adrese.id_sludinajums 
+            WHERE majuvieta_atteli.sludinajuma_veids = 'Pirkt'
+            AND majuvieta_adrese.sludinajuma_veids = 'Pirkt'
+            AND majuvieta_pirkt.statuss = 'Apsiprināts | Publicēts'
+            ORDER BY izveidosanas_datums DESC 
+            LIMIT 4";
         $atlasaPedejiSludinajumi = mysqli_query($savienojums, $pedejiSludinajumiSQL);
 
         if (mysqli_num_rows($atlasaPedejiSludinajumi) > 0) {
@@ -110,12 +128,21 @@ if (isset($_SESSION['lietotajaIdDt'])) {
                 $irSaglabats = in_array($id, $saglabatie);
                 $sirdsKlase = $irSaglabats ? "fa-solid" : "fa-regular";
                 $sirdsKlase2 = $irSaglabats ? "sirdsSarkans" : "";
+                $tips = "";
+                switch ($sludinajums['majokla_tips']) {
+                    case 'Mājas':
+                        $tips = "Maja";
+                        break;
+                    case 'Dzīvoklis':
+                        $tips = "Dzivoklis";
+                        break;
+                }
 
                 echo "
-                <div class='sludinajums' data-id='{$id}'>
+                <div class='sludinajums sludinajumsIndex' data-id='{$id}' data-tips='{$tips}'>
                     <div class='attela-sirds'>
                         <img src='data:image/jpeg;base64," . base64_encode($sludinajums['attela']) . "' />
-                        <a class='sirds saglabaSludinajumu {$sirdsKlase2}' data-id='{$id}' data-veids='Pirkt'>
+                        <a class='sirds saglabaSludinajumu {$sirdsKlase2}' data-id='{$id}' data-veids='Pirkt' data-tips='{$tips}'>
                             <i class='{$sirdsKlase} fa-heart'></i>
                         </a>
                     </div>
@@ -142,14 +169,14 @@ if (isset($_SESSION['lietotajaIdDt'])) {
         <div class="mazaKaste">
             <img src="images/pirkt.png">
             <h3>Pirkt mājokli</h3>
-            <p>Mājaslapā ir pieejami vairāk nekā 1 miljons+ pārdodamo māju, tāpēc Dzīvo Te var Jums atrast māju, kuru jūs vēlēsieties saukt par savām mājām.</p>
-            <a href="majas.php" class="btn">Mājās</a>
+            <p>Mājaslapā ir pieejami daudzi mājokļi pārdošanai, tāpēc Dzīvo Te var Jums atrast māju, kuru jūs vēlēsieties saukt par savām mājām.</p>
+            <a href="majas.php" class="btn">Mājas</a>
         </div>
         <div class="mazaKaste">
             <img src="images/iret.png">
             <h3>Īrēt mājokli</h3>
-            <p>Izmantojot vairāk nekā 35 filtrus un pielāgotu atslēgvārdu meklēšanu, Dzīvo Te var palīdzēt Jums viegli atrast māju vai dzīvokli īrei, kas Jums patiks.</p>
-            <a href="dzivokli.php" class="btn">Dzīvokli</a>
+            <p>Izmantojot filtrus un pielāgotu atslēgvārdu meklēšanu, Dzīvo Te var palīdzēt Jums viegli atrast māju vai dzīvokli īrei, kas Jums patiks.</p>
+            <a href="dzivokli.php" class="btn">Dzīvokļi</a>
         </div>
         <div class="mazaKaste">
             <img src="images/pardot.png">
@@ -163,73 +190,5 @@ if (isset($_SESSION['lietotajaIdDt'])) {
         </div>
     </div>
 </section>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        let saglabasanaNotiek = false;
-
-        document.querySelectorAll(".sludinajums").forEach(function(card) {
-            card.addEventListener("click", function() {
-                const id = this.dataset.id;
-                window.location.href = "maja_pirkt.php?id=" + id;
-            });
-        });
-
-        document.querySelectorAll(".saglabaSludinajumu").forEach(function(sirds) {
-            sirds.addEventListener("click", function(e) {
-                e.stopPropagation();
-                e.preventDefault();
-
-                if (saglabasanaNotiek) return;
-                saglabasanaNotiek = true;
-
-                const id = this.dataset.id;
-                const veids = this.dataset.veids;
-                const irSaglabats = this.querySelector("i").classList.contains("fa-solid");
-
-                const url = irSaglabats ?
-                    "assets/database/dzest_saglabatu.php" :
-                    "assets/database/pievienot_saglabatiem.php";
-
-                const ikona = this.querySelector("i");
-                const pats = this;
-
-                fetch(url, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/x-www-form-urlencoded",
-                        },
-                        body: `id_sludinajums=${id}&veids=${veids}`,
-                    })
-                    .then((res) => res.json())
-                    .then((data) => {
-                        if (data.success) {
-                            if (irSaglabats) {
-                                ikona.classList.remove("fa-solid");
-                                ikona.classList.add("fa-regular");
-                                pats.classList.remove("sirdsSarkans");
-                            } else {
-                                ikona.classList.remove("fa-regular");
-                                ikona.classList.add("fa-solid");
-                                pats.classList.add("sirdsSarkans");
-                            }
-                        } else {
-                            if (data.message === "unauthorized") {
-                                window.location.href = "login.php";
-                            } else {
-                                alert(data.message || "Darbība neizdevās.");
-                            }
-                        }
-                    })
-                    .catch(() => {
-                        alert("Neizdevās veikt darbību.");
-                    })
-                    .finally(() => {
-                        saglabasanaNotiek = false;
-                    });
-            });
-        });
-    });
-</script>
 
 <?php require "assets/footer.php"; ?>

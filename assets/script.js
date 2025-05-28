@@ -1,4 +1,4 @@
-// Modals logs
+//#region Modals logs
 let modalBtns = document.querySelectorAll("[data-target]");
 let closeModal = document.querySelectorAll(".close-modal");
 
@@ -13,8 +13,24 @@ closeModal.forEach(function (btn) {
     document.querySelector(btn.dataset.target).classList.remove("modal-active");
   });
 });
+//#endregion
 
-// Vēstules nosutīšana
+//#region Navigācija
+$(document).ready(function () {
+  $(".menu").on("click", function () {
+    $(".menu-wrapper").toggleClass("active");
+
+    const icon = $(this).find("i");
+    if (icon.hasClass("fa-bars")) {
+      icon.removeClass("fa-bars").addClass("fa-xmark");
+    } else {
+      icon.removeClass("fa-xmark").addClass("fa-bars");
+    }
+  });
+});
+//#endregion
+
+//#region Vēstules nosutīšana
 if (window.history.replaceState) {
   window.history.replaceState(null, null, window.location.href);
 }
@@ -23,8 +39,9 @@ x = () => {
   let alert = document.getElementById("pazinojums");
   alert.style.display = "none";
 };
+//#endregion
 
-// Funkcija, lai pārslēgt paroles redzamību
+//#region Funkcija, lai pārslēgt paroles redzamību
 function parslegtParolesRedzamibu(ikona, parole) {
   if (!ikona || !parole) return;
 
@@ -40,8 +57,9 @@ function parslegtParolesRedzamibu(ikona, parole) {
     }
   });
 }
+//#endregion
 
-// Attēlu skaita ierobežojums
+//#region Attēlu skaita ierobežojums
 function validateAtteluInput(input) {
   const maxFiles = 10;
   const maxSize = 100 * 1024;
@@ -62,8 +80,9 @@ function validateAtteluInput(input) {
 
   return true;
 }
+//#endregion
 
-// Funkcija sludinājumu pievienošanai vai dzēšanai no saglabātajiem
+//#region Funkcija sludinājumu pievienošanai vai dzēšanai no saglabātajiem
 function pievienot_dzest_saglabatu() {
   document
     .querySelectorAll(".sirds[data-id][data-veids][data-tips]")
@@ -120,8 +139,9 @@ function pievienot_dzest_saglabatu() {
       });
     });
 }
+//#endregion
 
-// Animācija
+//#region Animācija
 function animacija(pirmaisElements, masivsArElementiem, sekcija) {
   if (!sekcija || !(sekcija instanceof Element)) {
     console.error(
@@ -153,6 +173,7 @@ function animacija(pirmaisElements, masivsArElementiem, sekcija) {
 
   observer.observe(sekcija);
 }
+//#endregion
 
 document.addEventListener("DOMContentLoaded", function () {
   // Pārslegt paroles
@@ -243,11 +264,13 @@ document.addEventListener("DOMContentLoaded", function () {
     startCounting();
   }
 
+  // funkcijas
   initializeFilterToggle();
   pievienot_dzest_saglabatu();
+  initGlobalGalleryNavigation();
 });
 
-// Filtras pogas
+//#region Filtras pogas
 function initializeFilterToggle() {
   document.querySelectorAll(".filter-poga").forEach((button) => {
     button.addEventListener("click", function () {
@@ -280,8 +303,9 @@ function initializeFilterToggle() {
     });
   });
 }
+//#endregion
 
-// Pirk un Iret pogas Mājam:
+//#region Pirk un Iret pogas Mājam:
 const atlasitaPoga = document.querySelector(".atlasits");
 const neAtlasitaPoga = document.querySelector(".neAtlasits");
 const contentContainer = document.getElementById("contentContainer");
@@ -341,8 +365,9 @@ if (atlasitaPoga && neAtlasitaPoga && contentContainer) {
     }
   });
 }
+//#endregion
 
-// Pirk un Iret pogas Dzīvokļiem:
+//#region Pirk un Iret pogas Dzīvokļiem:
 const atlasitaPogaDziv = document.querySelector(".atlasitsDziv");
 const neAtlasitaPogaDziv = document.querySelector(".neAtlasitsDziv");
 const contentContainerDzivokli = document.getElementById(
@@ -423,3 +448,84 @@ if (atlasitaPogaDziv && neAtlasitaPogaDziv && contentContainerDzivokli) {
     }
   });
 }
+//#endregion
+
+//#region Galereja
+let globalGalleryImages = [];
+let currentGalleryIndex = 0;
+
+function initAtteluGalerija(containerSelector) {
+  const container = document.querySelector(containerSelector);
+  if (!container) return;
+
+  const imgElements = container.querySelectorAll("img");
+  globalGalleryImages = [];
+  currentGalleryIndex = 0;
+
+  imgElements.forEach((img, index) => {
+    globalGalleryImages.push(img.src);
+    img.addEventListener("click", () => {
+      currentGalleryIndex = index;
+      showGlobalModalImage();
+    });
+  });
+}
+
+function showGlobalModalImage() {
+  const modal = document.getElementById("imageModal");
+  const imgEl = document.getElementById("modalImage");
+  if (!modal || !imgEl) return;
+
+  imgEl.src = globalGalleryImages[currentGalleryIndex];
+  modal.style.display = "flex";
+  modal.classList.add("modal-active");
+}
+
+function initGlobalGalleryNavigation() {
+  const prev = document.getElementById("prevImage");
+  const next = document.getElementById("nextImage");
+
+  if (prev && next) {
+    prev.onclick = () => {
+      currentGalleryIndex =
+        (currentGalleryIndex - 1 + globalGalleryImages.length) %
+        globalGalleryImages.length;
+      showGlobalModalImage();
+    };
+
+    next.onclick = () => {
+      currentGalleryIndex =
+        (currentGalleryIndex + 1) % globalGalleryImages.length;
+      showGlobalModalImage();
+    };
+  }
+
+  document.addEventListener("keydown", (e) => {
+    const modal = document.getElementById("imageModal");
+    if (!modal || modal.style.display !== "flex") return;
+
+    if (e.key === "ArrowLeft") {
+      document.getElementById("prevImage").click();
+    } else if (e.key === "ArrowRight") {
+      document.getElementById("nextImage").click();
+    } else if (e.key === "Escape") {
+      modal.style.display = "none";
+    }
+  });
+}
+//#endregion
+
+//#region index.php atvert sludinājumu atseviškaja lapa
+$(document).on("click", ".sludinajumsIndex", function () {
+  const id = $(this).data("id");
+  const tips = $(this).data("tips");
+
+  if (!id || !tips) return;
+
+  if (tips === "Maja") {
+    window.location.href = `maja_pirkt.php?id=${id}`;
+  } else if (tips === "Dzivoklis") {
+    window.location.href = `dzivoklis_pirkt.php?id=${id}`;
+  }
+});
+//#endregion

@@ -128,11 +128,11 @@ require "database/con_db.php";
                         <option value="Atteikums">Atteikums</option>
                     </select>
                 </div>
-                <div class="rinda papildInfoLiet">
+                <div class="rinda papildInfoSlud">
                     <label>Atjaunināšanas datums:</label>
                     <p id="atjauninasanasDatumsSlud"></p>
                 </div>
-                <div class="rinda papildInfoLiet">
+                <div class="rinda papildInfoSlud">
                     <label>IP adrese:</label>
                     <p name="ipAdreseSlud" id="ipAdreseSlud"></p>
                 </div>

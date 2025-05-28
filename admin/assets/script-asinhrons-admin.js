@@ -524,6 +524,7 @@ $(document).ready(function () {
 
   $(document).on("click", "#new-btn-slud", (e) => {
     $(".modalSludinajums").css("display", "flex");
+    $(".papildInfoSlud").hide();
     $("#sludinajumaFormaAdmin").trigger("reset");
     $("#sludFormPazinojumsAdmin").text("");
     $(".nomainitAttelusRinda").hide();
@@ -552,6 +553,7 @@ $(document).ready(function () {
   $(document).on("click", ".sludinajums-item", (e) => {
     $(".modalSludinajums").css("display", "flex");
     $("#sludFormPazinojumsAdmin").text("");
+    $(".papildInfoSlud").show();
 
     const element = $(e.currentTarget).closest("tr");
     const id = $(element).attr("slud_ID");

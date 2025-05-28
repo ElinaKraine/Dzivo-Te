@@ -1,6 +1,10 @@
 <?php
 $page = "parmums";
 require "assets/header.php";
+require "admin/database/con_db.php";
+
+$vaicajums = "SELECT (SELECT COUNT(*) FROM majuvieta_pirkt) + (SELECT COUNT(*) FROM majuvieta_iret) AS sludinajumu_skaits";
+$sludinajumuSkaits = $savienojums->query($vaicajums)->fetch_row()[0];
 ?>
 
 <section class="parMums">
@@ -69,24 +73,52 @@ require "assets/header.php";
 </section>
 
 <section class="galvenaStatistika">
-    <div class="kasteInfo">
-        <h1>798</h1>
-        <p>Mājokļi</p>
+    <div class="statistikaDiv">
+        <div class="kasteInfo">
+            <h1><?php echo $sludinajumuSkaits; ?></h1>
+            <p>Mājokļi</p>
+        </div>
+        <img src="images/zieds.png">
+        <div class="kasteInfo">
+            <h1>25</h1>
+            <p>Gadu pieredze</p>
+        </div>
+        <img src="images/zieds.png">
+        <div class="kasteInfo">
+            <h1>1500</h1>
+            <p>Laimīgi klienti</p>
+        </div>
+        <img src="images/zieds.png">
+        <div class="kasteInfo">
+            <h1>120</h1>
+            <p>Apbalvojumi</p>
+        </div>
     </div>
-    <img src="images/zieds.png">
-    <div class="kasteInfo">
-        <h1>25</h1>
-        <p>Gadu pieredze</p>
-    </div>
-    <img src="images/zieds.png">
-    <div class="kasteInfo">
-        <h1>3000</h1>
-        <p>Laimīgi klienti</p>
-    </div>
-    <img src="images/zieds.png">
-    <div class="kasteInfo">
-        <h1>120</h1>
-        <p>Apbalvojumi</p>
+    <div class="kasteInfoMobile">
+        <div class="kolonna">
+            <div class="kasteInfo">
+                <h1><?php echo $sludinajumuSkaits; ?></h1>
+                <p>Mājokļi</p>
+            </div>
+            <div class="kasteInfo">
+                <h1>1500</h1>
+                <p>Laimīgi klienti</p>
+            </div>
+        </div>
+        <div class="kolonna">
+            <img src="images/zieds.png">
+            <img src="images/zieds.png">
+        </div>
+        <div class="kolonna">
+            <div class="kasteInfo">
+                <h1>25</h1>
+                <p>Gadu pieredze</p>
+            </div>
+            <div class="kasteInfo">
+                <h1>120</h1>
+                <p>Apbalvojumi</p>
+            </div>
+        </div>
     </div>
 </section>
 

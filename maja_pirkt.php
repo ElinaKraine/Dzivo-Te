@@ -90,6 +90,11 @@ if (isset($_GET['id'])) {
                     </div>
                 <?php } ?>
             </div>
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    initAtteluGalerija(".visasBildes");
+                });
+            </script>
         </section>
 
         <?php if (isset($_SESSION['pazinojumsMV'])): ?>
@@ -121,6 +126,18 @@ if (isset($_GET['id'])) {
                 </form>
             </div>
         </div>
+
+        <div id="imageModal" class="modal">
+            <div class="modal-atteli">
+                <span class="close-modal">&times;</span>
+                <img id="modalImage" />
+                <div class="modal-atteli-controls">
+                    <span id="prevImage">&#10094;</span>
+                    <span id="nextImage">&#10095;</span>
+                </div>
+            </div>
+        </div>
+
 <?php
     } else {
         echo "<p class='neveiksmigsPazinojums'>Māja nav atrasta</p>";

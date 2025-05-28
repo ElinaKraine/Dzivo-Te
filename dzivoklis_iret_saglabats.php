@@ -92,6 +92,23 @@ if (isset($_GET['id'])) {
                 </div>
             <?php } ?>
         </section>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                initAtteluGalerija(".visasBildes");
+            });
+        </script>
+
+        <div id="imageModal" class="modal">
+            <div class="modal-atteli">
+                <span class="close-modal">&times;</span>
+                <img id="modalImage" />
+                <div class="modal-atteli-controls">
+                    <span id="prevImage">&#10094;</span>
+                    <span id="nextImage">&#10095;</span>
+                </div>
+            </div>
+        </div>
 <?php
     } else {
         echo "<p class='neveiksmigsPazinojums'>Dzīvoklis nav atrasta</p>";

@@ -37,7 +37,7 @@ if (isset($_SESSION['lietotajaIdDt'])) {
             'majokla_tips' => htmlspecialchars($ieraksts['majokla_tips']),
             'cena' => htmlspecialchars($ieraksts['cena']),
             'platiba' => htmlspecialchars($ieraksts['platiba']),
-            'statuss' => htmlspecialchars($rierakstsow['statuss']),
+            'statuss' => htmlspecialchars($ieraksts['statuss']),
             'izveidosanas_datums' => date("d.m.Y", strtotime($ieraksts['izveidosanas_datums'])),
             'pilseta' => htmlspecialchars($ieraksts['pilseta']),
             'iela' => htmlspecialchars($ieraksts['iela']),

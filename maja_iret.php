@@ -108,6 +108,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
                 </div>
             <?php } ?>
         </section>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                initAtteluGalerija(".visasBildes");
+            });
+        </script>
 
         <?php if (isset($_SESSION['pazinojumsMV'])): ?>
             <div class="modal modal-active" id="modal-message">
@@ -140,6 +145,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
                     <input type="hidden" name="izrakstisanasDatums" value="<?php echo $datumsLidz->format('Y-m-d'); ?>">
                     <button type="submit" name="apstiprinat" class="btn">Apstiprināt</button>
                 </form>
+            </div>
+        </div>
+
+        <div id="imageModal" class="modal">
+            <div class="modal-atteli">
+                <span class="close-modal">&times;</span>
+                <img id="modalImage" />
+                <div class="modal-atteli-controls">
+                    <span id="prevImage">&#10094;</span>
+                    <span id="nextImage">&#10095;</span>
+                </div>
             </div>
         </div>
 <?php
