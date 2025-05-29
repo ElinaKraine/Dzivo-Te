@@ -70,9 +70,8 @@ require "assets/header.php";
                     <label>Attēls:</label>
                     <input type="file" id="attelsAdmin" name="attelsAdmin" accept="image/png, image/jpeg">
                 </div>
-                <div class="rinda">
-                    <input type="hidden" id="liet_admin_ID" name="liet_admin_ID">
-                </div>
+                <input type="hidden" id="liet_admin_ID" name="liet_admin_ID">
+                <div id="lietFormPazinojums" class="formPazinojums"></div>
             </div>
             <button type="submit" name="lietotajs_admin_saglabat" id="lietotajs_admin_saglabat" class="btn">Saglabāt</button>
         </form>

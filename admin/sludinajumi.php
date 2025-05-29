@@ -104,9 +104,9 @@ require "database/con_db.php";
                     <label>Apraksts:</label>
                     <textarea id="aprakstsAdmin" name="aprakstsAdmin" rows="5"></textarea>
                 </div>
-                <div class="rinda" id="atteluGalerijaContainerAdmin" style="display: none;">
+                <div class="rinda" id="atteluGalerijaContainer" style="display: none;">
                     <label>Attēli:</label>
-                    <div id="atteluGalerijaAdmin"></div>
+                    <div id="atteluGalerija"></div>
                 </div>
                 <div class="rinda nomainitAttelusRinda">
                     <label>Nomainīt attēlus?</label>
@@ -141,6 +141,14 @@ require "database/con_db.php";
             </div>
             <button type="submit" name="sludinajums_saglabat_admin" id="sludinajums_saglabat_admin" class="btn">Saglabāt</button>
         </form>
+    </div>
+</div>
+
+<div id="imageModal" class="modal">
+    <div class="modal-atteli"><span class="close-modal">&times;</span>
+        <span id="prevImage">&#10094;</span>
+        <img id="modalImage" />
+        <span id="nextImage">&#10095;</span>
     </div>
 </div>
 

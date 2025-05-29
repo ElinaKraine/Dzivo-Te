@@ -1354,7 +1354,7 @@ footer{
 }
 
 .profilsKaste .fons{
-    background-image: url("../images/profilsBackground.jpg");
+    background-image: url("../images/profilsBack.jpg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -1397,7 +1397,7 @@ footer{
                 border-radius: .5rem;
                 margin: 1rem 0;
                 display: block;
-                width: 18%;
+                width: 15rem;
                 text-align: center;
             }
 
@@ -1671,13 +1671,11 @@ footer{
         top: -4rem;
         right: -4rem;
         font-size: 2rem;
-        color: white;
         cursor: pointer;
         z-index: 2;
-        background: darkred;
-        padding: 0.5rem 1rem;
-        border-radius: 1px solid darkred;
         user-select: none;
+        color: white;
+        background: darkred;
     }
     .close-modal:hover{
         color: darkred;
@@ -1730,6 +1728,16 @@ footer{
     .sludinajums{ max-width: 30rem; }
     .lielaKaste{ flex-wrap: wrap; }
     .parMums p{ width: 90%; }
+    .profilsKaste .kaste{
+        flex-direction: column;
+        gap: 3rem;
+        align-items: center;
+    }
+    .profilsKaste .kaste { .tabulas { 
+        margin-top: 0;
+        overflow: hidden;
+    } }
+    .profilaInfo { gap: 1rem; }
 }
 
 @media (max-width: 1335px) {
@@ -1756,6 +1764,10 @@ footer{
         flex: auto; 
         width: 100%;
     }
+    .profilsKaste .kaste { .profilaInfo {
+        width: 100%;
+        align-items: center;
+    }}
 }
 
 @media (max-width: 1200px) {
@@ -1822,6 +1834,10 @@ footer{
     #imageModal, #imageModalAdmin{
         .close-modal{ right: 0; }
     }
+    #modal-admin-sludinajums, #modal-admin-pieteikums, #modal-admin-lietotajs, #modal-lietotajs-admin, #modal-lietotajs-tabula-admin, #modal-ires-ieraksts, #modal-admin-admin-sludinajums, #modal-admin-admin-pieteikums {
+        .modal-box{ width: 100%; }
+        .formElements { width: 100%; }
+    }
 }
 
 @media (max-width: 950px) {
@@ -1831,6 +1847,12 @@ footer{
         align-items: start; 
     }
     .labaPuse .iresanasDatumi, .iresanasDatumiDziv{ padding: 1rem 0; }
+    #tabula {
+        overflow: auto;
+        max-width: 100%;
+        max-height: 70vh;
+    }
+    #tabula table { min-width: 38rem; }
 }
 
 @media (max-width: 925px) {
@@ -1923,6 +1945,18 @@ footer{
     }
     .registracijasKaste { width: 95%; }
     .registracijasKaste form { width: 95%; }
+    #modal-admin-sludinajums, #modal-admin-pieteikums, #modal-admin-lietotajs, #modal-lietotajs-admin, #modal-lietotajs-tabula-admin, #modal-ires-ieraksts, #modal-admin-admin-sludinajums, #modal-admin-admin-pieteikums {
+        .formElements{ .rinda{
+            flex-direction: column;
+            gap: .5rem;
+            input, select, textarea{
+                width: 100%;
+            }
+    }}}
+    #lietotajaForma{
+        max-height: 42rem;
+        overflow-y: auto;
+    }
 }
 
 @media (max-width: 410px) {

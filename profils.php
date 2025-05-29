@@ -11,8 +11,6 @@ if (!isset($_SESSION['lietotajaLomaMV'])) {
 <div class="profilsKaste">
     <div class="fons">
     </div>
-    <div class="melnsFons">
-    </div>
     <div class="kaste">
         <div class="profilaInfo">
             <div id="profila_info">

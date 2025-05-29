@@ -84,6 +84,7 @@ $(document).ready(function () {
 
   $(document).on("click", ".profila-admin-item", (e) => {
     $(".modalLietotajsAdmin").css("display", "flex");
+    $("#lietFormPazinojums").text("");
     toggleFormFields();
 
     const element = $(e.currentTarget).closest("div[liet_admin_ID]");
@@ -111,6 +112,22 @@ $(document).ready(function () {
       processData: false,
       contentType: false,
       success: function (response) {
+        if (
+          response.includes("Visi ievadas lauki") ||
+          response.includes("Kļūda") ||
+          response.includes("Parole") ||
+          response.includes("jau")
+        ) {
+          $("#lietFormPazinojums").text(response);
+          return;
+        }
+
+        if (response.includes("veiksmīgi")) {
+          paradit_pazinojumu(response);
+          fetchProfilaInfo();
+          return;
+        }
+
         $(".modalLietotajsAdmin").hide();
         $("#lietotajaFormaAdmin").trigger("reset");
         fetchProfilaInfo();
@@ -122,7 +139,15 @@ $(document).ready(function () {
   });
 
   $(document).on("click", ".close-modal", (e) => {
-    $(".modal").hide();
+    const modalToClose = $(e.currentTarget).closest(".modal");
+
+    if (modalToClose.attr("id") === "imageModal") {
+      modalToClose.hide();
+      return;
+    }
+
+    modalToClose.hide();
+    $("#sludinajumaFormaAdmin").trigger("reset");
   });
 
   // #endregion
@@ -185,7 +210,6 @@ $(document).ready(function () {
       },
     });
   }
-
   // #endregion
 
   //#region Grafiks
@@ -195,7 +219,10 @@ $(document).ready(function () {
       type: "GET",
       dataType: "json",
       success: function (data) {
-        const labels = data.map((item) => item.date);
+        const labels = data.map((item) => {
+          const [y, m, d] = item.date.split("-");
+          return `${d}.${m}.${y}`;
+        });
         const pieteikumi = data.map((item) => item.pieteikumi);
         const rezervacijas = data.map((item) => item.rezervacijas);
         const sludinajumi = data.map((item) => item.sludinajumi);
@@ -237,10 +264,25 @@ $(document).ready(function () {
             plugins: {
               legend: {
                 position: "top",
+                labels: {
+                  font: {
+                    family: "'Roboto', 'Arial', sans-serif",
+                    size: 14,
+                  },
+                },
               },
               title: {
                 display: true,
                 text: "Statistika par pēdējām 7 dienām",
+                font: {
+                  family: "'Roboto', 'Arial', sans-serif",
+                  size: 16,
+                  weight: "bold",
+                },
+              },
+              tooltip: {
+                position: "nearest",
+                yAlign: "bottom",
               },
             },
             scales: {
@@ -349,6 +391,7 @@ $(document).ready(function () {
     $(".nomainitAtteluTabulaAdminRinda").show();
     $("#nomainitAtteluTabulaAdmin").hide();
     $(".papildInfoLiet").show();
+    $("#lietFormPazinojums").text("");
     toggleFormFields2();
 
     const element = $(e.currentTarget).closest("tr");
@@ -369,6 +412,7 @@ $(document).ready(function () {
 
   $(document).on("click", "#new-btn-lietotajs", (e) => {
     $(".modalLietotajsTabulaAdmin").css("display", "flex");
+    $("#lietFormPazinojums").text("");
     $("#lietotajaFormaTabulaAdmin").trigger("reset");
     $(".nomainitParoleTabulaAdminRinda").hide();
     $(".nomainitParoleTabulaAdmin").show();
@@ -395,6 +439,22 @@ $(document).ready(function () {
       processData: false,
       contentType: false,
       success: function (response) {
+        if (
+          response.includes("Visi ievadas lauki") ||
+          response.includes("Kļūda") ||
+          response.includes("Parole") ||
+          response.includes("jau")
+        ) {
+          $("#lietFormPazinojums").text(response);
+          return;
+        }
+
+        if (response.includes("veiksmīgi")) {
+          paradit_pazinojumu(response);
+          fetchTabulaAdminLietotaji();
+          return;
+        }
+
         $(".modalLietotajsTabulaAdmin").hide();
         $("#lietotajaFormaTabulaAdmin").trigger("reset");
         fetchTabulaAdminLietotaji();
@@ -529,7 +589,7 @@ $(document).ready(function () {
     $("#sludFormPazinojumsAdmin").text("");
     $(".nomainitAttelusRinda").hide();
     $(".nomainit-slud-atteli").show();
-    $("#atteluGalerijaContainerAdmin").hide();
+    $("#atteluGalerijaContainer").hide();
     $("#majoklaTipsAdmin").show();
     $("#majoklaTips-text-admin").hide();
     $("#slud_ID").val("");
@@ -597,7 +657,7 @@ $(document).ready(function () {
 
         toggleFormFields3();
         renderGallery(data.atteli);
-        $("#atteluGalerijaContainerAdmin").show();
+        $("#atteluGalerijaContainer").show();
         $(".nomainitAttelusRinda").show();
         toggleSludAtteluSelect();
       }
@@ -661,7 +721,7 @@ $(document).ready(function () {
     galleryImages = images;
     currentImageIndex = 0;
 
-    const gallery = $("#atteluGalerijaAdmin");
+    const gallery = $("#atteluGalerija");
     gallery.empty();
     images.forEach((src, index) => {
       const imgEl = $(`
@@ -680,35 +740,30 @@ $(document).ready(function () {
   function showModalImage() {
     const src = galleryImages[currentImageIndex];
     if (src) {
-      $("#modalImageAdmin").attr("src", "data:image/jpeg;base64," + src);
-      $("#imageModalAdmin").css("display", "flex");
+      $("#modalImage").attr("src", "data:image/jpeg;base64," + src);
+      $("#imageModal").css("display", "flex");
     }
   }
 
-  $("#atteluGalerijaAdmin").on("click", "img", function () {
-    currentImageIndex = index;
-    showModalImage();
-  });
-
-  $("#prevImageAdmin").on("click", () => {
+  $("#prevImage").on("click", () => {
     currentImageIndex =
       (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
     showModalImage();
   });
 
-  $("#nextImageAdmin").on("click", () => {
+  $("#nextImage").on("click", () => {
     currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
     showModalImage();
   });
 
   $(document).on("keydown", function (e) {
-    if ($("#imageModalAdmin").is(":visible")) {
+    if ($("#imageModal").is(":visible")) {
       if (e.key === "ArrowLeft") {
-        $("#prevImageAdmin").click();
+        $("#prevImage").click();
       } else if (e.key === "ArrowRight") {
-        $("#nextImageAdmin").click();
+        $("#nextImage").click();
       } else if (e.key === "Escape") {
-        $("#imageModalAdmin").hide();
+        $("#imageModal").hide();
       }
     }
   });

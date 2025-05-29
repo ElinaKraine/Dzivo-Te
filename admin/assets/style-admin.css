@@ -30,9 +30,7 @@
     color: white;
 }
 
-.header-admin .logo{
-    color: white;
-}
+.header-admin .logo{ color: white; }
 
 .sidebar{
     width: 21rem;
@@ -151,17 +149,20 @@
 
 .dazadaInfo{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 1rem;
     .rinda{
         display: flex;
         gap: 1rem;
+        flex-direction: column;
         .kaste{
             border-radius: .5rem;
             background: var(--light-gray);
             padding: 1rem;
             display: flex;
             gap: 3rem;
+            justify-content: space-between;
+            height: 7rem;
 
             .ciparsApraksts{
                 display: flex;
@@ -183,7 +184,7 @@
 #grafiks canvas {
     width: 100% !important;
     height: 100% !important;
-}  
+} 
 
 /* Tabulas */
 table{
@@ -199,21 +200,13 @@ table{
         text-align: left;
     }
 
-    td:first-child, th:first-child{
-        border-top-left-radius: .5rem;
-    }
+    td:first-child, th:first-child{ border-top-left-radius: .5rem; }
     
-    td:last-child, th:last-child{
-        border-top-right-radius: .5rem;
-    }
+    td:last-child, th:last-child{ border-top-right-radius: .5rem; }
 
-    td{
-        padding: .5rem 1rem;
-    }
+    td{ padding: .5rem 1rem; }
 
-    tr:hover{
-        background: var(--dark-gray);
-    }
+    tr:hover{ background: var(--dark-gray); }
 
     .ierakstaDarbibas{
         display: flex;
@@ -243,9 +236,7 @@ table{
     cursor: pointer;
 }
 
-.pievienotBtn:hover{
-    background: green;
-}
+.pievienotBtn:hover{ background: green; }
 
 .pievienotKaste{
     margin-bottom: 1rem;

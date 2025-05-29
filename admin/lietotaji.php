@@ -91,6 +91,7 @@ require "database/con_db.php";
                     <p name="ipAdrese" id="ipAdrese"></p>
                 </div>
                 <input type="hidden" id="lietotajs_admin_ID" name="lietotajs_admin_ID">
+                <div id="lietFormPazinojums" class="formPazinojums"></div>
             </div>
             <button type="submit" name="lietotajs_tabula_admin_saglabat" id="lietotajs_tabula_admin_saglabat" class="btn">Saglabāt</button>
         </form>
