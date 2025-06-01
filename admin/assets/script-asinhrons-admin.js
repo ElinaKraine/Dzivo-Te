@@ -457,6 +457,7 @@ $(document).ready(function () {
 
         $(".modalLietotajsTabulaAdmin").hide();
         $("#lietotajaFormaTabulaAdmin").trigger("reset");
+        $("#lietFormPazinojums").text("");
         fetchTabulaAdminLietotaji();
       },
       error: function () {
@@ -471,6 +472,11 @@ $(document).ready(function () {
       const id = $(element).attr("lietotajs_admin_ID");
 
       $.post("./database/lietotaji_delete.php", { id }, (response) => {
+        if (response.includes("dzēst")) {
+          paradit_pazinojumu(response);
+          fetchTabulaAdminLietotaji();
+          return;
+        }
         fetchTabulaAdminLietotaji();
       });
     }
@@ -485,7 +491,7 @@ $(document).ready(function () {
       type: "GET",
       success: function (response) {
         const sludinajumi = JSON.parse(response);
-        const rowsPerPage = 10;
+        const rowsPerPage = 15;
         let currentPage = 1;
 
         function renderTable(page) {
@@ -505,12 +511,13 @@ $(document).ready(function () {
               sludinajums.statuss === "Apsiprināts | Publicēts" ? "zals" : "";
             const klaseJauns =
               sludinajums.statuss === "Iesniegts sludinājums" ? "jauns" : "";
+            const veids = sludinajums.veids === "Iret" ? "Īre" : "Pikrt";
 
             template += `
               <tr slud_ID="${sludinajums.id}" data-veids="${sludinajums.veids}" class='${klaseJauns}'>
                 <td>${sludinajums.id}</td>
                 <td>${sludinajums.majokla_tips}</td>
-                <td>${sludinajums.veids}</td>
+                <td>${veids}</td>
                 <td>${sludinajums.epasts}</td>
                 <td>${sludinajums.adrese}</td>
                 <td>${cenaFormateta}</td>
@@ -576,9 +583,13 @@ $(document).ready(function () {
     if (majoklaVeids === "pirkt") {
       $("#pirkt-cena-admin").show();
       $(".iret-cena").hide();
+      $(".statussPirkt").show();
+      $(".statussIret").hide();
     } else if (majoklaVeids === "iret") {
       $("#pirkt-cena-admin").hide();
       $(".iret-cena").show();
+      $(".statussPirkt").hide();
+      $(".statussIret").show();
     }
   }
 
@@ -648,10 +659,13 @@ $(document).ready(function () {
         $("#staviAdmin").val(data.stavi || "");
         $("#stavsAdmin").val(data.stavs || "");
         $("#aprakstsAdmin").val(data.apraksts || "");
-        $("#sludNomainitStatusuAdmin").val(data.statuss);
+        if (veids === "Pirkt") {
+          $("#sludNomainitStatusuAdminPirkt").val(data.statuss);
+        } else {
+          $("#sludNomainitStatusuAdminIret").val(data.statuss);
+        }
         $("#ipAdreseSlud").text(data.ip_adrese);
         $("#atjauninasanasDatumsSlud").text(data.atjauninasanas_datums);
-
         $("#slud_ID").val(id);
         $("#sludinajums_saglabat_admin").text("Saglabāt");
 
@@ -802,27 +816,31 @@ $(document).ready(function () {
           const end = start + rowsPerPage;
           const pageItems = pieteikumi.slice(start, end);
 
-          pageItems.forEach((pieteikums) => {
-            const klaseSarkans =
-              pieteikums.statuss === "Atteikums" ? "sarkans" : "";
-            const klaseZals =
-              pieteikums.statuss === "Mājoklis ir iegādāts" ? "zals" : "";
-            template += `
-                          <tr piet_ID="${pieteikums.id}">
-                              <td>${pieteikums.id}</td>
-                              <td>${pieteikums.majokla_tips}</td>
-                              <td>${pieteikums.adrese}</td>
-                              <td>${pieteikums.cena}</td>
-                              <td>${pieteikums.epasts}</td>
-                              <td class='${klaseSarkans} ${klaseZals}'>${pieteikums.statuss}</td>
-                              <td>${pieteikums.izveidosanas_datums}</td>
-                              <td class="items">
-                                  <a class="piet-item editBtn"> <i class="fa fa-edit"></i> </a>    
-                                  <a class="piet-delete deleteBtn"> <i class="fa fa-trash"></i> </a>
-                              </td>
-                          </tr>
-                      `;
-          });
+          if (pieteikumi.length > 0) {
+            pageItems.forEach((pieteikums) => {
+              const klaseSarkans =
+                pieteikums.statuss === "Atteikums" ? "sarkans" : "";
+              const klaseZals =
+                pieteikums.statuss === "Mājoklis ir iegādāts" ? "zals" : "";
+              template += `
+                            <tr piet_ID="${pieteikums.id}">
+                                <td>${pieteikums.id}</td>
+                                <td>${pieteikums.majokla_tips}</td>
+                                <td>${pieteikums.adrese}</td>
+                                <td>${pieteikums.cena}</td>
+                                <td>${pieteikums.epasts}</td>
+                                <td class='${klaseSarkans} ${klaseZals}'>${pieteikums.statuss}</td>
+                                <td>${pieteikums.izveidosanas_datums}</td>
+                                <td class="items">
+                                    <a class="piet-item editBtn"> <i class="fa fa-edit"></i> </a>    
+                                    <a class="piet-delete deleteBtn"> <i class="fa fa-trash"></i> </a>
+                                </td>
+                            </tr>
+                        `;
+            });
+          } else {
+            template = `<p class='navRezultatus'>Nav neviena pieteikuma</p>`;
+          }
 
           $("#pieteikumi").html(template);
         }
@@ -928,23 +946,27 @@ $(document).ready(function () {
           const end = start + rowsPerPage;
           const pageItems = ieraksti.slice(start, end);
 
-          pageItems.forEach((ieraksts) => {
-            template += `
-              <tr ires_ID="${ieraksts.id}">
-                <td>${ieraksts.id}</td>
-                <td>${ieraksts.majokla_tips}</td>
-                <td>${ieraksts.adrese}</td>
-                <td>${ieraksts.epasts}</td>
-                <td>${ieraksts.registresanas_datums}</td>
-                <td>${ieraksts.izrakstisanas_datums}</td>
-                <td>${ieraksts.cena}</td>
-                <td>${ieraksts.izveidosanas_datums}</td>
-                <td class="items">
-                  <a class="ires-item editBtn"> <i class="fa fa-edit"></i> </a>    
-                  <a class="ires-delete deleteBtn"> <i class="fa fa-trash"></i> </a>
-                </td>
-              </tr>`;
-          });
+          if (ieraksti.length > 0) {
+            pageItems.forEach((ieraksts) => {
+              template += `
+                <tr ires_ID="${ieraksts.id}">
+                  <td>${ieraksts.id}</td>
+                  <td>${ieraksts.majokla_tips}</td>
+                  <td>${ieraksts.adrese}</td>
+                  <td>${ieraksts.epasts}</td>
+                  <td>${ieraksts.registresanas_datums}</td>
+                  <td>${ieraksts.izrakstisanas_datums}</td>
+                  <td>${ieraksts.cena}</td>
+                  <td>${ieraksts.izveidosanas_datums}</td>
+                  <td class="items">
+                    <a class="ires-item editBtn"> <i class="fa fa-edit"></i> </a>    
+                    <a class="ires-delete deleteBtn"> <i class="fa fa-trash"></i> </a>
+                  </td>
+                </tr>`;
+            });
+          } else {
+            template += `<p class='navRezultatus'>Nav neviena ieraksta</p>`;
+          }
 
           $("#iresIeraksti").html(template);
         }

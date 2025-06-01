@@ -171,11 +171,12 @@ $(document).ready(function () {
               ieraksts.statuss === "Atteikums" ? "sarkans" : "";
             const klaseZals =
               ieraksts.statuss === "Apsiprināts | Publicēts" ? "zals" : "";
+            const veids = ieraksts.veids === "Iret" ? "Īre" : "Pikrt";
 
             template += `
                 <tr sludinajuma_ID="${ieraksts.id}" data-veids="${ieraksts.veids}">
                   <td>${ieraksts.majokla_tips}</td>
-                  <td>${ieraksts.veids}</td>
+                  <td>${veids}</td>
                   <td>${ieraksts.pilseta}, ${ieraksts.iela} ${ieraksts.majas_numurs}</td>
                   <td>${cenaFormateta}</td>
                   <td>${ieraksts.platiba}</td>
@@ -414,7 +415,6 @@ $(document).ready(function () {
       const element = $(e.currentTarget).closest("tr");
       const id = $(element).attr("sludinajuma_ID");
       const tabula = $(element).data("veids");
-      // console.log(id)
       $.post(
         "./assets/database/sludinajumi_delete.php",
         { id, tabula },
@@ -488,8 +488,13 @@ $(document).ready(function () {
     if (confirm("Vai esat pārliecināts, ka vēlaties dzēst šo pieteikumu?")) {
       const element = $(e.currentTarget).closest("tr");
       const id = $(element).attr("ieraksta_ID");
-      // console.log(id)
       $.post("./assets/database/pieteikumi_delete.php", { id }, (response) => {
+        if (response.includes("nevar")) {
+          paradit_pazinojumu(response);
+          ieladetPieteikumus();
+          return;
+        }
+
         ieladetPieteikumus();
       });
     }
@@ -601,6 +606,7 @@ $(document).ready(function () {
 
   $(document).on("click", ".ieraksts-item", (e) => {
     $(".modalStatuss").css("display", "flex");
+    $("#pietFormPazinojums").text("");
 
     const element = $(e.currentTarget).closest("tr");
     const id = $(element).attr("ieraksta_ID");
@@ -631,6 +637,11 @@ $(document).ready(function () {
     url = "./assets/database/liet_pieteikumi_edit.php";
     // console.log(postData, url);
     $.post(url, postData, (response) => {
+      if (response.includes("nevar")) {
+        $("#pietFormPazinojums").text(response);
+        return;
+      }
+
       if (response.includes("veiksmīgi")) {
         paradit_pazinojumu(response);
         ieladetLietPieteikumus();
@@ -639,10 +650,10 @@ $(document).ready(function () {
 
       $(".modalStatuss").hide();
       $("#pieteikumaForma").trigger("reset");
+      $("#pietFormPazinojums").text("");
       ieladetLietPieteikumus();
     });
   });
-
   // #endregion
 
   //#region Lietotāju īre

@@ -5,16 +5,16 @@ if (isset($_POST['registracija'])) {
     session_start();
 
     $epasts = htmlspecialchars($_POST["epastaAdrese"]);
-    $vaicajums = "SELECT epasts FROM majuvieta_lietotaji WHERE epasts = '$epasts'";
+    $vaicajums = "SELECT epasts FROM majuvieta_lietotaji WHERE epasts = '$epasts' AND statuss != 'Dzēsts'";
     $rezultatsEpasts = mysqli_query($savienojums, $vaicajums);
 
     $vards = htmlspecialchars($_POST["vards"]);
     $uzvards = mysqli_real_escape_string($savienojums, $_POST["uzvards"]);
-    $vaicajums = "SELECT vards, uzvards FROM majuvieta_lietotaji WHERE vards = '$vards' AND uzvards = '$uzvards'";
+    $vaicajums = "SELECT vards, uzvards FROM majuvieta_lietotaji WHERE vards = '$vards' AND uzvards = '$uzvards' AND statuss != 'Dzēsts'";
     $rezultatsVardsUzvards = mysqli_query($savienojums, $vaicajums);
 
     $talrunis = htmlspecialchars($_POST["talrunis"]);
-    $vaicajums = "SELECT talrunis FROM majuvieta_lietotaji WHERE talrunis = '$talrunis'";
+    $vaicajums = "SELECT talrunis FROM majuvieta_lietotaji WHERE talrunis = '$talrunis' AND statuss != 'Dzēsts'";
     $rezultatsTalrunis = mysqli_query($savienojums, $vaicajums);
 
     $parole1 = mysqli_real_escape_string($savienojums, $_POST["paroleR"]);

@@ -119,13 +119,25 @@ require "database/con_db.php";
                     <label>Attēli: &nbsp;<span class="sarkans">*</span></label>
                     <input type="file" id="atteliAdmin" name="atteliAdmin[]" accept="image/png, image/jpeg" multiple>
                 </div>
-                <div class="rinda">
+                <div class="rinda statussPirkt">
                     <label>Statuss: &nbsp;<span class="sarkans">*</span></label>
-                    <select id="sludNomainitStatusuAdmin" name="sludNomainitStatusuAdmin">
+                    <select id="sludNomainitStatusuAdminPirkt" name="sludNomainitStatusuAdminPirkt">
                         <option value="Iesniegts sludinājums">Iesniegts sludinājums</option>
                         <option value="Sludinājuma pārskatīšana">Sludinājuma pārskatīšana</option>
                         <option value="Apsiprināts | Publicēts">Apsiprināts | Publicēts</option>
                         <option value="Atteikums">Atteikums</option>
+                        <option value="Mājoklis ir iegādāts">Mājoklis ir iegādāts</option>
+                        <option value="Dzēsts">Dzēsts</option>
+                    </select>
+                </div>
+                <div class="rinda statussIret">
+                    <label>Statuss: &nbsp;<span class="sarkans">*</span></label>
+                    <select id="sludNomainitStatusuAdminIret" name="sludNomainitStatusuAdminIret">
+                        <option value="Iesniegts sludinājums">Iesniegts sludinājums</option>
+                        <option value="Sludinājuma pārskatīšana">Sludinājuma pārskatīšana</option>
+                        <option value="Apsiprināts | Publicēts">Apsiprināts | Publicēts</option>
+                        <option value="Atteikums">Atteikums</option>
+                        <option value="Dzēsts">Dzēsts</option>
                     </select>
                 </div>
                 <div class="rinda papildInfoSlud">

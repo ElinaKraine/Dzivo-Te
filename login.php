@@ -24,7 +24,7 @@ session_start();
             <form action="admin/database/login_funkcija.php" method="post">
                 <input type="email" placeholder="E-pasta adrese *" name="epasts" required>
                 <div class="paroleKaste">
-                    <input type="password" placeholder="Parole *" name="parole" id="parole3" required>
+                    <input type="password" placeholder="Parole *" name="parole" id="parole3" autocomplete="new-password" required>
                     <i class="fa-solid fa-eye" id="parslegtParole3"></i>
                 </div>
                 <div class="pazinojums">

@@ -908,7 +908,7 @@ footer{
     z-index: 5;
     width: 85%;
     text-align: center;
-    background-color: darkgreen;
+    background-color: var(--dark-violet);
     color: #fff;
     font-size: 1.5rem;
     padding: 1.5rem 5%;
@@ -963,7 +963,7 @@ footer{
 }
 
 .darijumuVeids{
-    width: 12.3rem;
+    width: 11.9rem;
     border-radius: 1.3rem;
     background: var(--light-gray);
     display: flex;
@@ -1122,6 +1122,7 @@ footer{
 .majasSaturs .sludinajums img, .kontainerSaglabatie .sludinajums img, .dzivokliSaturs .sludinajums img{
     width: 100%;
     border-radius: .5rem;
+    height: 23rem;
 }
 
 .majasSaturs .sludinajums #adrese, .kontainerSaglabatie .sludinajums #adrese, .dzivokliSaturs .sludinajums #adrese{
@@ -1601,23 +1602,6 @@ footer{
     .btn:hover{ background: green; }
 }
 
-#modal-admin-pieteikums{
-    .formElements{
-        display: grid;
-        grid-template-columns: 35% 65%;
-        align-items: center;
-        width: 45rem;
-        padding: 2rem 5rem 1rem 3rem;
-
-        input, select{
-            font-size: 1.1rem;
-            padding: .5rem 1rem;
-            border-radius: .5rem;
-            background: var(--light-gray);
-        }
-    }
-}
-
 #atteluGalerija, #atteluGalerijaAdmin{
     display: flex;
     gap: 1rem;
@@ -1625,7 +1609,6 @@ footer{
         width: 5rem;
         height: 5rem;
         object-fit: cover;
-        
     }
 }
 
@@ -1934,7 +1917,12 @@ footer{
     }
 }
 
-@media (max-width: 640px) { .loginKaste{ width: 90%; } }
+@media (max-width: 640px) { 
+    .loginKaste{ width: 90%; }
+    .majasSaturs .sludinajums img, .kontainerSaglabatie .sludinajums img, .dzivokliSaturs .sludinajums img{
+        height: auto;
+    } 
+}
 
 @media (max-width: 510px) {
     .kreisaKaste .btn { width: 50%; }

@@ -9,9 +9,9 @@ if (isset($_POST['id'])) {
         $vaicajums->bind_param("i", $id);
 
         if ($vaicajums->execute()) {
-            echo "Veiksmīgi dzēst pirkt!";
+            // echo "Veiksmīgi dzēst pirkt!";
         } else {
-            echo "Kļūda: " . $savienojums->error;
+            // echo "Kļūda: " . $savienojums->error;
         }
 
         $vaicajums->close();
@@ -20,9 +20,9 @@ if (isset($_POST['id'])) {
         $vaicajums->bind_param("i", $id);
 
         if ($vaicajums->execute()) {
-            echo "Veiksmīgi dzēst pieteikums!";
+            // echo "Veiksmīgi dzēst pieteikums!";
         } else {
-            echo "Kļūda: " . $savienojums->error;
+            // echo "Kļūda: " . $savienojums->error;
         }
 
         $vaicajums->close();
@@ -31,9 +31,9 @@ if (isset($_POST['id'])) {
         $vaicajums->bind_param("i", $id);
 
         if ($vaicajums->execute()) {
-            echo "Veiksmīgi dzēsts iret!";
+            // echo "Veiksmīgi dzēsts iret!";
         } else {
-            echo "Kļūda: " . $savienojums->error;
+            // echo "Kļūda: " . $savienojums->error;
         }
 
         $vaicajums->close();
@@ -56,9 +56,9 @@ if (isset($_POST['id'])) {
     $vaicajums = $savienojums->prepare("DELETE FROM majuvieta_adrese WHERE sludinajuma_veids = ? AND id_sludinajums = ?");
     $vaicajums->bind_param("si", $veids, $id);
     if ($vaicajums->execute()) {
-        echo "Veiksmīgi dzēst adrese!";
+        // echo "Veiksmīgi dzēst adrese!";
     } else {
-        echo "Kļūda: " . $savienojums->error;
+        // echo "Kļūda: " . $savienojums->error;
     }
     $vaicajums->close();
 
@@ -66,9 +66,9 @@ if (isset($_POST['id'])) {
     $vaicajums = $savienojums->prepare("DELETE FROM majuvieta_atteli WHERE sludinajuma_veids = ? AND id_sludinajums = ?");
     $vaicajums->bind_param("si", $veids, $id);
     if ($vaicajums->execute()) {
-        echo "Veiksmīgi dzēst atteli!";
+        // echo "Veiksmīgi dzēst atteli!";
     } else {
-        echo "Kļūda: " . $savienojums->error;
+        // echo "Kļūda: " . $savienojums->error;
     }
     $vaicajums->close();
 

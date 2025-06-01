@@ -30,13 +30,13 @@ if (isset($_POST['liet_ID']) || isset($_POST['liet_admin_ID'])) {
         }
     }
 
-    $vaicajums = "SELECT vards, uzvards FROM majuvieta_lietotaji WHERE vards = '$vards' AND uzvards = '$uzvards' AND lietotaja_id != '$id'";
+    $vaicajums = "SELECT vards, uzvards FROM majuvieta_lietotaji WHERE vards = '$vards' AND uzvards = '$uzvards' AND lietotaja_id != '$id' AND statuss != 'Dzēsts'";
     $rezultatsVardsUzvards = mysqli_query($savienojums, $vaicajums);
 
-    $vaicajums = "SELECT epasts FROM majuvieta_lietotaji WHERE epasts = '$epasts' AND lietotaja_id != '$id'";
+    $vaicajums = "SELECT epasts FROM majuvieta_lietotaji WHERE epasts = '$epasts' AND lietotaja_id != '$id' AND statuss != 'Dzēsts'";
     $rezultatsEpasts = mysqli_query($savienojums, $vaicajums);
 
-    $vaicajums = "SELECT talrunis FROM majuvieta_lietotaji WHERE talrunis = '$talrunis' AND lietotaja_id != '$id'";
+    $vaicajums = "SELECT talrunis FROM majuvieta_lietotaji WHERE talrunis = '$talrunis' AND lietotaja_id != '$id' AND statuss != 'Dzēsts'";
     $rezultatsTalrunis = mysqli_query($savienojums, $vaicajums);
 
     $password_pattern = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/";

@@ -129,10 +129,15 @@ $(document).ready(function () {
                 `;
               });
 
+              if (template == "") {
+                template =
+                  "<p class='navRezultatus'>Nav rezultātu atbilstošu meklēšanai</p>";
+              }
+
               $(".majasSaturs.iresanasBack").removeClass("iresanasBack");
             } else {
               template =
-                "<p class='navRezultatus'>Izvēlētajā periodā nav brīvu mājokļu.</p>";
+                "<p class='navRezultatus'>Nav rezultātu atbilstošu meklēšanai</p>";
             }
 
             $("#majasIret").html(template);

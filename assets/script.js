@@ -4,28 +4,15 @@ let closeModal = document.querySelectorAll(".close-modal");
 
 modalBtns.forEach(function (btn) {
   btn.addEventListener("click", function () {
-    document.querySelector(btn.dataset.target).classList.add("modal-active");
+    const target = document.querySelector(btn.dataset.target);
+    if (target) target.classList.add("modal-active");
   });
 });
 
 closeModal.forEach(function (btn) {
   btn.addEventListener("click", function () {
-    document.querySelector(btn.dataset.target).classList.remove("modal-active");
-  });
-});
-//#endregion
-
-//#region Navigācija
-$(document).ready(function () {
-  $(".menu").on("click", function () {
-    $(".menu-wrapper").toggleClass("active");
-
-    const icon = $(this).find("i");
-    if (icon.hasClass("fa-bars")) {
-      icon.removeClass("fa-bars").addClass("fa-xmark");
-    } else {
-      icon.removeClass("fa-xmark").addClass("fa-bars");
-    }
+    const target = document.querySelector(btn.dataset.target);
+    if (target) target.classList.remove("modal-active");
   });
 });
 //#endregion
@@ -188,6 +175,29 @@ document.addEventListener("DOMContentLoaded", function () {
   if (icon2 && parole2) parslegtParolesRedzamibu(icon2, parole2);
   if (icon3 && parole3) parslegtParolesRedzamibu(icon3, parole3);
 
+  // Navigācija
+  const menuButton = document.querySelector(".menu");
+
+  if (menuButton) {
+    menuButton.addEventListener("click", function () {
+      const menuWrapper = document.querySelector(".menu-wrapper");
+      if (!menuWrapper) return;
+
+      menuWrapper.classList.toggle("active");
+
+      const icon = menuButton.querySelector("i");
+      if (!icon) return;
+
+      if (icon.classList.contains("fa-bars")) {
+        icon.classList.remove("fa-bars");
+        icon.classList.add("fa-xmark");
+      } else {
+        icon.classList.remove("fa-xmark");
+        icon.classList.add("fa-bars");
+      }
+    });
+  }
+
   // Animācijas
   const parInfo = document.querySelector(".parInfo");
   const parInfoAttelas = document.querySelectorAll(
@@ -268,6 +278,7 @@ document.addEventListener("DOMContentLoaded", function () {
   initializeFilterToggle();
   pievienot_dzest_saglabatu();
   initGlobalGalleryNavigation();
+  initBodyClickHandlers();
 });
 
 //#region Filtras pogas
@@ -484,8 +495,10 @@ function showGlobalModalImage() {
 function initGlobalGalleryNavigation() {
   const prev = document.getElementById("prevImage");
   const next = document.getElementById("nextImage");
+  const modal = document.getElementById("imageModal");
+  const close = modal?.querySelector(".close-modal");
 
-  if (prev && next) {
+  if (prev && next && modal) {
     prev.onclick = () => {
       currentGalleryIndex =
         (currentGalleryIndex - 1 + globalGalleryImages.length) %
@@ -500,14 +513,19 @@ function initGlobalGalleryNavigation() {
     };
   }
 
+  if (close) {
+    close.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
+  }
+
   document.addEventListener("keydown", (e) => {
-    const modal = document.getElementById("imageModal");
     if (!modal || modal.style.display !== "flex") return;
 
     if (e.key === "ArrowLeft") {
-      document.getElementById("prevImage").click();
+      prev?.click();
     } else if (e.key === "ArrowRight") {
-      document.getElementById("nextImage").click();
+      next?.click();
     } else if (e.key === "Escape") {
       modal.style.display = "none";
     }
@@ -516,16 +534,40 @@ function initGlobalGalleryNavigation() {
 //#endregion
 
 //#region index.php atvert sludinājumu atseviškaja lapa
-$(document).on("click", ".sludinajumsIndex", function () {
-  const id = $(this).data("id");
-  const tips = $(this).data("tips");
+function initBodyClickHandlers() {
+  document.body.addEventListener("click", function (e) {
+    const target = e.target;
 
-  if (!id || !tips) return;
+    // Открытие модального окна
+    if (target.matches("[data-target]")) {
+      const modal = document.querySelector(target.dataset.target);
+      if (modal) modal.classList.add("modal-active");
+    }
 
-  if (tips === "Maja") {
-    window.location.href = `maja_pirkt.php?id=${id}`;
-  } else if (tips === "Dzivoklis") {
-    window.location.href = `dzivoklis_pirkt.php?id=${id}`;
-  }
-});
+    // Закрытие модального окна
+    if (
+      target.classList.contains("close-modal") ||
+      target.closest(".close-modal")
+    ) {
+      const el = target.closest(".close-modal");
+      const modal = document.querySelector(el.dataset.target);
+      if (modal) modal.classList.remove("modal-active");
+    }
+
+    // Переход на страницу объявления из index.php
+    const ad = target.closest(".sludinajumsIndex");
+    if (ad) {
+      const id = ad.getAttribute("data-id");
+      const tips = ad.getAttribute("data-tips");
+      if (!id || !tips) return;
+
+      if (tips === "Maja") {
+        window.location.href = `maja_pirkt.php?id=${id}`;
+      } else if (tips === "Dzivoklis") {
+        window.location.href = `dzivoklis_pirkt.php?id=${id}`;
+      }
+    }
+  });
+}
+
 //#endregion

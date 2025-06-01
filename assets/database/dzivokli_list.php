@@ -10,7 +10,7 @@ $prasibas = [
 
 if (!empty($_GET['meklet'])) {
     $meklet = mysqli_real_escape_string($savienojums, htmlspecialchars($_GET['meklet']));
-    $prasibas[] = "md.pilseta LIKE '%$meklet%' OR md.iela LIKE '%$meklet%'";
+    $prasibas[] = "(md.pilseta LIKE '%$meklet%' OR md.iela LIKE '%$meklet%')";
 }
 
 if (!empty($_GET['minCena'])) {

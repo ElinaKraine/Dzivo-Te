@@ -50,7 +50,7 @@ if (!isset($_SESSION['lietotajaLomaMV'])) {
                             <label>Darījuma veids: &nbsp;<span class="sarkans">*</span></label>
                             <select id="majoklaVeids" name="majoklaVeids" required>
                                 <option value="pirkt">Pirkt</option>
-                                <option value="iret">Īrēt</option>
+                                <option value="iret">Īre</option>
                             </select>
                         </div>
                         <div class="rinda">
@@ -140,25 +140,38 @@ if (!isset($_SESSION['lietotajaLomaMV'])) {
                 </div>
                 <form id="pieteikumaForma">
                     <div class="formElements">
-                        <label>Lietotājs:</label>
-                        <input type="text" id="pietlietotajs" name="pietlietotajs" disabled>
-                        <label>Mājokļa tips:</label>
-                        <input type="text" id="pietMajoklaTips" name="pietMajoklaTips" disabled>
-                        <label>Adrese:</label>
-                        <input type="text" id="pietAdrese" name="pietAdrese" disabled>
-                        <label>Cena (€):</label>
-                        <input type="text" id="pietCena" name="pietCena" disabled>
-                        <label>Datums:</label>
-                        <input type="text" id="pietDatums" name="pietDatums" disabled>
-                        <label>Statuss: &nbsp;<span class="sarkans">*</span></label>
-                        <select id="pietStatuss" name="pietStatuss" required>
-                            <option value="iesniegtsPieteikums">Iesniegts pieteikums</option>
-                            <option value="pieteikumaParskatisana">Pieteikuma pārskatīšana</option>
-                            <option value="majoklaIegadesProcesa">Mājokļa iegādes procesā</option>
-                            <option value="majoklisIrIegadats">Mājoklis ir iegādāts</option>
-                            <option value="atteikums">Atteikums</option>
-                        </select>
+                        <div class="rinda">
+                            <label>Lietotājs:</label>
+                            <input type="text" id="pietlietotajs" name="pietlietotajs" disabled>
+                        </div>
+                        <div class="rinda">
+                            <label>Mājokļa tips:</label>
+                            <input type="text" id="pietMajoklaTips" name="pietMajoklaTips" disabled>
+                        </div>
+                        <div class="rinda">
+                            <label>Adrese:</label>
+                            <input type="text" id="pietAdrese" name="pietAdrese" disabled>
+                        </div>
+                        <div class="rinda">
+                            <label>Cena (€):</label>
+                            <input type="text" id="pietCena" name="pietCena" disabled>
+                        </div>
+                        <div class="rinda">
+                            <label>Datums:</label>
+                            <input type="text" id="pietDatums" name="pietDatums" disabled>
+                        </div>
+                        <div class="rinda">
+                            <label>Statuss: &nbsp;<span class="sarkans">*</span></label>
+                            <select id="pietStatuss" name="pietStatuss" required>
+                                <option value="iesniegtsPieteikums">Iesniegts pieteikums</option>
+                                <option value="pieteikumaParskatisana">Pieteikuma pārskatīšana</option>
+                                <option value="majoklaIegadesProcesa">Mājokļa iegādes procesā</option>
+                                <option value="majoklisIrIegadats">Mājoklis ir iegādāts</option>
+                                <option value="atteikums">Atteikums</option>
+                            </select>
+                        </div>
                         <input type="hidden" id="pieteikums_ID">
+                        <div id="pietFormPazinojums" class="formPazinojums"></div>
                     </div>
                     <button type="submit" name="pieteikums_saglabat" id="pieteikums_saglabat" class="btn">Saglabāt</button>
                 </form>

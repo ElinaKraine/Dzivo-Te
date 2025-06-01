@@ -16,7 +16,7 @@ switch ($_SESSION['lietotajaLomaMV']) {
 }
 
 if ($loma === "Admin") {
-    $statuss = $_POST['sludNomainitStatusuAdmin'];
+    $statuss = $veids === 'pirkt' ?  $_POST['sludNomainitStatusuAdminPirkt'] : $_POST['sludNomainitStatusuAdminIret'];
     $majokla_tips = htmlspecialchars($_POST['majoklaTipsAdmin']);
     $majokla_veids = htmlspecialchars($_POST['majoklaVeidsAdmin']);
     $pilseta = htmlspecialchars($_POST['pilsetaAdmin']);

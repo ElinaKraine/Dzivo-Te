@@ -1,8 +1,8 @@
 <?php
 require '../../admin/database/con_db.php';
 session_start();
-// error_reporting(E_ALL);
-// ini_set('display_errors', 1);
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 function atjauninat_attelus($savienojums, $atteli, $sludinajuma_veids, $sludinajuma_id)
 {
@@ -126,6 +126,27 @@ function vai_adrese_jau_eksiste($savienojums, $pilseta, $iela, $majas_numurs, $d
     return $eksiste;
 }
 
+function iegut_ipasnieka_id($savienojums, $veids, $id)
+{
+    $ipasniekaId = 0;
+    if ($veids === 'pirkt') {
+        $vaicajums = $savienojums->prepare("SELECT id_ipasnieks FROM majuvieta_pirkt WHERE pirkt_id = ?");
+    } elseif ($veids === 'iret') {
+        $vaicajums = $savienojums->prepare("SELECT id_ipasnieks FROM majuvieta_iret WHERE iret_id = ?");
+    } else {
+        return null;
+    }
+
+    $vaicajums->bind_param("i", $id);
+    $vaicajums->execute();
+    $vaicajums->bind_result($ipasniekaId);
+    $vaicajums->fetch();
+    $vaicajums->close();
+
+    return $ipasniekaId;
+}
+
+
 $loma = "";
 switch ($_SESSION['lietotajaLomaMV']) {
     case 'Administrators':
@@ -158,7 +179,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $cenaDiena = $_POST['cenaDienaAdmin'] ?? null;
         $cenaNedela = $_POST['cenaNedelaAdmin'] ?? null;
         $cenaMenesi = $_POST['cenaMenesiAdmin'] ?? null;
-        $statuss = $_POST['sludNomainitStatusuAdmin'];
+        $statuss = $veids === 'pirkt' ?  $_POST['sludNomainitStatusuAdminPirkt'] : $_POST['sludNomainitStatusuAdminIret'];
         $atteli = $_FILES['atteliAdmin'];
     } elseif ($loma === "liet") {
         $id = intval($_POST['id_sludinajums']);
@@ -214,7 +235,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     //region Rediģēšanas aizliegums, ja ir pieteikumi/rezervācijas vai ja adrese jau pastāv
     if ($vecaisVeids === "pirkt") {
-        $vaicajums = $savienojums->prepare("SELECT COUNT(*) FROM majuvieta_pieteikumi WHERE id_majuvieta_pirkt = ?");
+        $vaicajums = $savienojums->prepare("SELECT COUNT(*) FROM majuvieta_pieteikumi WHERE id_majuvieta_pirkt = ? AND statuss != 'Atteikums'");
         $vaicajums->bind_param("i", $id);
         $vaicajums->execute();
         $vaicajums->bind_result($count);
@@ -223,6 +244,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($count > 0) {
             echo "Šo sludinājumu nevar rediģēt, jo tam jau ir pieteikumi.";
             exit;
+        }
+
+        if ($loma === "liet") {
+            $vaicajums = $savienojums->prepare("SELECT statuss FROM majuvieta_pirkt WHERE pirkt_id = ?");
+            $vaicajums->bind_param("i", $id);
+            $vaicajums->execute();
+            $vaicajums->bind_result($sludinajumsStatuss);
+            $vaicajums->fetch();
+            $vaicajums->close();
+            if ($sludinajumsStatuss == "Mājoklis ir iegādāts") {
+                echo "Šo sludinājumu nevar rediģēt, jo mājoklis jau ir iegādāts.";
+                exit;
+            }
         }
     } else {
         $sodien = date("Y-m-d");
@@ -237,14 +271,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
     }
-
-    if (vai_adrese_jau_eksiste($savienojums, $pilseta, $iela, $majasNumurs, $dzivoklaNumurs, $vecaisVeids, $id)) {
-        echo "Šāda adrese jau eksistē aktīvā sludinājumā!";
-        exit;
-    }
     //endregion
 
     $vai_veids_ir_nomainits = $vecaisVeids !== $veids;
+
+    $veidsKapitals = $veids === 'pirkt' ? 'Pirkt' : 'Iret';
+    if (!$vai_veids_ir_nomainits) {
+        if (vai_adrese_jau_eksiste($savienojums, $pilseta, $iela, $majasNumurs, $dzivoklaNumurs, $veidsKapitals, $id)) {
+            echo "Šāda adrese jau eksistē aktīvā sludinājumā!";
+            exit;
+        }
+    }
 
     if (!empty($veids) && !empty($pilseta) && !empty($iela) && !empty($majasNumurs) && !empty($platiba) && !empty($stavs_vai_stavi)) {
         if ($nomainitAtteli === "ja" && !isset($atteli)) {
@@ -259,21 +296,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 //region Māja pārdošanai
                 if ($vai_veids_ir_nomainits) {
                     $sqlTeikums = "INSERT INTO majuvieta_pirkt (id_ipasnieks, cena, platiba, zemes_platiba, istabas, stavs_vai_stavi, apraksts, atjauninasanas_datums, statuss, ip_adrese) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                    $params = [
-                        "iiiiisssss",
-                        $lietotajaId,
-                        $cenaPirkt,
-                        $platiba,
-                        $zemesPlatiba,
-                        $istabas,
-                        $stavs_vai_stavi,
-                        $apraksts,
-                        $datums,
-                        $statuss,
-                        $ip_adrese
-                    ];
 
-                    $jaunsId = nomainit_sludinajumu($savienojums, $vecaisVeids, $id, $veids, $sqlTeikums, $params, $lietotajaId);
+                    $ipasniekaId = iegut_ipasnieka_id($savienojums, $vecaisVeids, $id);
+                    if ($ipasniekaId === 0) {
+                        echo "Neizdevās noteikt īpašnieku!";
+                        exit;
+                    }
+
+                    $params = ["iiiiisssss", $ipasniekaId, $cenaPirkt, $platiba, $zemesPlatiba, $istabas, $stavs_vai_stavi, $apraksts, $datums, $statuss, $ip_adrese];
+
+                    $jaunsId = nomainit_sludinajumu($savienojums, $vecaisVeids, $id, $veids, $sqlTeikums, $params, $ipasniekaId);
                     $id = $jaunsId;
 
                     atjauninat_adresi($savienojums, $veids, $id, $pilseta, $iela, $majasNumurs);
@@ -313,23 +345,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 //region Māja īrēšanai
                 if ($vai_veids_ir_nomainits) {
                     $sqlTeikums = "INSERT INTO majuvieta_iret (id_ipasnieks, cena_diena, cena_nedela, cena_menesis, platiba, zemes_platiba, istabas, stavs_vai_stavi, apraksts, atjauninasanas_datums, statuss, ip_adrese) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                    $params = [
-                        "iiiiiiisssss",
-                        $lietotajaId,
-                        $cenaDiena,
-                        $cenaNedela,
-                        $cenaMenesi,
-                        $platiba,
-                        $zemesPlatiba,
-                        $istabas,
-                        $stavs_vai_stavi,
-                        $apraksts,
-                        $datums,
-                        $statuss,
-                        $ip_adrese
-                    ];
 
-                    $jaunsId = nomainit_sludinajumu($savienojums, $vecaisVeids, $id, $veids, $sqlTeikums, $params, $lietotajaId);
+                    $ipasniekaId = iegut_ipasnieka_id($savienojums, $vecaisVeids, $id);
+                    if ($ipasniekaId === 0) {
+                        echo "Neizdevās noteikt īpašnieku!";
+                        exit;
+                    }
+
+                    $params = ["iiiiiiisssss", $ipasniekaId, $cenaDiena, $cenaNedela, $cenaMenesi, $platiba, $zemesPlatiba, $istabas, $stavs_vai_stavi, $apraksts, $datums, $statuss, $ip_adrese];
+
+                    $jaunsId = nomainit_sludinajumu($savienojums, $vecaisVeids, $id, $veids, $sqlTeikums, $params, $ipasniekaId);
                     $id = $jaunsId;
 
                     atjauninat_adresi($savienojums, $veids, $id, $pilseta, $iela, $majasNumurs);
@@ -373,21 +398,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 //region Dzīvoklis pārdošanai
                 if ($vai_veids_ir_nomainits) {
                     $sqlTeikums = "INSERT INTO majuvieta_pirkt (majokla_tips, id_ipasnieks, cena, platiba, istabas, stavs_vai_stavi, apraksts, atjauninasanas_datums, statuss, ip_adrese) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                    $params = [
-                        "siiiisssss",
-                        $tips,
-                        $lietotajaId,
-                        $cenaPirkt,
-                        $platiba,
-                        $istabas,
-                        $stavs_vai_stavi,
-                        $apraksts,
-                        $datums,
-                        $statuss,
-                        $ip_adrese
-                    ];
 
-                    $jaunsId = nomainit_sludinajumu($savienojums, $vecaisVeids, $id, $veids, $sqlTeikums, $params, $lietotajaId);
+                    $ipasniekaId = iegut_ipasnieka_id($savienojums, $vecaisVeids, $id);
+                    if ($ipasniekaId === 0) {
+                        echo "Neizdevās noteikt īpašnieku!";
+                        exit;
+                    }
+
+                    $params = ["siiiisssss", $tips, $ipasniekaId, $cenaPirkt, $platiba, $istabas, $stavs_vai_stavi, $apraksts, $datums, $statuss, $ip_adrese];
+
+                    $jaunsId = nomainit_sludinajumu($savienojums, $vecaisVeids, $id, $veids, $sqlTeikums, $params, $ipasniekaId);
                     $id = $jaunsId;
 
                     atjauninat_adresi($savienojums, $veids, $id, $pilseta, $iela, $majasNumurs, $dzivoklaNumurs);
@@ -427,23 +447,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 //region Dzīvoklis īrēšanai
                 if ($vai_veids_ir_nomainits) {
                     $sqlTeikums = "INSERT INTO majuvieta_iret (majokla_tips, id_ipasnieks, cena_diena, cena_nedela, cena_menesis, platiba, istabas, stavs_vai_stavi, apraksts, atjauninasanas_datums, statuss, ip_adrese) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                    $params = [
-                        "siiiiiisssss",
-                        $tips,
-                        $lietotajaId,
-                        $cenaDiena,
-                        $cenaNedela,
-                        $cenaMenesi,
-                        $platiba,
-                        $istabas,
-                        $stavs_vai_stavi,
-                        $apraksts,
-                        $datums,
-                        $statuss,
-                        $ip_adrese
-                    ];
 
-                    $jaunsId = nomainit_sludinajumu($savienojums, $vecaisVeids, $id, $veids, $sqlTeikums, $params, $lietotajaId);
+                    $ipasniekaId = iegut_ipasnieka_id($savienojums, $vecaisVeids, $id);
+                    if ($ipasniekaId === 0) {
+                        echo "Neizdevās noteikt īpašnieku!";
+                        exit;
+                    }
+
+                    $params = ["siiiiiisssss", $tips, $ipasniekaId, $cenaDiena, $cenaNedela, $cenaMenesi, $platiba, $istabas, $stavs_vai_stavi, $apraksts, $datums, $statuss, $ip_adrese];
+
+                    $jaunsId = nomainit_sludinajumu($savienojums, $vecaisVeids, $id, $veids, $sqlTeikums, $params, $ipasniekaId);
                     $id = $jaunsId;
 
                     atjauninat_adresi($savienojums, $veids, $id, $pilseta, $iela, $majasNumurs, $dzivoklaNumurs);

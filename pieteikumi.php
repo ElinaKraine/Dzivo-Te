@@ -7,7 +7,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["nosutit"])) {
     $lietotaja_id = $_SESSION['lietotajaIdDt'];
     $ip_adrese = $_SERVER['REMOTE_ADDR'];
 
-
     $id_majuvieta_pirkt = intval($_POST['id_majuvieta_pirkt']);
 
     $parbaude = $savienojums->prepare("SELECT COUNT(*) FROM majuvieta_pieteikumi WHERE id_lietotajs = ? AND id_majuvieta_pirkt = ?");

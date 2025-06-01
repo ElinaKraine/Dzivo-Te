@@ -6,7 +6,7 @@ require "assets/header.php";
 <div class="galvenieFiltri">
     <div class="darijumuVeids">
         <button type="button" name="pirkt" class="atlasits">Pirkt</button>
-        <button type="button" name="iret" class="neAtlasits">Īrēt</button>
+        <button type="button" name="iret" class="neAtlasits">Īre</button>
     </div>
 
     <?php

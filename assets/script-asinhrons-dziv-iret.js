@@ -127,11 +127,15 @@ $(document).ready(function () {
               });
 
               $(".dzivokliSaturs.iresanasBack").removeClass("iresanasBack");
+              if (template == "") {
+                template =
+                  "<p class='navRezultatus'>Nav rezultātu atbilstošu meklēšanai</p>";
+              }
             } else {
               template =
-                "<p class='navRezultatus'>Nav pieejamu mājokļu izvēlētajās dienās.</p>";
+                "<p class='navRezultatus'>Nav rezultātu atbilstošu meklēšanai</p>";
             }
-
+            console.log(template);
             $("#dzivokliIret").html(template);
           },
           error: function () {

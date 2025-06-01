@@ -28,11 +28,11 @@ session_start();
             <input type="email" name="epastaAdrese" placeholder="E-pasta adrese *" required>
             <input type="text" name="talrunis" placeholder="Tālrunis *" required>
             <div class="paroleKaste">
-                <input type="password" name="paroleR" id="parole1" placeholder="Parole *" required>
+                <input type="password" name="paroleR" id="parole1" placeholder="Parole *" autocomplete="new-password" required>
                 <i class="fa-solid fa-eye" id="parslegtParole1"></i>
             </div>
             <div class="paroleKaste">
-                <input type="password" name="paroleAtkartoti" id="parole2" placeholder="Parole (atkārtoti) *" required>
+                <input type="password" name="paroleAtkartoti" id="parole2" placeholder="Parole (atkārtoti) *" autocomplete="new-password" required>
                 <i class="fa-solid fa-eye" id="parslegtParole2"></i>
             </div>
             <div class="pazinojums">

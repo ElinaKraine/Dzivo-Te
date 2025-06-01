@@ -40,7 +40,6 @@ if (isset($_POST['id'])) {
         $ieraksts = $rez->fetch_assoc();
         $id_majuvieta_iret = $ieraksts['id_majuvieta_iret'];
 
-        // --- Проверка пересечения интервала
         $vaicajums = $savienojums->prepare(
             "SELECT 1 FROM majuvieta_iziresana 
              WHERE id_majuvieta_iret = ? 
@@ -73,8 +72,8 @@ if (isset($_POST['id'])) {
         $vaicajums->close();
         //endregion
 
-        $vaicajums = $savienojums->prepare("UPDATE majuvieta_iziresana SET registresanas_datums = ?, izrakstisanas_datums = ?, cena = ?, atjauninasanas_datums = ? WHERE ip_adrese = ?");
-        $vaicajums->bind_param("ssssi", $cena, $registresanas_datums, $izrakstisanas_datums, $tagad, $id);
+        $vaicajums = $savienojums->prepare("UPDATE majuvieta_iziresana SET registresanas_datums = ?, izrakstisanas_datums = ?, cena = ?, atjauninasanas_datums = ? WHERE iziresana_id = ?");
+        $vaicajums->bind_param("ssdsi", $registresanas_datums, $izrakstisanas_datums, $cena, $tagad, $id);
 
         if ($vaicajums->execute()) {
             echo "Īres ieraksts veiksmīgi rediģēts";
@@ -85,6 +84,5 @@ if (isset($_POST['id'])) {
     } else {
         echo "Visi ievadas lauki nav aizpildīti!";
     }
-
-    $savienojums->close();
 }
+$savienojums->close();
