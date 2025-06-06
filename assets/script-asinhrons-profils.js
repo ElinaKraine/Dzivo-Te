@@ -22,6 +22,33 @@ $(document).ready(function () {
     $("body").append(modalHTML);
   }
 
+  function paradit_apstiprinajumu(teksts, onConfirm, onCancel) {
+    const id = "modal-confirm";
+    const modalHTML = `
+      <div class="modal modal-active modal-apstiprinat" id="${id}">
+        <div class="modal-box">
+          <div class="close-modal" data-target="#${id}"><i class="fas fa-times"></i></div>
+          <h2>${teksts}</h2>
+          <div class="modal-actions">
+            <button class="btn" id="btn-atcelt">Nē</button>
+            <button class="btn" id="btn-apstiprinat">Jā</button>
+          </div>
+        </div>
+      </div>
+    `;
+    $("body").append(modalHTML);
+
+    $(`#btn-apstiprinat`).on("click", function () {
+      $(`#${id}`).remove();
+      if (typeof onConfirm === "function") onConfirm();
+    });
+
+    $(`#btn-atcelt, .close-modal`).on("click", function () {
+      $(`#${id}`).remove();
+      if (typeof onCancel === "function") onCancel();
+    });
+  }
+
   //#region Profila informācija
   function fetchProfilaInfo() {
     $.ajax({
@@ -411,23 +438,26 @@ $(document).ready(function () {
   });
 
   $(document).on("click", ".sludinajums-delete", (e) => {
-    if (confirm("Vai esat pārliecināts, ka vēlaties dzēst šo sludinājumu?")) {
-      const element = $(e.currentTarget).closest("tr");
-      const id = $(element).attr("sludinajuma_ID");
-      const tabula = $(element).data("veids");
-      $.post(
-        "./assets/database/sludinajumi_delete.php",
-        { id, tabula },
-        (response) => {
-          if (response.includes("dzēst")) {
-            paradit_pazinojumu(response);
+    paradit_apstiprinajumu(
+      "Vai esat pārliecināts, ka vēlaties dzēst šo sludinājumu?",
+      () => {
+        const element = $(e.currentTarget).closest("tr");
+        const id = $(element).attr("sludinajuma_ID");
+        const tabula = $(element).data("veids");
+        $.post(
+          "./assets/database/sludinajumi_delete.php",
+          { id, tabula },
+          (response) => {
+            if (response.includes("dzēst")) {
+              paradit_pazinojumu(response);
+              ieladetSludinajumus();
+              return;
+            }
             ieladetSludinajumus();
-            return;
           }
-          ieladetSludinajumus();
-        }
-      );
-    }
+        );
+      }
+    );
   });
   // #endregion
 
@@ -485,19 +515,26 @@ $(document).ready(function () {
   }
 
   $(document).on("click", ".ieraksts-delete", (e) => {
-    if (confirm("Vai esat pārliecināts, ka vēlaties dzēst šo pieteikumu?")) {
-      const element = $(e.currentTarget).closest("tr");
-      const id = $(element).attr("ieraksta_ID");
-      $.post("./assets/database/pieteikumi_delete.php", { id }, (response) => {
-        if (response.includes("nevar")) {
-          paradit_pazinojumu(response);
-          ieladetPieteikumus();
-          return;
-        }
+    paradit_apstiprinajumu(
+      "Vai esat pārliecināts, ka vēlaties dzēst šo pieteikumu?",
+      () => {
+        const element = $(e.currentTarget).closest("tr");
+        const id = $(element).attr("ieraksta_ID");
+        $.post(
+          "./assets/database/pieteikumi_delete.php",
+          { id },
+          (response) => {
+            if (response.includes("nevar")) {
+              paradit_pazinojumu(response);
+              ieladetPieteikumus();
+              return;
+            }
 
-        ieladetPieteikumus();
-      });
-    }
+            ieladetPieteikumus();
+          }
+        );
+      }
+    );
   });
 
   // #endregion

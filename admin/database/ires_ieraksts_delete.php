@@ -8,7 +8,7 @@ if (isset($_POST['id'])) {
     if ($vaicajums->execute()) {
         // echo "Pieteikums ir veiksmīgi izdzēsts!";
     } else {
-        // echo "Kļūda: ".$savienojums->error;
+        // echo "Kļūda: " . $savienojums->error;
     }
 
     $vaicajums->close();

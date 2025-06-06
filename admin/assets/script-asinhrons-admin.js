@@ -32,6 +32,33 @@ $(document).ready(function () {
     $("body").append(modalHTML);
   }
 
+  function paradit_apstiprinajumu(teksts, onConfirm, onCancel) {
+    const id = "modal-confirm";
+    const modalHTML = `
+      <div class="modal modal-active modal-apstiprinat" id="${id}">
+        <div class="modal-box">
+          <div class="close-modal" data-target="#${id}"><i class="fas fa-times"></i></div>
+          <h2>${teksts}</h2>
+          <div class="modal-actions">
+            <button class="btn" id="btn-atcelt">Nē</button>
+            <button class="btn" id="btn-apstiprinat">Jā</button>
+          </div>
+        </div>
+      </div>
+    `;
+    $("body").append(modalHTML);
+
+    $(`#btn-apstiprinat`).on("click", function () {
+      $(`#${id}`).remove();
+      if (typeof onConfirm === "function") onConfirm();
+    });
+
+    $(`#btn-atcelt, .close-modal`).on("click", function () {
+      $(`#${id}`).remove();
+      if (typeof onCancel === "function") onCancel();
+    });
+  }
+
   //#region Profila informācija
   function fetchProfilaInfo() {
     $.ajax({
@@ -467,19 +494,22 @@ $(document).ready(function () {
   });
 
   $(document).on("click", ".lietotajs-tabula-delete", (e) => {
-    if (confirm("Vai esat pārliecināts, ka vēlaties dzēst šo lietotāju?")) {
-      const element = $(e.currentTarget).closest("tr");
-      const id = $(element).attr("lietotajs_admin_ID");
+    paradit_apstiprinajumu(
+      "Vai esat pārliecināts, ka vēlaties dzēst šo lietotāju?",
+      () => {
+        const element = $(e.currentTarget).closest("tr");
+        const id = $(element).attr("lietotajs_admin_ID");
 
-      $.post("./database/lietotaji_delete.php", { id }, (response) => {
-        if (response.includes("dzēst")) {
-          paradit_pazinojumu(response);
+        $.post("./database/lietotaji_delete.php", { id }, (response) => {
+          if (response.includes("dzēst")) {
+            paradit_pazinojumu(response);
+            fetchTabulaAdminLietotaji();
+            return;
+          }
           fetchTabulaAdminLietotaji();
-          return;
-        }
-        fetchTabulaAdminLietotaji();
-      });
-    }
+        });
+      }
+    );
   });
 
   // #endregion
@@ -783,19 +813,21 @@ $(document).ready(function () {
   });
 
   $(document).on("click", ".sludinajums-delete", (e) => {
-    if (confirm("Vai esat pārliecināts, ka vēlaties dzēst šo sludinājumu?")) {
-      const element = $(e.currentTarget).closest("tr");
-      const id = $(element).attr("slud_ID");
-      const tabula = $(element).data("veids");
-      // console.log(id)
-      $.post(
-        "./database/sludinajumi_delete.php",
-        { id, tabula },
-        (response) => {
-          fetchSludinajumi();
-        }
-      );
-    }
+    paradit_apstiprinajumu(
+      "Vai esat pārliecināts, ka vēlaties dzēst šo sludinājumu?",
+      () => {
+        const element = $(e.currentTarget).closest("tr");
+        const id = $(element).attr("slud_ID");
+        const tabula = $(element).data("veids");
+        $.post(
+          "./database/sludinajumi_delete.php",
+          { id, tabula },
+          (response) => {
+            fetchSludinajumi();
+          }
+        );
+      }
+    );
   });
 
   // #endregion
@@ -898,13 +930,20 @@ $(document).ready(function () {
   });
 
   $(document).on("click", ".piet-delete", (e) => {
-    if (confirm("Vai esat pārliecināts, ka vēlaties dzēst šo pieteikumu?")) {
-      const element = $(e.currentTarget).closest("tr");
-      const id = $(element).attr("piet_ID");
-      $.post("../assets/database/pieteikumi_delete.php", { id }, (response) => {
-        fetchPieteikumi();
-      });
-    }
+    paradit_apstiprinajumu(
+      "Vai esat pārliecināts, ka vēlaties dzēst šo pieteikumu?",
+      () => {
+        const element = $(e.currentTarget).closest("tr");
+        const id = $(element).attr("piet_ID");
+        $.post(
+          "../assets/database/pieteikumi_delete.php",
+          { id },
+          (response) => {
+            fetchPieteikumi();
+          }
+        );
+      }
+    );
   });
 
   $("#pieteikumaFormaAdmin").submit((e) => {
@@ -1023,13 +1062,16 @@ $(document).ready(function () {
   });
 
   $(document).on("click", ".ires-delete", (e) => {
-    if (confirm("Vai esat pārliecināts, ka vēlaties dzēst šo īres ierakstu?")) {
-      const element = $(e.currentTarget).closest("tr");
-      const id = $(element).attr("ires_ID");
-      $.post("./database/ires_ieraksts_delete.php", { id }, (response) => {
-        fetchIresIeraksti();
-      });
-    }
+    paradit_apstiprinajumu(
+      "Vai esat pārliecināts, ka vēlaties dzēst šo īres ierakstu?",
+      () => {
+        const element = $(e.currentTarget).closest("tr");
+        const id = $(element).attr("ires_ID");
+        $.post("./database/ires_ieraksts_delete.php", { id }, (response) => {
+          fetchIresIeraksti();
+        });
+      }
+    );
   });
 
   $("#iresIerakstaForma").submit((e) => {

@@ -709,6 +709,30 @@ footer{
 
 .modal.modal-active{ display: flex; }
 
+.modal-apstiprinat{
+    .modal-actions{
+        display: flex;
+        gap: 1rem;
+        padding: 1rem;
+        #btn-atcelt{
+            background: darkred;
+        }
+        #btn-atcelt:hover{
+            background: white;
+            color: darkred;
+            border: 1px solid darkred;
+        }
+        #btn-apstiprinat{
+            background: darkgreen;
+        }
+        #btn-apstiprinat:hover{
+            background: white;
+            color: darkgreen;
+            border: 1px solid darkgreen;
+        }
+    }
+}
+
 /* ParMums.php: */
 .parMums{
     margin-top: 4rem;
@@ -1415,7 +1439,7 @@ footer{
                     color: var(--dark-violet);
                 }
             
-                td{ padding: .5rem 1rem; }
+                td{ padding: 1.1rem; }
             
                 tr:hover{ background: var(--dark-gray); }
             
