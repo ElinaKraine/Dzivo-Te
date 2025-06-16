@@ -35,6 +35,18 @@ $(document).ready(function () {
     return "dienām";
   }
 
+  function paradit_pazinojumu(pazinojums) {
+    const modalHTML = `
+      <div class="modal modal-active" id="modal-message">
+        <div class="modal-box">
+          <div class="close-modal" data-target="#modal-message"><i class="fas fa-times"></i></div>
+          <h2>${pazinojums}</h2>
+        </div>
+      </div>
+    `;
+    $("body").append(modalHTML);
+  }
+
   function fetchIresanasDzivokli(
     meklet = "",
     filtri = {},
@@ -175,7 +187,7 @@ $(document).ready(function () {
     const dayDiff = timeDiff / (1000 * 3600 * 24);
 
     if (dayDiff < 1) {
-      alert("Datumu atšķirībai jābūt vismaz 1 dienai.");
+      paradit_pazinojumu("Datumu atšķirībai jābūt vismaz 1 dienai.");
       return;
     }
 
